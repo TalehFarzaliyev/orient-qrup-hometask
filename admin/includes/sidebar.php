@@ -6,7 +6,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Orient Admin</div>
+                <div class="sidebar-brand-text mx-3">RƏSSAMLAR BİRLİYİ</div>
             </a>
 
             <!-- Divider -->
@@ -16,7 +16,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="http://ressam.me/admin/index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Admin</span></a>
+                    <span>Admin paneli</span></a>
             </li>
 
             <!-- Divider -->

@@ -33,10 +33,10 @@
 
 <?php include 'includes/head.php'; ?>
 
-<body class="bg-gradient-primary">
+<body class="bg-gradient-primary" style= 'background-color: #8EC5FC; background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);'>
    <div class="container">
         <!-- Outer Row -->
-        <div class="row justify-content-center">
+        <div class="row justify-content-center" style="position:absolute; top: 50%; left:50%; transform:translate(-50%, -50%); width:80%">
 
             <div class="col-xl-10 col-lg-12 col-md-9">
 
@@ -52,7 +52,7 @@
                                         <?php
                                         	if(!empty($msg))
                                         	{
-                                        		echo "<h1>".$msg."</h1>";
+                                        		echo "<h4 style='color:red;'>".$msg."</h4>";
                                         	}
                                         ?>
                                     </div>
