@@ -1,16 +1,17 @@
 <?php
 
-function uploadImage($fileInput = array())
+error_reporting(0);
+
+function uploadImage ($fileInput = array())
 {
-	$file_name  = $fileInput['name'];
-    $file_size  = $fileInput['size'];
-    $file_tmp   = $fileInput['tmp_name'];
-    $file_type  = $fileInput['type'];
+    $file_name = $fileInput['name'];
+    $file_size = $fileInput['size'];
+    $file_tmp = $fileInput['tmp_name'];
+    $file_type = $fileInput['type'];
 
-    if(move_uploaded_file($file_tmp,"../uploads/".$file_name))
-    	return $file_name;
-	
-	return NULL;
+    if( move_uploaded_file($file_tmp, "../uploads/".$file_name))
+        return $file_name;
+
+    return NULL;
 }
-
 ?>

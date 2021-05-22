@@ -54,23 +54,3 @@
     });
 
 })(jQuery); // End of use strict
-
-
-var buttonAz = document.querySelector(".button-az"),
-    buttonEn = document.querySelector(".button-en"),
-    azSection = document.querySelector(".az-section"),
-    enSection = document.querySelector(".en-section");
-
-function changeLangAz() {
-    azSection.style.display = "block";
-    enSection.style.display = "none";
-    buttonAz.style.borderColor = "#59afcc lightgray transparent transparent";
-    buttonEn.style.borderColor = "transparent transparent lightgray transparent";
-}
-
-function changeLangEn() {
-    enSection.style.display = "block";
-    azSection.style.display = "none";
-    buttonEn.style.borderColor = "#59afcc transparent transparent lightgray";
-    buttonAz.style.borderColor = "transparent transparent lightgray transparent";
-}

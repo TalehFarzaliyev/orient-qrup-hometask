@@ -31,7 +31,7 @@
     <script src="templates/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="templates/js/sb-admin-2.js"></script>
+    <script src="templates/js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
     <script src="templates/vendor/chart.js/Chart.min.js"></script>

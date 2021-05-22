@@ -36,8 +36,8 @@ if ($_SESSION['logged_in'] == 1) {
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                                        <div class="create-button" style="display:flex; justify-content:flex-end; margin-right: 110px;">
-                                            <a href="form-menu.php" class="btn btn-success">Yarat</a>
+                                        <div class="create-button">
+                                            <a href="form-menu.php" class="btn btn-primary"><i class="fas fa-plus-square"></i></a>
                                         </div>
                                         <br>
                                         <div class="row">
@@ -74,15 +74,18 @@ if ($_SESSION['logged_in'] == 1) {
                                                                 <td class="sorting_1"><?= $row['slug']; ?></td>
                                                                 <td class="sorting_1"><?= $row['type']; ?></td>
 
-                                                                <td>
-                                                                    <a href="form-menu.php?menu=<?= $row['id']; ?>" class="btn btn-success">Redaktə et</a>
-                                                                    <a href="form-menu.php?menu=<?= $row['id']; ?>" class="btn btn-danger">Sil</a>
+                                                                <td class="edit-buttons">
+                                                                    <div class="button-section">
+                                                                        <a href="form-menu.php?menu=<?= $row['id']; ?>" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                                                                        <a href="form-menu.php?menu=<?= $row['id']; ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                                                    </div>
+
                                                                 </td>
                                                             </tr>
                                                         <?php
                                                         }
                                                         ?>
-                                                       
+
                                                     </tbody>
                                                 </table>
                                             </div>
