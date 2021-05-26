@@ -1,6 +1,16 @@
 <?php
 session_start();
 if ($_SESSION['logged_in'] == 1) {
+    include '../config/config.php';
+
+    if(isset($_GET['id']) and !empty($_GET['id']))
+    {
+        $menu_id = intval($_GET['id']);
+        mysqli_query($conn,"DELETE FROM `menu` WHERE `id`=$menu_id");
+        mysqli_query($conn,"DELETE FROM `menu_translation` WHERE `menu_id`=$menu_id");
+        header('menu.php');
+    }
+
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -44,7 +54,7 @@ if ($_SESSION['logged_in'] == 1) {
                                             <div class="col-sm-12">
                                                 <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                                                     <thead>
-                                                        <tr role="row">
+                                                        <tr role="row" style="text-align: center;">
                                                             <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Menyu adı</th>
                                                             <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Slug</th>
                                                             <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Tipi</th>
@@ -52,7 +62,7 @@ if ($_SESSION['logged_in'] == 1) {
                                                         </tr>
                                                     </thead>
                                                     <tfoot>
-                                                        <tr>
+                                                        <tr style="text-align: center;">
                                                             <th rowspan="1" colspan="1">Menyu adı</th>
                                                             <th rowspan="1" colspan="1">Slug</th>
                                                             <th rowspan="1" colspan="1">Tipi</th>
@@ -65,7 +75,7 @@ if ($_SESSION['logged_in'] == 1) {
                                                         include '../config/vars.php';
                                                         $select_sql = "SELECT * FROM orient_ressamlar.menu_translation mt 
                                                                INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
-                                                               Where mt.lang_id=1 and m.status=1;";
+                                                               Where mt.lang_id=1 and m.status=1 order by m.`id` desc;";
                                                         $result     = mysqli_query($conn, $select_sql);
                                                         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                                                         ?>
@@ -76,8 +86,8 @@ if ($_SESSION['logged_in'] == 1) {
 
                                                                 <td class="edit-buttons">
                                                                     <div class="button-section">
-                                                                        <a href="form-menu.php?menu=<?= $row['id']; ?>" class="btn btn-success"><i class="fas fa-edit"></i></a>
-                                                                        <a href="form-menu.php?menu=<?= $row['id']; ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                                                        <a href="form-menu.php?id=<?= $row['id']; ?>" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                                                                        <a href="menu.php?id=<?=$row['id'];?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
                                                                     </div>
 
                                                                 </td>

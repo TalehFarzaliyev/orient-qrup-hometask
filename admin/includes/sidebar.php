@@ -53,7 +53,7 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseArtists"
+                <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseArtists"
                    aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Rəssamlar</span>
