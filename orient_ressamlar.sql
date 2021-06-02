@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 26, 2021 at 01:34 PM
+-- Generation Time: Jun 02, 2021 at 01:22 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -102,17 +102,39 @@ CREATE TABLE IF NOT EXISTS `menu` (
   `order_number` int(11) DEFAULT '0',
   `status` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COMMENT='Menu for sites';
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8 COMMENT='Menu for sites';
 
 --
 -- Dumping data for table `menu`
 --
 
 INSERT INTO `menu` (`id`, `type`, `parent_id`, `order_number`, `status`) VALUES
-(40, NULL, 0, 1, 1),
-(41, NULL, 0, 2, 1),
-(42, NULL, 41, 1, 1),
-(43, NULL, 41, 2, 1);
+(46, '', 0, 1, 1),
+(47, 'post', 0, 2, 1),
+(48, '', 47, 1, 1),
+(49, '', 47, 2, 1),
+(50, '', 47, 3, 1),
+(51, '', 47, 4, 1),
+(52, '', 47, 5, 1),
+(53, 'post', 47, 6, 1),
+(54, 'painter', 0, 3, 1),
+(55, 'painter', 54, 1, 1),
+(56, 'painter', 54, 2, 1),
+(57, 'painter', 54, 3, 1),
+(58, 'painter', 54, 4, 1),
+(59, 'painter', 54, 5, 1),
+(60, 'painter', 54, 6, 1),
+(61, 'painter', 54, 7, 1),
+(62, 'post', 0, 4, 1),
+(63, 'post', 62, 1, 1),
+(64, 'post', 62, 2, 1),
+(65, '', 0, 5, 1),
+(66, 'post', 0, 6, 1),
+(67, 'post', 66, 1, 1),
+(68, 'post', 66, 2, 1),
+(69, 'post', 66, 3, 1),
+(70, '', 0, 7, 1),
+(71, 'post', 66, 4, 0);
 
 -- --------------------------------------------------------
 
@@ -133,14 +155,58 @@ CREATE TABLE IF NOT EXISTS `menu_translation` (
 --
 
 INSERT INTO `menu_translation` (`menu_id`, `lang_id`, `name`, `slug`) VALUES
-(40, 1, 'Æsas sÉ™hifÉ™', 'esas-sehife'),
-(40, 2, 'Home page', 'home-page'),
-(41, 1, 'NRB kataloq', ''),
-(41, 2, 'NRB catalog', ''),
-(42, 1, 'rengkarliq', ''),
-(42, 2, 'painting', ''),
-(43, 1, 'Heykelterasliq', ''),
-(43, 2, 'Sculpture', '');
+(46, 1, 'Æsas sÉ™hifÉ™', 'esas-sehife'),
+(46, 2, 'Home page', 'home-page'),
+(47, 1, 'BÃ¶lmÉ™lÉ™r', 'bolmeler'),
+(47, 2, 'Sections', 'sections'),
+(48, 1, 'Struktur', 'struktur'),
+(48, 2, 'Structure', 'structure'),
+(49, 1, 'SÉ™rÉ™ncamlar', 'serencamlar'),
+(49, 2, 'Disposal', 'disposal'),
+(50, 1, 'ÃœzvlÉ™r', 'uzvler'),
+(50, 2, 'Members', 'members'),
+(51, 1, 'GÉ™nclÉ™r bÃ¶lmÉ™si', 'gencler-bolmesi'),
+(51, 2, 'Youth department', 'youth-department'),
+(52, 1, 'FÉ™xri Ã¼zvlÉ™r', 'fexri-uzvler'),
+(52, 2, 'Honorary members', 'honorary-members'),
+(53, 1, 'Festival', 'festival'),
+(53, 2, 'Festival', 'festival'),
+(54, 1, 'NRB kataloq', 'nrb-kataloq'),
+(54, 2, 'NRB catalog', 'nrb-catalog'),
+(55, 1, 'RÉ™ngkarlÄ±q', 'rengkarliq'),
+(55, 2, 'Painting', 'painting'),
+(56, 1, 'HeykÉ™ltÉ™raÅŸlÄ±q', 'heykelterasliq'),
+(56, 2, 'Sculpture', 'sculpture'),
+(57, 1, 'Dekorativ tÉ™tbiqi sÉ™nÉ™t', 'dekorativ-tetbiqi-senet'),
+(57, 2, 'Decorative applied art', 'decorative-applied-art'),
+(58, 1, 'Teatr kino vÉ™ TV', 'teatr-kino-ve-tv'),
+(58, 2, 'Theater cinema and tv', 'theater cinema and tv'),
+(59, 1, 'SÉ™nÉ™tÅŸÃ¼naslÄ±q', 'senetsunasliq'),
+(59, 2, 'Study of art', 'study-of-art'),
+(60, 1, 'KÃ¶hnÉ™ ustadlar', 'kohne-ustadlar'),
+(60, 2, 'Old masters', 'old-masters'),
+(61, 1, 'Qrafika', 'qrafika'),
+(61, 2, 'Graphics', 'graphics'),
+(62, 1, 'Arxiv', 'arxiv'),
+(62, 2, 'Archive', 'archive'),
+(63, 1, 'Tarixi fotolar', 'tarixi-fotolar'),
+(63, 2, 'Historical photos', 'historical-photos'),
+(64, 1, 'KÃ¶hnÉ™ afiÅŸalar', 'kohne-afisalar'),
+(64, 2, 'Old posters', 'old-posters'),
+(65, 1, 'ÆlaqÉ™', 'elaqe'),
+(65, 2, 'Contact', 'contact'),
+(66, 1, 'FÉ™aliyyÉ™t', 'fealiyyet'),
+(66, 2, 'Activities', 'activities'),
+(67, 1, 'SÉ™rgilÉ™r', 'sergiler'),
+(67, 2, 'Exhibitions', 'exhibitions'),
+(68, 1, 'TÉ™dbirlÉ™r', 'tedbirler'),
+(68, 2, 'Events', 'events'),
+(69, 1, 'Elanlar', 'elanlar'),
+(69, 2, 'Announcements', 'announcements'),
+(71, 1, 'XÉ™bÉ™rlÉ™r', 'xeberler'),
+(71, 2, 'News', 'news'),
+(70, 1, 'SatÄ±ÅŸ', 'satis'),
+(70, 2, 'Sale', 'sale');
 
 -- --------------------------------------------------------
 
@@ -153,17 +219,19 @@ CREATE TABLE IF NOT EXISTS `painters` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `painter_name` varchar(45) DEFAULT NULL,
   `painter_surname` varchar(45) DEFAULT NULL,
-  `image` varchar(255) DEFAULT NULL,
+  `painter_image` varchar(255) DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `painters`
 --
 
-INSERT INTO `painters` (`id`, `painter_name`, `painter_surname`, `image`, `status`) VALUES
-(1, 'Ayten', 'Seyidova', 'banner1.jpg', 1);
+INSERT INTO `painters` (`id`, `painter_name`, `painter_surname`, `painter_image`, `status`) VALUES
+(11, 'Metin', 'Quliyev', '95+-Funky-Computer-4K-Wallpapers-WallpaperYou.jpg', 1),
+(22, 'Kateqoriya ucun', 'soyad', '235506.jpg', 1),
+(25, 'Puste1', 'Aghayeva1', 'abstract-wallpapers-hd-experiment.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -173,10 +241,20 @@ INSERT INTO `painters` (`id`, `painter_name`, `painter_surname`, `image`, `statu
 
 DROP TABLE IF EXISTS `painters_to_category`;
 CREATE TABLE IF NOT EXISTS `painters_to_category` (
-  `painter_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `painter_id` int(11) DEFAULT NULL,
   `category_id` int(11) NOT NULL,
-  PRIMARY KEY (`painter_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `painters_to_category`
+--
+
+INSERT INTO `painters_to_category` (`id`, `painter_id`, `category_id`) VALUES
+(40, 11, 59),
+(68, 25, 57),
+(69, 22, 56);
 
 -- --------------------------------------------------------
 
@@ -196,8 +274,88 @@ CREATE TABLE IF NOT EXISTS `painter_translation` (
 --
 
 INSERT INTO `painter_translation` (`painter_id`, `lang_id`, `about_painter`) VALUES
-(1, 1, 'haqqinda melumat'),
-(1, 2, 'information about painter');
+(11, 1, 'Bu ressam haqqinda melumatdir'),
+(11, 2, 'This is information about painter'),
+(25, 1, 'metn metn metng'),
+(25, 2, 'text text textg'),
+(22, 1, 'melumat'),
+(22, 2, 'information');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `posts`
+--
+
+DROP TABLE IF EXISTS `posts`;
+CREATE TABLE IF NOT EXISTS `posts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `image` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `category_id` int(11) DEFAULT NULL,
+  `hits` int(11) NOT NULL DEFAULT '0',
+  `status` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `posts`
+--
+
+INSERT INTO `posts` (`id`, `image`, `created_date`, `category_id`, `hits`, `status`) VALUES
+(2, 'banner1.jpg', '2021-06-02 09:14:15', 53, 0, 1),
+(4, '363673.jpg', '2021-06-02 10:53:44', 67, 0, 1),
+(5, '4WUfMQ.jpg', '2021-06-02 10:56:11', 1, 0, 1),
+(6, '235506.jpg', '2021-06-02 11:28:12', 71, 0, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `posts_gallery`
+--
+
+DROP TABLE IF EXISTS `posts_gallery`;
+CREATE TABLE IF NOT EXISTS `posts_gallery` (
+  `post_id` int(11) DEFAULT NULL,
+  `gallery_image` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `posts_gallery`
+--
+
+INSERT INTO `posts_gallery` (`post_id`, `gallery_image`) VALUES
+(2, 'banner1.jpg'),
+(2, 'banner2.jpg'),
+(2, '4.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `posts_translation`
+--
+
+DROP TABLE IF EXISTS `posts_translation`;
+CREATE TABLE IF NOT EXISTS `posts_translation` (
+  `post_id` int(11) DEFAULT NULL,
+  `lang_id` int(11) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `content` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `posts_translation`
+--
+
+INSERT INTO `posts_translation` (`post_id`, `lang_id`, `title`, `content`) VALUES
+(2, 1, 'basliq melumat', 'mezmun mezmun'),
+(2, 2, 'title', 'content'),
+(5, 1, 'bu bir basliqdir11', 'mezmun haqqinda'),
+(5, 2, 'this is a title11', 'content '),
+(6, 1, 'Xeber basligi', 'xeber mezmunu'),
+(6, 2, 'news title', 'news content'),
+(4, 1, 'basliq basliq edit', 'mezmun haqqinda edit'),
+(4, 2, 'ingilis basliq edit', 'content edit');
 
 -- --------------------------------------------------------
 
@@ -226,7 +384,7 @@ CREATE TABLE IF NOT EXISTS `slider` (
   `painter_surname` varchar(45) DEFAULT NULL,
   `status` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `slider`
@@ -234,8 +392,9 @@ CREATE TABLE IF NOT EXISTS `slider` (
 
 INSERT INTO `slider` (`id`, `image`, `painter_name`, `painter_surname`, `status`) VALUES
 (41, '47878.jpg', 'Puste', 'Aghayeva', 1),
-(42, '32833.jpg', 'Metin', 'Quliyev', 1),
-(43, 'ebe39def5ad5e741b9bf510c8a96120e.jpg', 'Ayten', 'Seyidova', 1);
+(42, '4.jpg', 'Metin', 'Quliyev', 1),
+(43, 'ebe39def5ad5e741b9bf510c8a96120e.jpg', 'Ayten', 'Seyidova', 1),
+(44, 'planets-in-the-night-sky-25818-1920x1080.jpg', 'Gunel', 'Mehnetli', 1);
 
 -- --------------------------------------------------------
 
@@ -257,10 +416,12 @@ CREATE TABLE IF NOT EXISTS `slider_translation` (
 INSERT INTO `slider_translation` (`slider_id`, `lang_id`, `title`) VALUES
 (41, 1, 'basliq basliq'),
 (41, 2, 'ingilis basliq'),
+(43, 1, 'Basliq elave etmek'),
+(43, 2, 'Add title'),
 (42, 1, 'bu bir basliqdir'),
 (42, 2, 'this is a title'),
-(43, 1, 'Basliq elave etmek'),
-(43, 2, 'Add title');
+(44, 1, 'Basliq elave etmek1'),
+(44, 2, 'title');
 
 -- --------------------------------------------------------
 
@@ -270,11 +431,24 @@ INSERT INTO `slider_translation` (`slider_id`, `lang_id`, `title`) VALUES
 
 DROP TABLE IF EXISTS `works`;
 CREATE TABLE IF NOT EXISTS `works` (
-  `id` int(11) DEFAULT NULL,
-  `ressam_id` int(11) DEFAULT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `painter_id` int(11) DEFAULT NULL,
+  `work_image` varchar(255) DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `works`
+--
+
+INSERT INTO `works` (`id`, `painter_id`, `work_image`, `status`) VALUES
+(9, 11, 'abstract-wallpapers-hd-experiment.jpg', 1),
+(10, 20, 'banner2.jpg', 1),
+(17, 11, '413607.jpg', 1),
+(21, 25, 'Parallel-Universe-Wallpaper.jpg', 1),
+(22, 22, '7046.jpg', 1),
+(24, 25, '', 1);
 
 -- --------------------------------------------------------
 
@@ -288,6 +462,24 @@ CREATE TABLE IF NOT EXISTS `works_translation` (
   `lang_id` int(11) DEFAULT NULL,
   `work_name` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `works_translation`
+--
+
+INSERT INTO `works_translation` (`work_id`, `lang_id`, `work_name`) VALUES
+(10, 1, 'eserin adi eserin adi'),
+(10, 2, 'work name work name'),
+(9, 1, 'eser adik'),
+(9, 2, 'work namek'),
+(17, 1, 'ad ad ad12'),
+(17, 2, 'name name name12'),
+(21, 1, 'eser adi'),
+(21, 2, 'work name'),
+(22, 1, 'ad ad ad1'),
+(22, 2, 'name name name1'),
+(24, 1, 'hjkjh'),
+(24, 2, 'ghkjhk');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

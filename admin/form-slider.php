@@ -6,6 +6,18 @@ if ($_SESSION['logged_in'] == 1) {
 
     $post_type = (isset($_GET['id'])) ? 'edit' : 'create';
     $slider_id = (isset($_GET['id'])) ? intval($_GET['id']) : 0;
+    if (!empty($slider_id)) {
+        $sql        = "SELECT * FROM `slider` WHERE `id`=$slider_id";
+        $sql_tr     = "SELECT * FROM languages lang
+                       INNER JOIN slider_translation st ON lang.id=st.lang_id WHERE st.slider_id=$slider_id";
+        $result     = mysqli_query($conn, $sql);
+        $slider_row = mysqli_fetch_assoc($result);
+        $result_tr  = mysqli_query($conn, $sql_tr);
+        $slider_tr  = mysqli_fetch_all($result_tr, MYSQLI_ASSOC);
+    }else{
+        $slider_row = [];
+        $slider_tr  = [];
+    }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (isset($_POST['post-type']) and !empty($_POST['post-type']) and $_POST['post-type'] == 'create') {
@@ -28,7 +40,7 @@ if ($_SESSION['logged_in'] == 1) {
         } else if (isset($_POST['post-type']) and !empty($_POST['post-type']) and $_POST['post-type'] == 'edit') {
             $painter_name    = (isset($_POST['painter_name'])) ? trim($_POST['painter_name']) : '';
             $painter_surname = (isset($_POST['painter_surname'])) ? trim($_POST['painter_surname']) : '';
-            
+
             if ($_POST['hidden'] == "0")
                 $image  = uploadImage('../uploads/noPhoto.png');
             elseif (empty($_FILES['image']['tmp_name']) || !is_uploaded_file($_FILES['image']['tmp_name']))
@@ -82,11 +94,11 @@ if ($_SESSION['logged_in'] == 1) {
                                         <br>
                                         <div class="form-group">
                                             <label for="exampleFormControlInput1">Rəssamın adı</label>
-                                            <input type="text" name="painter_name" class="form-control" id="exampleFormControlInput1" placeholder="Rəssamın adı">
+                                            <input type="text" name="painter_name" required class="form-control" id="exampleFormControlInput1" placeholder="Rəssamın adı">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleFormControlInput1">Rəssamın soyadı</label>
-                                            <input type="text" name="painter_surname" class="form-control" id="exampleFormControlInput1" placeholder="Rəssamın soyadı">
+                                            <input type="text" name="painter_surname" required class="form-control" id="exampleFormControlInput1" placeholder="Rəssamın soyadı">
                                         </div>
                                         <div class="form-group img-section">
                                             <label for="exampleFormControlFile1">Şəkil</label>
@@ -128,7 +140,7 @@ if ($_SESSION['logged_in'] == 1) {
                                                 <div class="tab-pane fade show <?php if ($row['code'] == 'az') echo 'active' ?>" id="nav-<?= $row['code']; ?>" role="tabpanel" aria-labelledby="nav-<?= $row['code']; ?>-tab">
                                                     <div class="form-group">
                                                         <label for="exampleFormControlInput1">Başlıq</label>
-                                                        <input type="text" name="translation[<?= $row['id'] ?>][title]" class="form-control" id="exampleFormControlInput1" placeholder="Başlıq">
+                                                        <input type="text" name="translation[<?= $row['id'] ?>][title]" class="form-control" required id="exampleFormControlInput1" placeholder="Başlıq">
                                                     </div>
                                                 </div>
                                             <?php
@@ -145,15 +157,6 @@ if ($_SESSION['logged_in'] == 1) {
 
                         <?php
                         } elseif ($post_type == 'edit') {
-                            if (!empty($slider_id)) {
-                                $sql        = "SELECT * FROM `slider` WHERE `id`=$slider_id";
-                                $sql_tr     = "SELECT * FROM languages lang
-                                               INNER JOIN slider_translation st ON lang.id=st.lang_id WHERE st.slider_id=$slider_id";
-                                $result     = mysqli_query($conn, $sql);
-                                $slider_row = mysqli_fetch_assoc($result);
-                                $result_tr  = mysqli_query($conn, $sql_tr);
-                                $slider_tr  = mysqli_fetch_all($result_tr, MYSQLI_ASSOC);
-                            }
                         ?>
                             <h1 class="h3 mb-2 text-gray-800">Slider redaktə et</h1>
                             <br>
@@ -163,11 +166,11 @@ if ($_SESSION['logged_in'] == 1) {
                                         <br>
                                         <div class="form-group">
                                             <label for="exampleFormControlInput1">Rəssamın adı</label>
-                                            <input type="text" name="painter_name" class="form-control" value="<?= $slider_row['painter_name']; ?>" id="exampleFormControlInput1" placeholder="Rəssamın adı">
+                                            <input type="text" name="painter_name" required class="form-control" value="<?= $slider_row['painter_name']; ?>" id="exampleFormControlInput1" placeholder="Rəssamın adı">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleFormControlInput1">Rəssamın soyadı</label>
-                                            <input type="text" name="painter_surname" class="form-control" value="<?= $slider_row['painter_surname']; ?>" id="exampleFormControlInput1" placeholder="Rəssamın soyadı">
+                                            <input type="text" name="painter_surname" required class="form-control" value="<?= $slider_row['painter_surname']; ?>" id="exampleFormControlInput1" placeholder="Rəssamın soyadı">
                                         </div>
 
                                         <div class="form-group img-section">
@@ -215,7 +218,7 @@ if ($_SESSION['logged_in'] == 1) {
                                                 <div class="tab-pane fade show <?php if ($value['code'] == 'az') echo 'active' ?>" id="nav-<?= $value['code']; ?>" role="tabpanel" aria-labelledby="nav-<?= $value['code']; ?>-tab">
                                                     <div class="form-group">
                                                         <label for="exampleFormControlInput1">Başlıq</label>
-                                                        <input type="text" name="translation[<?= $value['lang_id'] ?>][title]" value="<?= $value['title']; ?>" class="form-control" id="exampleFormControlInput1" placeholder="Başlıq">
+                                                        <input type="text" name="translation[<?= $value['lang_id'] ?>][title]" required value="<?= $value['title']; ?>" class="form-control" id="exampleFormControlInput1" placeholder="Başlıq">
                                                     </div>
                                                 </div>
                                             <?php
@@ -267,7 +270,7 @@ if ($_SESSION['logged_in'] == 1) {
                 var oFReader = new FileReader();
                 oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
                 oFReader.onload = function(oFREvent) {
-                    document.getElementById("previewImage").src = oFREvent.target.result;
+                document.getElementById("previewImage").src = oFREvent.target.result;
                 };
             };
 

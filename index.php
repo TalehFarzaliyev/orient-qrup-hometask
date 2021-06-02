@@ -1,99 +1,304 @@
 <!DOCTYPE html>
-<html>
-   <?php include 'includes/header.php'; ?>
-   
-   <body class="w3-light-grey">
-      <div class="w3-content" style="max-width:1400px">
-         <!-- Header -->
-         <header class="w3-container w3-center w3-padding-32">
-            <h1><b>MY BLOG</b></h1>
-            <p>Welcome to the blog of <span class="w3-tag">Orient Students</span></p>
-         </header>
-         <!-- Grid -->
-         <div class="w3-row">
-            <!-- Blog entries -->
-            <div class="w3-col l8 s12">
-               <?php
-                include 'admin/database/data.php';
-                foreach ($data as $key => $value) {
-               ?>
-               <div class="w3-card-4 w3-margin w3-white">
-                  <img src="<?=$value['image'];?>" alt="Nature" style="width:100%">
-                  <div class="w3-container">
-                     <h3><b><?=$value['title'];?></b></h3>
-                     <h5><?=$value['title'];?><span class="w3-opacity"> <?=$value['date'];?></span></h5>
-                  </div>
-                  <div class="w3-container">
-                     <p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed
-                        tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.
-                     </p>
-                     <div class="w3-row">
-                        <div class="w3-col m8 s12">
-                           <p><button class="w3-button w3-padding-large w3-white w3-border"><b>READ MORE »</b></button></p>
+<html lang="en">
+
+<?php include 'includes/header.php' ?>
+
+<body>
+    <div id="go-up" class="header">
+        <?php include 'includes/menu.php'; ?>
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="assets/img/main1.png" alt="First slide">
+                    <div class="carousel-caption d-none d-md-block homepage-caption">
+                        <p class="homepage-text">RƏSSAMLAR BİRLİYİ</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="assets/img/main2.jpg" alt="Second slide">
+                    <div class="carousel-caption d-none d-md-block slider-caption">
+                        <a href="artists.php" class="painter_name">Əzizə İsmayılova</a>
+                        <p class="caption-head">seçilən <span style="color: #fff;">əsərlər</span></p>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="col-pictures">
+                                    <a href=""><img src="assets/img/_DSC0487.JPG" alt=""></a>
+                                </div>
+                                <div class="col-pictures">
+                                    <a href=""><img src="assets/img/_DSC0488.JPG" alt=""></a>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="col-pictures">
+                                    <a href=""><img src="assets/img/_DSC0497.JPG" alt=""></a>
+                                </div>
+                                <div class="col-pictures">
+                                    <a href=""><img src="assets/img/_DSC0501.JPG" alt=""></a>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="col-pictures">
+                                    <a href=""><img src="assets/img/2-2.jpg" alt=""></a>
+                                </div>
+                                <div class="col-pictures">
+                                    <a href=""><img src="assets/img/IMG_0724.JPG" alt=""></a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="w3-col m4 w3-hide-small">
-                           <p><span class="w3-padding-large w3-right"><b>Comments  </b> <span class="w3-tag">0</span></span></p>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        <div class="social-icon">
+            <a class="gmail" href="https://www.gmail.com/"><i class="fas fa-envelope social-media"></i></a>
+            <a class="instagram" href="https://www.instagram.com/"><i class="fab fa-instagram social-media"></i></a>
+            <a class="facebook" href="https://www.facebook.com/"><i class="fab fa-facebook-f social-media"></i></a>
+            <a class="youtube" href="https://www.youtube.com/"><i class="fab fa-youtube social-media"></i></a>
+        </div>
+    </div>
+
+    <?php include 'includes/theme.php'; ?>
+
+    <div class="portfolio change-theme portfolio-button">
+        <a href="portfolio.php" class="view_button">BİRLİYİN PROFİLİ</a>
+    </div>
+    <div class="blog change-theme news-section">
+        <div class="section-header">
+            <h2>Xəbərlər</h2>
+            <div class="title-line">
+                <img class="line" src="assets/img/title-line.png" alt="">
+            </div>
+        </div>
+        <div class="owl-carousel owl-theme container">
+            <div class="card">
+                <img class="card-img-top" src="assets/img/2-4.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h6 class="card-title">Xəbər başlığı</h6>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <div class="date_button">
+                        <span><i class="far fa-clock"></i>&nbsp;21.10.2020 15:48</span>
+                        <a href="single_news.php" class="btn btn-primary change_button_color">Ətraflı</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="assets/img/6.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h6 class="card-title">Xəbər başlığı</h6>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <div class="date_button">
+                        <span><i class="far fa-clock"></i>&nbsp;21.10.2020 15:48</span>
+                        <a href="single_news.php" class="btn btn-primary change_button_color">Ətraflı</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="assets/img/2-2.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h6 class="card-title">Xəbər başlığı</h6>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <div class="date_button">
+                        <span><i class="far fa-clock"></i>&nbsp;21.10.2020 15:48</span>
+                        <a href="single_news.php" class="btn btn-primary change_button_color">Ətraflı</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="assets/img/2-3.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h6 class="card-title">Xəbər başlığı</h6>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <div class="date_button">
+                        <span><i class="far fa-clock"></i>&nbsp;21.10.2020 15:48</span>
+                        <a href="single_news.php" class="btn btn-primary change_button_color">Ətraflı</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="assets/img/2-5.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h6 class="card-title">Xəbər başlığı</h6>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <div class="date_button">
+                        <span><i class="far fa-clock"></i>&nbsp;21.10.2020 15:48</span>
+                        <a href="single_news.php" class="btn btn-primary change_button_color">Ətraflı</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="assets/img/2-6.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h6 class="card-title">Xəbər başlığı</h6>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <div class="date_button">
+                        <span><i class="far fa-clock"></i>&nbsp;21.10.2020 15:48</span>
+                        <a href="single_news.php" class="btn btn-primary change_button_color">Ətraflı</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="assets/img/1.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h6 class="card-title">Xəbər başlığı</h6>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <div class="date_button">
+                        <span><i class="far fa-clock"></i>&nbsp;21.10.2020 15:48</span>
+                        <a href="single_news.php" class="btn btn-primary change_button_color">Ətraflı</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="assets/img/2.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h6 class="card-title">Xəbər başlığı</h6>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <div class="date_button">
+                        <span><i class="far fa-clock"></i>&nbsp;21.10.2020 15:48</span>
+                        <a href="single_news.php" class="btn btn-primary change_button_color">Ətraflı</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="blog change-theme">
+        <div class="section-header">
+            <h2>Əsərlər</h2>
+            <div class="title-line">
+                <img class="line" src="assets/img/title-line.png" alt="">
+            </div>
+        </div>
+        <div class="blog-slider">
+            <div class="vc_item row">
+                <div id="carouselExampleControls-one" class="carousel slide col-xl-6 col-lg-6 col-md-12" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <span class="carousel-line"></span>
+                        <div class="carousel-item active">
+                            <img src="assets/img/_DSC0501.JPG" class="d-block w-100" alt="...">
                         </div>
-                     </div>
-                  </div>
-               </div>
-               <hr>
-              <?php 
-                } 
-              ?>
+                        <div class="carousel-item">
+                            <img src="assets/img/_DSC0497.JPG" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="assets/img/_DSC0488.JPG" class="d-block w-100" alt="...">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls-one" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls-one" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 acrylic">
+                    <h2>Əsər 1</h2>
+                    <p>1971-ci ilin iyun ayında Naxçıvan Rəssamlar Təşkilatının yaradılmasına hazırlıq işlərinin tamamlanması barədə hökumət strukturlarına və Rəssamlar İttifaqına göstəriş verən ümummilli liderimiz yeni təşkilatın sədri vəzifəsinə bu məsələnin
+                        əsas təşəbbüskarı olan və hələ özünün Naxçıvanda işlədiyi illərdən istedadlı gənc teatr rəssamı kimi tanıdığı Məmməd Qasımovun namizədliyini tövsiyə etmişdir.</p>
+                </div>
             </div>
-            <!-- Introduction menu -->
-            <div class="w3-col l4">
-               <!-- About Card -->
-               <div class="w3-card w3-margin w3-margin-top">
-                  <img src="https://www.w3schools.com/w3images/avatar_g.jpg" style="width:100%">
-                  <div class="w3-container w3-white">
-                     <h4><b>My Name</b></h4>
-                     <p>Just me, myself and I, exploring the universe of uknownment. I have a heart of love and a interest of lorem ipsum and mauris neque quam blog. I want to share my world with you.</p>
-                  </div>
-               </div>
-               <hr>
-               <!-- Posts -->
-               <div class="w3-card w3-margin">
-                  <div class="w3-container w3-padding">
-                     <h4>Popular Posts</h4>
-                  </div>
-                  <ul class="w3-ul w3-hoverable w3-white">
-                    <?php
-                      for ($i=0; $i <=3 ; $i++) { 
-                    ?>
-                     <li class="w3-padding-16">
-                        <img src="https://www.w3schools.com/w3images/workshop.jpg" alt="Image" class="w3-left w3-margin-right" style="width:50px">
-                        <span class="w3-large">Lorem</span><br>
-                        <span>Sed mattis nunc</span>
-                     </li>
-                    <?php 
-                      } 
-                    ?> 
-                  </ul>
-               </div>
-               <hr>
-               <!-- Labels / tags -->
-               <div class="w3-card w3-margin">
-                  <div class="w3-container w3-padding">
-                     <h4>Tags</h4>
-                  </div>
-                  <div class="w3-container w3-white">
-                     <p><span class="w3-tag w3-black w3-margin-bottom">Travel</span> <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">New York</span> <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">London</span>
-                        <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">IKEA</span> <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">NORWAY</span> <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">DIY</span>
-                        <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">Ideas</span> <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">Baby</span> <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">Family</span>
-                        <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">News</span> <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">Clothing</span> <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">Shopping</span>
-                        <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">Sports</span> <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">Games</span>
-                     </p>
-                  </div>
-               </div>
-               <!-- END Introduction Menu -->
+            <div class="vc_item row">
+                <div class="col-xl-6 col-lg-6 col-md-12 acrylic">
+                    <h2>Əsər 2</h2>
+                    <p>1971-ci ilin iyun ayında Naxçıvan Rəssamlar Təşkilatının yaradılmasına hazırlıq işlərinin tamamlanması barədə hökumət strukturlarına və Rəssamlar İttifaqına göstəriş verən ümummilli liderimiz yeni təşkilatın sədri vəzifəsinə bu məsələnin
+                        əsas təşəbbüskarı olan və hələ özünün Naxçıvanda işlədiyi illərdən istedadlı gənc teatr rəssamı kimi tanıdığı Məmməd Qasımovun namizədliyini tövsiyə etmişdir.</p>
+                </div>
+                <div id="carouselExampleControls-two" class="carousel slide col-xl-6 col-lg-6 col-md-12" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <span class="carousel-line right-line"></span>
+                        <div class="carousel-item active">
+                            <img src="assets/img/_DSC0487.JPG" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="assets/img/_DSC0488.JPG" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="assets/img/_DSC0501.JPG" class="d-block w-100" alt="...">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls-two" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls-two" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
             </div>
-            <!-- END GRID -->
-         </div>
-         <br>
-         <!-- END w3-content -->
-      </div>
-      <?php include 'includes/footer.php'; ?>
-   </body>
+            <div class="vc_item row">
+                <div id="carouselExampleControls-three" class="carousel slide col-xl-6 col-lg-6 col-md-12" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <span class="carousel-line"></span>
+                        <div class="carousel-item active">
+                            <img src="assets/img/_DSC0488.JPG" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="assets/img/_DSC0497.JPG" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="assets/img/_DSC0487.JPG" class="d-block w-100" alt="...">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls-three" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls-three" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 acrylic">
+                    <h2>Əsər 3</h2>
+                    <p>1971-ci ilin iyun ayında Naxçıvan Rəssamlar Təşkilatının yaradılmasına hazırlıq işlərinin tamamlanması barədə hökumət strukturlarına və Rəssamlar İttifaqına göstəriş verən ümummilli liderimiz yeni təşkilatın sədri vəzifəsinə bu məsələnin
+                        əsas təşəbbüskarı olan və hələ özünün Naxçıvanda işlədiyi illərdən istedadlı gənc teatr rəssamı kimi tanıdığı Məmməd Qasımovun namizədliyini tövsiyə etmişdir.</p>
+                </div>
+            </div>
+            <div class="vc_item row">
+                <div class="col-xl-6 col-lg-6 col-md-12 acrylic">
+                    <h2>Əsər 4</h2>
+                    <p>1971-ci ilin iyun ayında Naxçıvan Rəssamlar Təşkilatının yaradılmasına hazırlıq işlərinin tamamlanması barədə hökumət strukturlarına və Rəssamlar İttifaqına göstəriş verən ümummilli liderimiz yeni təşkilatın sədri vəzifəsinə bu məsələnin
+                        əsas təşəbbüskarı olan və hələ özünün Naxçıvanda işlədiyi illərdən istedadlı gənc teatr rəssamı kimi tanıdığı Məmməd Qasımovun namizədliyini tövsiyə etmişdir.</p>
+                </div>
+                <div id="carouselExampleControls-four" class="carousel slide col-xl-6 col-lg-6 col-md-12" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <span class="carousel-line right-line"></span>
+                        <div class="carousel-item active">
+                            <img class="d-block w-100" src="assets/img/_DSC0497.JPG" alt="First slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="assets/img/_DSC0501.JPG" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="assets/img/_DSC0488.JPG" alt="Third slide">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls-four" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls-four" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <?php include 'includes/footer.php'; ?>
+</body>
+
 </html>

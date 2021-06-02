@@ -2,6 +2,15 @@
 session_start();
 if ($_SESSION['logged_in'] == 1) {
     include '../config/config.php';
+
+    if (isset($_GET['id']) and !empty($_GET['id'])) {
+        $painter_id = intval($_GET['id']);
+        mysqli_query($conn, "DELETE FROM `painters` WHERE `id`=$painter_id");
+        mysqli_query($conn, "DELETE FROM `painters_to_category` WHERE `painter_id`=$painter_id");
+        mysqli_query($conn, "DELETE FROM `painter_translation` WHERE `painter_id`=$painter_id");
+        mysqli_query($conn, "DELETE w, wt FROM works w INNER JOIN works_translation wt ON w.id=wt.work_id WHERE w.painter_id = $painter_id");
+        header('artists.php');
+    }
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -10,26 +19,19 @@ if ($_SESSION['logged_in'] == 1) {
 
     <body id="page-top">
 
-        <!-- Page Wrapper -->
         <div id="wrapper">
 
             <?php include 'includes/sidebar.php'; ?>
 
-            <!-- Content Wrapper -->
             <div id="content-wrapper" class="d-flex flex-column">
 
-                <!-- Main Content -->
                 <div id="content">
 
                     <?php include 'includes/topbar.php'; ?>
 
-
-                    <!-- Begin Page Content -->
                     <div class="container-fluid">
 
-                        <!-- Page Heading -->
                         <h1 class="h3 mb-2 text-gray-800">Rəssamların siyahısı</h1>
-                        <!-- DataTales Example -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
                                 <h6 class="m-0 font-weight-bold text-primary">Siyahı Rəssamlar</h6>
@@ -38,7 +40,7 @@ if ($_SESSION['logged_in'] == 1) {
                                 <div class="table-responsive">
                                     <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                         <div class="create-button">
-                                            <a href="form-artists.php" class="btn btn-primary"><i class="fas fa-plus-square"></i></a>
+                                            <a href="form-artist.php" class="btn btn-primary"><i class="fas fa-plus-square"></i></a>
                                         </div>
                                         <br>
                                         <div class="row">
@@ -50,7 +52,7 @@ if ($_SESSION['logged_in'] == 1) {
                                                             <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Rəssamın adı</th>
                                                             <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Rəssam haqqında</th>
                                                             <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Kateqoriya</th>
-                                                            <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Əsərləri</th>
+                                                            <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 100px;">Əsərləri</th>
                                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 163px;">Əməliyyatlar</th>
                                                         </tr>
                                                     </thead>
@@ -67,39 +69,45 @@ if ($_SESSION['logged_in'] == 1) {
                                                     <tbody>
                                                         <?php
                                                         include '../config/config.php';
-                                                        include '../config/vars.php';
-                                                        $select_sql = "SELECT * FROM orient_ressamlar.painter_translation pt 
-                                                               INNER JOIN orient_ressamlar.painters p ON pt.painter_id=p.id
-                                                               Where pt.lang_id=1 and p.status=1 ORDER BY `id` desc";
-                                                        $result     = mysqli_query($conn, $select_sql);
-                                                        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                                                        $select_sql  = "SELECT p.painter_name, p.id as artist_id, p.painter_surname, p.painter_image, p.status, pt.* FROM orient_ressamlar.painters p 
+                                                                            INNER JOIN orient_ressamlar.painter_translation pt ON pt.painter_id=p.id 
+                                                                            WHERE pt.lang_id=1 && p.status=1 ORDER BY p.`id` desc";
+                                                        $result      = mysqli_query($conn, $select_sql);
+                                                        $select_category = "SELECT p.id as artist_id, mt.*, m.*, ptc.* FROM orient_ressamlar.painters p 
+                                                                            INNER JOIN orient_ressamlar.menu_translation mt 
+                                                                            INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
+                                                                            INNER JOIN orient_ressamlar.painters_to_category ptc ON ptc.painter_id=p.id 
+                                                                            WHERE ptc.category_id=m.id && mt.lang_id=1 ORDER BY p.`id` desc";
+                                                        $result_category = mysqli_query($conn, $select_category);
+                                                        while ($row  = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                                                         ?>
                                                             <tr role="row" class="even">
                                                                 <?php
-                                                                if (empty($row['image']))
+                                                                if (empty($row['painter_image']))
                                                                     echo "<td><img src='../uploads/noPhoto.png' class='img-thumbnail' width='200px' height='200px'></td>";
                                                                 else
-                                                                    echo "<td><img id='previewImage' src='../uploads/" . $row['image'] . "' class='img-thumbnail' width='200px' height='200px'></td>";
+                                                                    echo "<td><img id='previewImage' src='../uploads/" . $row['painter_image'] . "' class='img-thumbnail' width='200px' height='200px'></td>";
                                                                 ?>
                                                                 <td class="sorting_1"><?= $row['painter_name']; ?> <?= $row['painter_surname']; ?></td>
                                                                 <td class="sorting_1"><?= $row['about_painter']; ?></td>
-
-                                                                <td class="sorting_1"></td>
-                                                                <td class="sorting_1 edit-buttons">
-                                                                    <a href="works.php?id=<?= $row['id']; ?>" class="btn btn-secondary button-section d-block"><i class="far fa-images"></i></a>
-                                                                </td>
-
-                                                                <td class="edit-buttons">
-                                                                    <div class="button-section">
-                                                                        <a href="form-artists.php?id=<?= $row['id']; ?>" class="btn btn-success"><i class="fas fa-edit"></i></a>
-                                                                        <a href="artists.php?id=<?= $row['id']; ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        <?php
+                                                                <?php
+                                                                $row_c = mysqli_fetch_array($result_category, MYSQLI_ASSOC)
+                                                                ?>
+                                                                 <td class="sorting_1"><?= $row_c['name']; ?></td>  
+                                                        <?php  ?>
+                                                        <td class="sorting_1 edit-buttons">
+                                                            <a href="works.php?painters=<?= $row['artist_id']; ?>" class="btn btn-secondary button-section d-block"><i class="far fa-images"></i></a>
+                                                        </td>
+                                                        <td class="edit-buttons">
+                                                            <div class="button-section">
+                                                                <a href="form-artist.php?id=<?= $row['artist_id']; ?>" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                                                                <a href="artists.php?id=<?= $row['artist_id']; ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                                            </div>
+                                                        </td>
+                                                        </tr>
+                                                    <?php
                                                         }
-                                                        ?>
-
+                                                    ?>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -108,23 +116,15 @@ if ($_SESSION['logged_in'] == 1) {
                                 </div>
                             </div>
                         </div>
-
                     </div>
-                    <!-- /.container-fluid -->
-
                 </div>
-                <!-- End of Main Content -->
 
                 <?php include 'includes/content-footer.php'; ?>
 
             </div>
-            <!-- End of Content Wrapper -->
-
         </div>
-        <!-- End of Page Wrapper -->
 
         <?php include 'includes/footer.php'; ?>
-
 
     </body>
 

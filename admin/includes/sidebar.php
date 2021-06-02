@@ -4,7 +4,7 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="http://ressam.me/admin/index.php">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                <i class="fas fa-palette"></i>
                 </div>
                 <div class="sidebar-brand-text mx-3">RƏSSAMLAR BİRLİYİ</div>
             </a>
@@ -15,7 +15,7 @@
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="http://ressam.me/admin/index.php">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                <i class="fas fa-paint-brush"></i>
                     <span>Admin paneli</span></a>
             </li>
 

@@ -10,10 +10,11 @@ if ($_SESSION['logged_in'] == 1) {
         if (isset($_POST['post-type']) and !empty($_POST['post-type']) and $_POST['post-type'] == 'create') {
             $parent_id      = (isset($_POST['parent_id'])) ? intval($_POST['parent_id']) : 0;
             $order_number   = (isset($_POST['order_number'])) ? intval($_POST['order_number']) : 0;
+            $type           = (isset($_POST['type'])) ? $_POST['type'] : '';
             $status         = (isset($_POST['status'])) ? intval($_POST['status']) : 0;
             $translation    = (isset($_POST['translation'])) ? $_POST['translation'] : [];
 
-            $insert_menu    = "INSERT INTO `menu`(`parent_id`,`order_number`,`status`) VALUES ('$parent_id','$order_number','$status')";
+            $insert_menu    = "INSERT INTO `menu`(`parent_id`,`order_number`,`type`,`status`) VALUES ('$parent_id','$order_number','$type','$status')";
             $result_insert  = mysqli_query($conn, $insert_menu);
             if ($result_insert) {
                 $menu_id = mysqli_insert_id($conn);
@@ -23,14 +24,14 @@ if ($_SESSION['logged_in'] == 1) {
                 }
             }
             header("Location: menu.php");
-            
         } else if (isset($_POST['post-type']) and !empty($_POST['post-type']) and $_POST['post-type'] == 'edit') {
             $parent_id      = (isset($_POST['parent_id'])) ? intval($_POST['parent_id']) : 0;
             $order_number   = (isset($_POST['order_number'])) ? intval($_POST['order_number']) : 0;
+            $type           = (isset($_POST['type'])) ? $_POST['type'] : '';
             $status         = (isset($_POST['status'])) ? intval($_POST['status']) : 0;
             $translation    = (isset($_POST['translation'])) ? $_POST['translation'] : [];
 
-            $update_menu    = "UPDATE `menu` SET `parent_id`='$parent_id',`order_number`='$order_number',`status`='$status' WHERE id=$menu_id";
+            $update_menu    = "UPDATE `menu` SET `parent_id`='$parent_id',`order_number`='$order_number',`type`='$type',`status`='$status' WHERE id=$menu_id";
             $result_update  = mysqli_query($conn, $update_menu);
             if ($result_update) {
                 mysqli_query($conn, "DELETE FROM `menu_translation` WHERE `menu_id`=$menu_id");
@@ -92,7 +93,26 @@ if ($_SESSION['logged_in'] == 1) {
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleFormControlTextarea1">Sıra nömrəsi</label>
-                                            <input type="number" name="order_number" min="0" class="form-control" id="exampleFormControlInput1" placeholder="Sıra nömrəsi">
+                                            <input type="number" name="order_number" required min="0" class="form-control" id="exampleFormControlInput1" placeholder="Sıra nömrəsi">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1">Səhifənin tipi</label>
+                                            <select class="form-control" name="type" id="exampleFormControlSelect1">
+                                                <option value="">Seç</option>
+
+                                                <?php
+
+                                                $select_sql  = "SELECT DISTINCT m.type FROM orient_ressamlar.menu m 
+                                                                INNER JOIN orient_ressamlar.menu_translation mt ON mt.menu_id=m.id 
+                                                                WHERE `lang_id`=1 && `parent_id`=0 && `type`!=''";
+                                                $result      = mysqli_query($conn, $select_sql);
+                                                while ($row  = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                                                ?>
+                                                    <option value="<?= $row['type']; ?>"><?= $row['type']; ?></option>;
+                                                <?php
+                                                }
+                                                ?>
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">Status</label>
@@ -127,11 +147,11 @@ if ($_SESSION['logged_in'] == 1) {
                                                 <div class="tab-pane fade show <?php if ($row['code'] == 'az') echo 'active' ?>" id="nav-<?= $row['code']; ?>" role="tabpanel" aria-labelledby="nav-<?= $row['code']; ?>-tab">
                                                     <div class="form-group">
                                                         <label for="exampleFormControlInput1">Menyu elementi adı</label>
-                                                        <input type="text" name="translation[<?= $row['id'] ?>][name]" class="form-control" id="exampleFormControlInput1" placeholder="Menyu elementinin adı">
+                                                        <input type="text" name="translation[<?= $row['id'] ?>][name]" required class="form-control" id="exampleFormControlInput1" placeholder="Menyu elementinin adı">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="exampleFormControlInput1">Slug</label>
-                                                        <input type="text" name="translation[<?= $row['id'] ?>][slug]" class="form-control" id="exampleFormControlInput1" placeholder="Slug">
+                                                        <input type="text" name="translation[<?= $row['id'] ?>][slug]" required class="form-control" id="exampleFormControlInput1" placeholder="Slug">
                                                     </div>
                                                 </div>
                                             <?php
@@ -168,7 +188,7 @@ if ($_SESSION['logged_in'] == 1) {
                                             <select class="form-control" name="parent_id" id="exampleFormControlSelect1">
                                                 <option value="0">Seç</option>
                                                 <?php
-                                                $select_sql  = "SELECT * FROM `menu_translation` WHERE `lang_id`=1";
+                                                $select_sql  = "SELECT * FROM `menu_translation` mt INNER JOIN `menu` m ON mt.menu_id=m.id WHERE `lang_id`=1 && `parent_id`=0";
                                                 $result      = mysqli_query($conn, $select_sql);
                                                 while ($row1 = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                                                 ?>
@@ -181,7 +201,22 @@ if ($_SESSION['logged_in'] == 1) {
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleFormControlTextarea1">Sıra nömrəsi</label>
-                                            <input type="number" name="order_number" min="0" class="form-control" value="<?= $menu_row['order_number']; ?>" id="exampleFormControlInput1" placeholder="Sıra nömrəsi">
+                                            <input type="number" name="order_number" min="0" required class="form-control" value="<?= $menu_row['order_number']; ?>" id="exampleFormControlInput1" placeholder="Sıra nömrəsi">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1">Səhifənin tipi</label>
+                                            <select class="form-control" name="type" id="exampleFormControlSelect1">
+                                                <option value="">Seç</option>
+                                                <?php
+                                                $select_sql  = "SELECT * FROM `menu` WHERE `parent_id`=0 && `type`!=''";
+                                                $result      = mysqli_query($conn, $select_sql);
+                                                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                                                ?>
+                                                    <option value="<?= $row['type']; ?>" <?php echo ($menu_row['parent_id'] == $row['id']) ? 'selected' : ''; ?>><?= $row['type']; ?></option>
+                                                <?php
+                                                }
+                                                ?>
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">Status</label>
@@ -215,11 +250,11 @@ if ($_SESSION['logged_in'] == 1) {
                                                 <div class="tab-pane fade show <?php if ($value['code'] == 'az') echo 'active' ?>" id="nav-<?= $value['code']; ?>" role="tabpanel" aria-labelledby="nav-<?= $value['code']; ?>-tab">
                                                     <div class="form-group">
                                                         <label for="exampleFormControlInput1">Menyu elementi adı</label>
-                                                        <input type="text" name="translation[<?= $value['lang_id'] ?>][name]" value="<?= $value['name']; ?>" class="form-control" id="exampleFormControlInput1" placeholder="Menyu elementinin adı">
+                                                        <input type="text" name="translation[<?= $value['lang_id'] ?>][name]" required value="<?= $value['name']; ?>" class="form-control" id="exampleFormControlInput1" placeholder="Menyu elementinin adı">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="exampleFormControlInput1">Slug</label>
-                                                        <input type="text" name="translation[<?= $value['lang_id'] ?>][slug]" value="<?= $value['slug']; ?>" class="form-control" id="exampleFormControlInput1" placeholder="Slug">
+                                                        <input type="text" name="translation[<?= $value['lang_id'] ?>][slug]" required value="<?= $value['slug']; ?>" class="form-control" id="exampleFormControlInput1" placeholder="Slug">
                                                     </div>
                                                 </div>
                                             <?php

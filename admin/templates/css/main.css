@@ -1,0 +1,31 @@
+.img-section {
+  position: relative; }
+  .img-section .delete-img {
+    cursor: pointer;
+    position: absolute;
+    left: 90%;
+    top: 30px; }
+    .img-section .delete-img .fa-trash {
+      font-size: 30px; }
+
+.preview-img {
+  width: 350px;
+  object-fit: cover;
+  display: block;
+  margin-top: 20px;
+  border-radius: 5px; }
+
+.edit-buttons {
+  position: relative; }
+  .edit-buttons .button-section {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex; }
+    .edit-buttons .button-section a {
+      margin-right: 5px; }
+      .edit-buttons .button-section a:last-child {
+        margin-right: 0; }
+
+/*# sourceMappingURL=main.css.map */

@@ -1,6 +1,29 @@
-<!-- Footer -->
-      <footer class="w3-container w3-dark-grey w3-padding-32 w3-margin-top">
-         <button class="w3-button w3-black w3-disabled w3-padding-large w3-margin-bottom">Previous</button>
-         <button class="w3-button w3-black w3-padding-large w3-margin-bottom">Next »</button>
-         <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
-      </footer>
+<footer>
+   <div class="footer-line" style="background-image: url(assets/img/title-line.png);"></div>
+   <div class="footer-text">
+      <div class="first-row">
+         <a class="footer-item" href="contact.php">contact</a>
+         <a class="footer-item" href="privacy.php">privacy policy</a>
+         <a class="footer-item" href="privacy.php">terms of use</a>
+         <a class="footer-item" href="privacy.php">faq</a>
+      </div>
+   </div>
+</footer>
+<script type="text/javascript" charset="utf-8">
+   $(document).ready(function() {
+      $("area[rel^='prettyPhoto']").prettyPhoto();
+      $(".gallery:first a[rel^='prettyPhoto']").prettyPhoto({
+         animation_speed: 'fast',
+         slideshow: 10000,
+         hideflash: true
+      });
+   });
+</script>
+<!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script> -->
+<script src="assets/js/owl.carousel.min.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
