@@ -1,5 +1,6 @@
 <?php
 
+error_reporting(0);
 function uploadImage($fileInput = array())
 {
 	$file_name  = $fileInput['name'];
