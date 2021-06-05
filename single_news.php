@@ -14,7 +14,7 @@
     <?php include 'includes/theme.php'; ?>
 
     <div class="portfolio change-theme">
-        <div class="icon profile-header">
+        <div class="icon title-line">
             <img src="assets/img/title-line.png">
         </div>
         <div class="portfolio-pictures">

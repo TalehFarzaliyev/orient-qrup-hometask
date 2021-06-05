@@ -6,7 +6,7 @@
 <body>
     <div id="go-up" class="header">
 
-    <?php include 'includes/menu.php'; ?>
+        <?php include 'includes/menu.php'; ?>
 
         <div class="menu-name"></div>
     </div>
@@ -15,7 +15,7 @@
 
     <div class="portfolio change-theme">
         <h2 class="head-text change-theme profile-header portfolio-header">Elanlar</h2>
-        <div class="icon profile-header">
+        <div class="icon title-line">
             <img src="assets/img/title-line.png">
         </div>
         <div class="portfolio-pictures gallery structur">
@@ -106,7 +106,7 @@
             </div>
         </div>
     </div>
-    
+
     <?php include 'includes/footer.php'; ?>
 
 </body>

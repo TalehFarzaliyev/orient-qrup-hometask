@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="row contact-section">
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3092.284373037151!2d45.40836291472001!3d39.19098663719114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40142e11821ed39b%3A0x5289940cb49c2ed6!2s38%20Heydar%20Aliyev%20street%2C%20Nakhchivan%2C%20Azerbaijan!5e0!3m2!1sen!2s!4v1618574974023!5m2!1sen!2s" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe></div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 map-section"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3092.284373037151!2d45.40836291472001!3d39.19098663719114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40142e11821ed39b%3A0x5289940cb49c2ed6!2s38%20Heydar%20Aliyev%20street%2C%20Nakhchivan%2C%20Azerbaijan!5e0!3m2!1sen!2s!4v1618574974023!5m2!1sen!2s" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe></div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 contact-us">
                 <h3 class="contact-header">Əlaqə məlumatları</h3>
                 <div class="adress contact-item"><i class="fas fa-map-marker-alt contact-icon"></i><span>Ünvan: Naxçıvan

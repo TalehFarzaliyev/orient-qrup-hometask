@@ -9,8 +9,8 @@ var miniMenu = document.querySelector('.menu-items'),
     upThemeIcon = document.querySelector(".fa-angle-double-up"),
     blogButton = document.querySelectorAll(".view_button"),
     footerColor = document.querySelector("footer"),
-    changeButtonColor = document.querySelectorAll('.change_button_color');
-footerItem = document.querySelectorAll(".footer-item"),
+    changeButtonColor = document.querySelectorAll('.change_button_color'),
+    footerItem = document.querySelectorAll(".footer-item"),
     contactLink = document.querySelectorAll('.contact-link'),
     formColor = document.querySelectorAll(".form-input"),
     linkHover = document.querySelectorAll(".linkhover"),
@@ -42,11 +42,20 @@ function showMenu() {
 }
 
 function toggleTheme() {
-    if (themeSide.style.marginLeft === "0px") {
-        themeSide.style.marginLeft = "-235px";
+    if ($(window).width() < 560) {
+        if (themeSide.style.marginLeft === "-24px") {
+            themeSide.style.marginLeft = "-212px";
+        } else {
+            themeSide.style.marginLeft = "-24px";
+        }
     } else {
-        themeSide.style.marginLeft = "0px";
+        if (themeSide.style.marginLeft === "0px") {
+            themeSide.style.marginLeft = "-235px";
+        } else {
+            themeSide.style.marginLeft = "0px";
+        }
     }
+
 }
 
 function lightTheme() {
@@ -173,10 +182,13 @@ $(document).ready(function() {
             0: {
                 items: 1
             },
-            600: {
+            577: {
                 items: 2
             },
-            1000: {
+            1100: {
+                items: 3
+            },
+            1200: {
                 items: 4
             }
         }

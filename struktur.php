@@ -15,7 +15,7 @@
 
     <div class="portfolio change-theme">
         <h2 class="head-text change-theme portfolio-header profile-header">Struktur</h2>
-        <div class="icon profile-header">
+        <div class="icon title-line">
             <img src="assets/img/title-line.png">
         </div>
         <div class="portfolio-pictures gallery structur">

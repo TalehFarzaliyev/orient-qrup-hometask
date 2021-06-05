@@ -10,13 +10,13 @@
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img class="d-block w-100" src="assets/img/main1.png" alt="First slide">
-                    <div class="carousel-caption d-none d-md-block homepage-caption">
+                    <div class="carousel-caption d-md-block homepage-caption">
                         <p class="homepage-text">RƏSSAMLAR BİRLİYİ</p>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <img class="d-block w-100" src="assets/img/main2.jpg" alt="Second slide">
-                    <div class="carousel-caption d-none d-md-block slider-caption">
+                    <div class="carousel-caption d-md-block slider-caption">
                         <a href="artists.php" class="painter_name">Əzizə İsmayılova</a>
                         <p class="caption-head">seçilən <span style="color: #fff;">əsərlər</span></p>
                         <div class="row">
@@ -56,12 +56,13 @@
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="sr-only">Next</span>
             </a>
-        </div>
-        <div class="social-icon">
-            <a class="gmail" href="https://www.gmail.com/"><i class="fas fa-envelope social-media"></i></a>
-            <a class="instagram" href="https://www.instagram.com/"><i class="fab fa-instagram social-media"></i></a>
-            <a class="facebook" href="https://www.facebook.com/"><i class="fab fa-facebook-f social-media"></i></a>
-            <a class="youtube" href="https://www.youtube.com/"><i class="fab fa-youtube social-media"></i></a>
+
+            <div class="social-icon">
+                <a class="gmail" href="https://www.gmail.com/"><i class="fas fa-envelope social-media"></i></a>
+                <a class="instagram" href="https://www.instagram.com/"><i class="fab fa-instagram social-media"></i></a>
+                <a class="facebook" href="https://www.facebook.com/"><i class="fab fa-facebook-f social-media"></i></a>
+                <a class="youtube" href="https://www.youtube.com/"><i class="fab fa-youtube social-media"></i></a>
+            </div>
         </div>
     </div>
 
@@ -73,7 +74,7 @@
     <div class="blog change-theme news-section">
         <div class="section-header">
             <h2>Xəbərlər</h2>
-            <div class="title-line">
+            <div class="title-line icon">
                 <img class="line" src="assets/img/title-line.png" alt="">
             </div>
         </div>
@@ -215,7 +216,7 @@
                 </div>
                 <div id="carouselExampleControls-two" class="carousel slide col-xl-6 col-lg-6 col-md-12" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        <span class="carousel-line right-line"></span>
+                        <span class="carousel-line"></span>
                         <div class="carousel-item active">
                             <img src="assets/img/_DSC0487.JPG" class="d-block w-100" alt="...">
                         </div>
@@ -274,7 +275,7 @@
                 </div>
                 <div id="carouselExampleControls-four" class="carousel slide col-xl-6 col-lg-6 col-md-12" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        <span class="carousel-line right-line"></span>
+                        <span class="carousel-line"></span>
                         <div class="carousel-item active">
                             <img class="d-block w-100" src="assets/img/_DSC0497.JPG" alt="First slide">
                         </div>
@@ -297,7 +298,6 @@
             </div>
         </div>
     </div>
-
     <?php include 'includes/footer.php'; ?>
 </body>
 
