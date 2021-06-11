@@ -66,12 +66,12 @@ if ($_SESSION['logged_in'] == 1) {
                                                     <tbody>
                                                         <?php
                                                         include '../config/config.php';
-                                                        $select_sql   = "SELECT p.painter_name, p.id as artist_id, p.painter_surname, p.painter_image, p.categories, p.status, pt.*, mt.* FROM orient_ressamlar.painters p 
-                                                                         INNER JOIN orient_ressamlar.painter_translation pt ON pt.painter_id=p.id
-                                                                         INNER JOIN orient_ressamlar.menu_translation mt 
-                                                                         WHERE pt.lang_id=1 && mt.lang_id=1 && p.categories=mt.menu_id && p.status=1 ORDER BY p.`id` desc";
-                                                        $result      = mysqli_query($conn, $select_sql);
-                                                        while ($row  = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                                                        $select_sql = "SELECT p.painter_name, p.id as artist_id, p.painter_surname, p.painter_image, p.categories, p.status, pt.*, mt.* FROM orient_ressamlar.painters p 
+                                                                       INNER JOIN orient_ressamlar.painter_translation pt ON pt.painter_id=p.id
+                                                                       INNER JOIN orient_ressamlar.menu_translation mt 
+                                                                       WHERE pt.lang_id=1 && mt.lang_id=1 && p.categories=mt.menu_id && p.status=1 ORDER BY p.`id` desc";
+                                                        $result     = mysqli_query($conn, $select_sql);
+                                                        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                                                         ?>
                                                             <tr role="row" class="even">
                                                                 <?php
@@ -81,23 +81,20 @@ if ($_SESSION['logged_in'] == 1) {
                                                                     echo "<td><img id='previewImage' src='../uploads/" . $row['painter_image'] . "' class='img-thumbnail' width='200px' height='200px'></td>";
                                                                 ?>
                                                                 <td class="sorting_1"><?= $row['painter_name']; ?> <?= $row['painter_surname']; ?></td>
-                                                                <!-- <?php
-                                                                $list = [$row['categories']];
-                                                                foreach ($list as $key => $value) {
-                                                                    $new = explode(',', $list[0]);
-                                                                    // echo (count($list[0]));
-                                                                    foreach ($new as $key => $value) {
-                                                                        var_dump(intval($value));
-                                                                        if (intval($new[$key]) == $row['menu_id']) {
-                                                                            echo ($value);
-                                                                            // echo ($row['name']);
-                                                                ?> -->
-                                                                            <td class="sorting_1"><?= $row['name']; ?></td>
-                                                                <!-- <?php
-                                                                        }
+                                                                <td class="sorting_1">
+                                                                    <?php
+                                                                    $list = $row['categories'];
+                                                                    $new = explode(',', $list);
+                                                                    foreach ($new as $key) {
+                                                                        $sql_category    = "SELECT `name` FROM menu_translation WHERE menu_id='$key'";
+                                                                        $category_result = mysqli_query($conn, $sql_category);
+                                                                        $row_category    = mysqli_fetch_array($category_result, MYSQLI_ASSOC);
+                                                                    ?>
+                                                                        <?= $row_category['name']; ?>,
+                                                                    <?php
                                                                     }
-                                                                }
-                                                                ?> -->
+                                                                    ?>
+                                                                </td>
                                                                 <input name="id" id="delete" value="<?= $row['artist_id']; ?>" style="display:none;"></input>
                                                                 <td class="sorting_1 edit-buttons">
                                                                     <a href="works.php?painter=<?= $row['artist_id']; ?>" class="btn btn-secondary button-section d-block"><i class="far fa-images"></i></a>
