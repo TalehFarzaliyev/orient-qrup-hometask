@@ -410,6 +410,7 @@ body {
           body .portfolio .portfolio-pictures .port-picture .tiny-img .tiny-icon {
             margin-top: 20% !important; }
         body .portfolio .portfolio-pictures .port-picture .port-img {
+          margin: auto;
           width: 300px;
           height: 400px;
           border-top: 15px solid #2e2e2e;

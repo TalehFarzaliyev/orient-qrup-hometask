@@ -1,5 +1,4 @@
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -19,5 +18,5 @@
     <link href="templates/css/dropzone.css" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="templates/js/dropzone.js" type="text/javascript"></script>
-
+    <script src=" https://cdn.ckeditor.com/4.14.0/full/ckeditor.js"></script>
 </head>

@@ -37,11 +37,11 @@ if ($_SESSION['logged_in'] == 1) {
                     mysqli_query($conn, $insert_translation);
                 }
             }
-            header("Location: works.php?painters=$painter_id");
+            header("Location: works.php?painter=$painter_id");
         } else if (isset($_POST['post-type']) and !empty($_POST['post-type']) and $_POST['post-type'] == 'edit') {
 
             if ($_POST['hidden'] == "0")
-                $image  = uploadImage('../uploads/noPhoto.png');
+                $image  = 'noPhoto.png';
             elseif (empty($_FILES['work_image']['tmp_name']) || !is_uploaded_file($_FILES['work_image']['tmp_name']))
                 $image  = $work_row['work_image'];
             else
@@ -59,7 +59,7 @@ if ($_SESSION['logged_in'] == 1) {
                     mysqli_query($conn, $insert_translation);
                 }
             }
-            header("Location: works.php?painters=$painter_id");
+            header("Location: works.php?painter=$painter_id");
         }
     }
 

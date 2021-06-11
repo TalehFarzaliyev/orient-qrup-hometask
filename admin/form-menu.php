@@ -98,20 +98,9 @@ if ($_SESSION['logged_in'] == 1) {
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">Səhifənin tipi</label>
                                             <select class="form-control" name="type" id="exampleFormControlSelect1">
-                                                <option value="">Seç</option>
-
-                                                <?php
-
-                                                $select_sql  = "SELECT DISTINCT m.type FROM orient_ressamlar.menu m 
-                                                                INNER JOIN orient_ressamlar.menu_translation mt ON mt.menu_id=m.id 
-                                                                WHERE `lang_id`=1 && `parent_id`=0 && `type`!=''";
-                                                $result      = mysqli_query($conn, $select_sql);
-                                                while ($row  = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                                                ?>
-                                                    <option value="<?= $row['type']; ?>"><?= $row['type']; ?></option>;
-                                                <?php
-                                                }
-                                                ?>
+                                                <option selected value="">Seç</option>
+                                                <option value="post">Post</option>
+                                                <option value="painter">Painter</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
@@ -207,15 +196,8 @@ if ($_SESSION['logged_in'] == 1) {
                                             <label for="exampleFormControlSelect1">Səhifənin tipi</label>
                                             <select class="form-control" name="type" id="exampleFormControlSelect1">
                                                 <option value="">Seç</option>
-                                                <?php
-                                                $select_sql  = "SELECT * FROM `menu` WHERE `parent_id`=0 && `type`!=''";
-                                                $result      = mysqli_query($conn, $select_sql);
-                                                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                                                ?>
-                                                    <option value="<?= $row['type']; ?>" <?php echo ($menu_row['parent_id'] == $row['id']) ? 'selected' : ''; ?>><?= $row['type']; ?></option>
-                                                <?php
-                                                }
-                                                ?>
+                                                <option value="post" <?php echo ($menu_row['type'] == 'post') ? 'selected' : ''; ?>>Post</option>
+                                                <option value="painter" <?php echo ($menu_row['type'] == 'painter') ? 'selected' : ''; ?>>Painter</option>
                                             </select>
                                         </div>
                                         <div class="form-group">

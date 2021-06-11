@@ -18,26 +18,19 @@ if ($_SESSION['logged_in'] == 1) {
 
     <body id="page-top">
 
-        <!-- Page Wrapper -->
         <div id="wrapper">
 
             <?php include 'includes/sidebar.php'; ?>
 
-            <!-- Content Wrapper -->
             <div id="content-wrapper" class="d-flex flex-column">
 
-                <!-- Main Content -->
                 <div id="content">
 
                     <?php include 'includes/topbar.php'; ?>
 
-
-                    <!-- Begin Page Content -->
                     <div class="container-fluid">
 
-                        <!-- Page Heading -->
                         <h1 class="h3 mb-2 text-gray-800">Siyahı Slayder</h1>
-                        <!-- DataTales Example -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
                                 <h6 class="m-0 font-weight-bold text-primary">Siyahı Slayder</h6>
@@ -87,11 +80,11 @@ if ($_SESSION['logged_in'] == 1) {
                                                                 ?>
                                                                 <td class="sorting_1"><?= $row['painter_name']; ?> <?= $row['painter_surname']; ?></td>
                                                                 <td class="sorting_1"><?= $row['title']; ?></td>
-
+                                                                <input name="id" id="delete" value="<?= $row['id']; ?>" style="display:none;"></input>
                                                                 <td class="edit-buttons">
                                                                     <div class="button-section">
                                                                         <a href="form-slider.php?id=<?= $row['id']; ?>" class="btn btn-success"><i class="fas fa-edit"></i></a>
-                                                                        <a href="slides.php?id=<?= $row['id']; ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                                                        <a onclick="sil();" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -107,26 +100,39 @@ if ($_SESSION['logged_in'] == 1) {
                                 </div>
                             </div>
                         </div>
-
                     </div>
-                    <!-- /.container-fluid -->
-
                 </div>
-                <!-- End of Main Content -->
 
                 <?php include 'includes/content-footer.php'; ?>
 
             </div>
-            <!-- End of Content Wrapper -->
-
         </div>
-        <!-- End of Page Wrapper -->
 
         <?php include 'includes/footer.php'; ?>
 
-
     </body>
-
+    <script>
+            function sil() {
+                var id = document.getElementById("delete").value;
+                swal({
+                        title: "Silmək istəyirsinizmi?",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                        buttons: ['Xeyr', 'Bəli'],
+                    })
+                    .then((result) => {
+                        if (result) {
+                            swal("Silindi", {
+                                icon: "success",
+                            });
+                            window.location.href = "slides.php?id=" + id;
+                        } else {
+                            swal("Silinmədi");
+                        }
+                    });
+            };
+        </script>
     </html>
 
 <?php

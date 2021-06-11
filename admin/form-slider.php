@@ -42,7 +42,7 @@ if ($_SESSION['logged_in'] == 1) {
             $painter_surname = (isset($_POST['painter_surname'])) ? trim($_POST['painter_surname']) : '';
 
             if ($_POST['hidden'] == "0")
-                $image  = uploadImage('../uploads/noPhoto.png');
+                $image  = 'noPhoto.png';
             elseif (empty($_FILES['image']['tmp_name']) || !is_uploaded_file($_FILES['image']['tmp_name']))
                 $image  = $slider_row['image'];
             else

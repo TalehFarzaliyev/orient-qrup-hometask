@@ -3,11 +3,10 @@ session_start();
 if ($_SESSION['logged_in'] == 1) {
     include '../config/config.php';
 
-    if(isset($_GET['id']) and !empty($_GET['id']))
-    {
+    if (isset($_GET['id']) and !empty($_GET['id'])) {
         $menu_id = intval($_GET['id']);
-        mysqli_query($conn,"DELETE FROM `menu` WHERE `id`=$menu_id");
-        mysqli_query($conn,"DELETE FROM `menu_translation` WHERE `menu_id`=$menu_id");
+        mysqli_query($conn, "DELETE FROM `menu` WHERE `id`=$menu_id");
+        mysqli_query($conn, "DELETE FROM `menu_translation` WHERE `menu_id`=$menu_id");
         header('menu.php');
     }
 
@@ -19,26 +18,20 @@ if ($_SESSION['logged_in'] == 1) {
 
     <body id="page-top">
 
-        <!-- Page Wrapper -->
         <div id="wrapper">
 
             <?php include 'includes/sidebar.php'; ?>
 
-            <!-- Content Wrapper -->
             <div id="content-wrapper" class="d-flex flex-column">
 
-                <!-- Main Content -->
                 <div id="content">
 
                     <?php include 'includes/topbar.php'; ?>
 
-
-                    <!-- Begin Page Content -->
                     <div class="container-fluid">
 
-                        <!-- Page Heading -->
                         <h1 class="h3 mb-2 text-gray-800">Siyahı Menyu</h1>
-                        <!-- DataTales Example -->
+
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
                                 <h6 class="m-0 font-weight-bold text-primary">Siyahı Menyu</h6>
@@ -83,11 +76,12 @@ if ($_SESSION['logged_in'] == 1) {
                                                                 <td class="sorting_1"><?= $row['name']; ?></td>
                                                                 <td class="sorting_1"><?= $row['slug']; ?></td>
                                                                 <td class="sorting_1"><?= $row['type']; ?></td>
+                                                                <input name="id" id="delete" value="<?= $row['id']; ?>" style="display:none;"></input>
 
                                                                 <td class="edit-buttons">
                                                                     <div class="button-section">
                                                                         <a href="form-menu.php?id=<?= $row['id']; ?>" class="btn btn-success"><i class="fas fa-edit"></i></a>
-                                                                        <a href="menu.php?id=<?=$row['id'];?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                                                        <a onclick="sil();" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
                                                                     </div>
 
                                                                 </td>
@@ -104,24 +98,37 @@ if ($_SESSION['logged_in'] == 1) {
                                 </div>
                             </div>
                         </div>
-
                     </div>
-                    <!-- /.container-fluid -->
-
                 </div>
-                <!-- End of Main Content -->
 
                 <?php include 'includes/content-footer.php'; ?>
 
             </div>
-            <!-- End of Content Wrapper -->
-
         </div>
-        <!-- End of Page Wrapper -->
 
         <?php include 'includes/footer.php'; ?>
-
-
+        <script>
+            function sil() {
+                var id = document.getElementById("delete").value;
+                swal({
+                        title: "Silmək istəyirsinizmi?",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                        buttons: ['Xeyr', 'Bəli'],
+                    })
+                    .then((result) => {
+                        if (result) {
+                            swal("Silindi", {
+                                icon: "success",
+                            });
+                            window.location.href = "menu.php?id=" + id;
+                        } else {
+                            swal("Silinmədi");
+                        }
+                    });
+            };
+        </script>
     </body>
 
     </html>

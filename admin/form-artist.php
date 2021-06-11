@@ -6,49 +6,37 @@ if ($_SESSION['logged_in'] == 1) {
 
     $post_type = (isset($_GET['id'])) ? 'edit' : 'create';
     $painter_id = (isset($_GET['id'])) ? intval($_GET['id']) : 0;
-    $selected_category = [];
+
     if (!empty($painter_id)) {
         $sql              = "SELECT * FROM `painters` WHERE `id`=$painter_id";
-        $sql_category     = "SELECT * FROM `painters_to_category` WHERE `painter_id`=$painter_id";
         $sql_tr           = "SELECT * FROM languages lang
                              INNER JOIN painter_translation pt ON lang.id=pt.lang_id WHERE pt.painter_id=$painter_id";
         $result           = mysqli_query($conn, $sql);
         $painter_row      = mysqli_fetch_assoc($result);
-        $result_category  = mysqli_query($conn, $sql_category);
-        $painter_category = mysqli_fetch_all($result_category, MYSQLI_ASSOC);
-        foreach($painter_category as $key=>$value)
-        {
-            $selected_category[$key] = $value['category_id'];
-        }
         $result_tr        = mysqli_query($conn, $sql_tr);
         $painter_tr       = mysqli_fetch_all($result_tr, MYSQLI_ASSOC);
+        $list_select      = explode(',', $painter_row['categories']);
     } else {
         $painter_row      = [];
-        $painter_category = [];
+        $list_select      = [];
         $painter_tr       = [];
     }
-    //  print_r($painter_category);
-    //  print_r($selected_category); exit();
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
         if (isset($_POST['post-type']) and !empty($_POST['post-type']) and $_POST['post-type'] == 'create') {
+            $list            = implode(',', $_POST['categories']);
             $painter_name    = (isset($_POST['painter_name'])) ? trim($_POST['painter_name']) : '';
             $painter_surname = (isset($_POST['painter_surname'])) ? trim($_POST['painter_surname']) : '';
             $image           = uploadImage($_FILES['painter_image']);
             $status          = (isset($_POST['status'])) ? intval($_POST['status']) : 0;
-            // $category        = (isset($_POST['category_id'])) ? intval($_POST['category_id']) : 0;
-            $category_list   = (isset($_POST['category_list'])) ? $_POST['category_list'] : [];
             $translation     = (isset($_POST['translation'])) ? $_POST['translation'] : [];
 
-            $insert_painter  = "INSERT INTO `painters`(`painter_name`, `painter_surname`, `painter_image`,`status`) VALUES ('$painter_name','$painter_surname','$image','$status')";
+            $insert_painter  = "INSERT INTO `painters`(`painter_name`, `painter_surname`, `categories`, `painter_image`,`status`) VALUES ('$painter_name', '$painter_surname', '$list', '$image', '$status')";
             $result_insert   = mysqli_query($conn, $insert_painter);
             if ($result_insert) {
                 $painter_id  = mysqli_insert_id($conn);
-                foreach ($category_list as $key => $value) {
-                    $insert_category   = "INSERT INTO `painters_to_category`(`painter_id`, `id`, `category_id`) VALUES ('$painter_id','$key','" . $value['category_id'] . "')";
-                    mysqli_query($conn, $insert_category);
-                }
                 foreach ($translation as $key => $value) {
-                    $insert_translation       = "INSERT INTO `painter_translation`(`painter_id`,`lang_id`,`about_painter`) VALUES ('$painter_id','$key','" . $value['about_painter'] . "')";
+                    $insert_translation       = "INSERT INTO `painter_translation`(`painter_id`,`lang_id`,`about_painter`) VALUES ('$painter_id', '$key', '" . $value['about_painter'] . "')";
                     mysqli_query($conn, $insert_translation);
                 }
             }
@@ -56,24 +44,21 @@ if ($_SESSION['logged_in'] == 1) {
         } else if (isset($_POST['post-type']) and !empty($_POST['post-type']) and $_POST['post-type'] == 'edit') {
             $painter_name    = (isset($_POST['painter_name'])) ? trim($_POST['painter_name']) : '';
             $painter_surname = (isset($_POST['painter_surname'])) ? trim($_POST['painter_surname']) : '';
+            $list            = implode(',', $_POST['categories']);
 
             if ($_POST['hidden'] == "0")
-                $image  = uploadImage('../uploads/noPhoto.png');
+                $image  = 'noPhoto.png';
             elseif (empty($_FILES['painter_image']['tmp_name']) || !is_uploaded_file($_FILES['painter_image']['tmp_name']))
                 $image  = $painter_row['painter_image'];
             else
                 $image  = uploadImage($_FILES['painter_image']);
 
             $status          = (isset($_POST['status'])) ? intval($_POST['status']) : 0;
-            $category        = (isset($_POST['category_id'])) ? intval($_POST['category_id']) : 0;
             $translation     = (isset($_POST['translation'])) ? $_POST['translation'] : [];
 
-            $update_painter  = "UPDATE `painters` SET `painter_name`='$painter_name', `painter_surname`='$painter_surname', `painter_image`='$image',`status`='$status' WHERE `id`=$painter_id";
+            $update_painter  = "UPDATE `painters` SET `painter_name`='$painter_name', `painter_surname`='$painter_surname', `painter_image`='$image',`categories`='$list', `status`='$status' WHERE `id`=$painter_id";
             $result_update   = mysqli_query($conn, $update_painter);
             if ($result_update) {
-                mysqli_query($conn, "DELETE FROM `painters_to_category` WHERE `painter_id`=$painter_id");
-                $insert_category   = "INSERT INTO `painters_to_category`(`painter_id`, `category_id`) VALUES ('$painter_id','$category')";
-                mysqli_query($conn, $insert_category);
                 mysqli_query($conn, "DELETE FROM `painter_translation` WHERE `painter_id`=$painter_id");
                 foreach ($translation as $key => $value) {
                     $insert_translation       = "INSERT INTO `painter_translation`(`painter_id`,`lang_id`,`about_painter`) VALUES ('$painter_id','$key','" . $value['about_painter'] . "')";
@@ -129,31 +114,24 @@ if ($_SESSION['logged_in'] == 1) {
                                         </div>
 
                                         <div class="row">
-                                            <div class="customer_records">
-                                                <div class="form-group">
-                                                    <label for="exampleFormControlSelect1">Kateqoriya</label>
-                                                    <select class="form-control" name="category_list[<?= $row['id'] ?>][category_id]" id="exampleFormControlSelect1">
-                                                        <option value="0">Seç</option>
-                                                        <?php
+                                            <div class="form-group">
+                                                <label for="exampleFormControlSelect1">Kateqoriya</label>
+                                                <select class="form-control" name="categories[]" multiple id="exampleFormControlSelect1">
+                                                    <option value="0">Seç</option>
+                                                    <?php
 
-                                                        $select_sql       = "SELECT * FROM orient_ressamlar.menu_translation mt 
-                                                                          INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
-                                                                          WHERE `lang_id`=1 && `parent_id`>0 && `type`='painter'";
-                                                        $result           = mysqli_query($conn, $select_sql);
-                                                        while ($row1      = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                                                        ?>
-                                                            <option value ="<?= $row1['menu_id']; ?>"><?= $row1['name']; ?></option>;
-                                                        <?php
-                                                        }
-                                                        ?>
-                                                    </select>
-                                                </div>
-
-                                                <a class="extra-fields-customer" href="#">Digər kateqoriya əlavə et</a>
+                                                    $select_sql       = "SELECT * FROM orient_ressamlar.menu_translation mt 
+                                                                         INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
+                                                                         WHERE `lang_id`=1 && `parent_id`>0 && `type`='painter'";
+                                                    $result           = mysqli_query($conn, $select_sql);
+                                                    while ($row1      = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                                                    ?>
+                                                        <option value="<?= $row1['menu_id']; ?>"><?= $row1['name']; ?></option>;
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </select>
                                             </div>
-
-                                            <div class="customer_records_dynamic"></div>
-
                                         </div>
 
                                         <br><br>
@@ -190,7 +168,7 @@ if ($_SESSION['logged_in'] == 1) {
                                                 <div class="tab-pane fade show <?php if ($row['code'] == 'az') echo 'active' ?>" id="nav-<?= $row['code']; ?>" role="tabpanel" aria-labelledby="nav-<?= $row['code']; ?>-tab">
                                                     <div class="form-group">
                                                         <label for="exampleFormControlInput1">Haqqında məlumat</label>
-                                                        <input type="text" name="translation[<?= $row['id'] ?>][about_painter]" required class="form-control" id="exampleFormControlInput1" placeholder="Haqqında">
+                                                        <textarea name="translation[<?= $row['id'] ?>][about_painter]" cols="40" rows="10" required class="form-control editor" id="editor<?= $row['id'] ?>" style="visibility:hidden; display: none;"></textarea>
                                                     </div>
                                                 </div>
                                             <?php
@@ -238,7 +216,7 @@ if ($_SESSION['logged_in'] == 1) {
 
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">Kateqoriya</label>
-                                            <select class="form-control" name="category_id" multiple id="exampleFormControlSelect1">
+                                            <select class="form-control" name="categories[]" multiple id="exampleFormControlSelect1">
                                                 <option value="0">Seç</option>
                                                 <?php
                                                 $select_sql  = "SELECT * FROM orient_ressamlar.menu_translation mt 
@@ -247,7 +225,7 @@ if ($_SESSION['logged_in'] == 1) {
                                                 $result      = mysqli_query($conn, $select_sql);
                                                 while ($rows = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                                                 ?>
-                                                    <option value="<?= $rows['menu_id']; ?>" <?php echo (in_array($rows['menu_id'], $selected_category)) ? 'selected' : ''; ?>><?= $rows['name']; ?></option>
+                                                    <option value="<?= $rows['menu_id']; ?>" <?php echo (in_array($rows['menu_id'], $list_select)) ? 'selected' : ''; ?>><?= $rows['name']; ?></option>
 
                                                 <?php
                                                 }
@@ -286,8 +264,8 @@ if ($_SESSION['logged_in'] == 1) {
                                             ?>
                                                 <div class="tab-pane fade show <?php if ($value['code'] == 'az') echo 'active' ?>" id="nav-<?= $value['code']; ?>" role="tabpanel" aria-labelledby="nav-<?= $value['code']; ?>-tab">
                                                     <div class="form-group">
-                                                        <label for="exampleFormControlInput1">Haqqında</label>
-                                                        <input type="text" name="translation[<?= $value['lang_id'] ?>][about_painter]" required value="<?= $value['about_painter']; ?>" class="form-control" id="exampleFormControlInput1" placeholder="Haqqında">
+                                                        <label for="exampleFormControlInput1">Məzmun</label>
+                                                        <textarea name="translation[<?= $value['lang_id'] ?>][about_painter]" cols="40" rows="10" required class="form-control editor" id="editor<?= $value['lang_id'] ?>" placeholder="Məzmun" style="visibility:hidden; display: none;"><?= $value['about_painter']; ?></textarea>
                                                     </div>
                                                 </div>
                                             <?php
@@ -307,17 +285,26 @@ if ($_SESSION['logged_in'] == 1) {
                         ?>
 
                     </div>
-
                 </div>
 
                 <?php include 'includes/content-footer.php'; ?>
 
             </div>
-
         </div>
 
         <?php include 'includes/footer.php'; ?>
         <script type="text/javascript">
+            var id = 1;
+            $('textarea.editor').each(function() {
+                $(this).attr("id", "editor" + id);
+                CKEDITOR.replace('editor' + id, {
+                    height: '300px',
+
+                });
+                id = id + 1;
+            });
+
+
             function PreviewImageCreate() {
                 var oFReader = new FileReader();
                 oFReader.readAsDataURL(document.getElementById("uploadImage-create").files[0]);
@@ -331,8 +318,6 @@ if ($_SESSION['logged_in'] == 1) {
                 document.getElementById("previewImage-create").src = '../uploads/noPhoto.png';
                 document.getElementById("uploadImage-create").value = '';
             }
-
-
 
             function PreviewImage() {
                 document.getElementById('hiddenInput').value = '1';
@@ -348,30 +333,7 @@ if ($_SESSION['logged_in'] == 1) {
                 document.getElementById("uploadImage").value = '';
                 document.getElementById('hiddenInput').value = '0';
             }
-
-                $('.extra-fields-customer').click(function() {
-                $('.customer_records').clone().appendTo('.customer_records_dynamic');
-                $('.customer_records_dynamic .customer_records').addClass('single remove');
-                // $( ".customer_records_dynamic .customer_records:nth-child(2)" ).attr("name", "category_list[<?= $row['id'+1] ?>][category_id]");
-                $('.single .extra-fields-customer').remove();
-                $('.single').append('<a href="#" class="remove-field btn-remove-customer">Ləğv et</a>');
-                $('.customer_records_dynamic > .single').attr("class", "remove");
-
-                $('.customer_records_dynamic input').each(function() {
-                    var count = 0;
-                    var fieldname = $(this).attr("name");
-                    $(this).attr('name', fieldname + count);
-                    count++;
-                });
-
-            });
-
-            $(document).on('click', '.remove-field', function(e) {
-                $(this).parent('.remove').remove();
-                e.preventDefault();
-            });
         </script>
-
 
     </body>
 

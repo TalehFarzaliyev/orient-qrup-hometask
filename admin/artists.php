@@ -6,7 +6,6 @@ if ($_SESSION['logged_in'] == 1) {
     if (isset($_GET['id']) and !empty($_GET['id'])) {
         $painter_id = intval($_GET['id']);
         mysqli_query($conn, "DELETE FROM `painters` WHERE `id`=$painter_id");
-        mysqli_query($conn, "DELETE FROM `painters_to_category` WHERE `painter_id`=$painter_id");
         mysqli_query($conn, "DELETE FROM `painter_translation` WHERE `painter_id`=$painter_id");
         mysqli_query($conn, "DELETE w, wt FROM works w INNER JOIN works_translation wt ON w.id=wt.work_id WHERE w.painter_id = $painter_id");
         header('artists.php');
@@ -50,7 +49,6 @@ if ($_SESSION['logged_in'] == 1) {
                                                         <tr role="row" style="text-align: center;">
                                                             <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 180px;">Şəkil</th>
                                                             <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Rəssamın adı</th>
-                                                            <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Rəssam haqqında</th>
                                                             <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Kateqoriya</th>
                                                             <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 100px;">Əsərləri</th>
                                                             <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 163px;">Əməliyyatlar</th>
@@ -60,7 +58,6 @@ if ($_SESSION['logged_in'] == 1) {
                                                         <tr style="text-align: center;">
                                                             <th rowspan="1" colspan="1">Şəkil</th>
                                                             <th rowspan="1" colspan="1">Rəssamın adı</th>
-                                                            <th rowspan="1" colspan="1">Rəssam haqqında</th>
                                                             <th rowspan="1" colspan="1">Kateqoriya</th>
                                                             <th rowspan="1" colspan="1">Əsərləri</th>
                                                             <th rowspan="1" colspan="1">Əməliyyatlar</th>
@@ -69,16 +66,11 @@ if ($_SESSION['logged_in'] == 1) {
                                                     <tbody>
                                                         <?php
                                                         include '../config/config.php';
-                                                        $select_sql  = "SELECT p.painter_name, p.id as artist_id, p.painter_surname, p.painter_image, p.status, pt.* FROM orient_ressamlar.painters p 
-                                                                            INNER JOIN orient_ressamlar.painter_translation pt ON pt.painter_id=p.id 
-                                                                            WHERE pt.lang_id=1 && p.status=1 ORDER BY p.`id` desc";
+                                                        $select_sql   = "SELECT p.painter_name, p.id as artist_id, p.painter_surname, p.painter_image, p.categories, p.status, pt.*, mt.* FROM orient_ressamlar.painters p 
+                                                                         INNER JOIN orient_ressamlar.painter_translation pt ON pt.painter_id=p.id
+                                                                         INNER JOIN orient_ressamlar.menu_translation mt 
+                                                                         WHERE pt.lang_id=1 && mt.lang_id=1 && p.categories=mt.menu_id && p.status=1 ORDER BY p.`id` desc";
                                                         $result      = mysqli_query($conn, $select_sql);
-                                                        $select_category = "SELECT p.id as artist_id, mt.*, m.*, ptc.* FROM orient_ressamlar.painters p 
-                                                                            INNER JOIN orient_ressamlar.menu_translation mt 
-                                                                            INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
-                                                                            INNER JOIN orient_ressamlar.painters_to_category ptc ON ptc.painter_id=p.id 
-                                                                            WHERE ptc.category_id=m.id && mt.lang_id=1 ORDER BY p.`id` desc";
-                                                        $result_category = mysqli_query($conn, $select_category);
                                                         while ($row  = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                                                         ?>
                                                             <tr role="row" class="even">
@@ -89,25 +81,37 @@ if ($_SESSION['logged_in'] == 1) {
                                                                     echo "<td><img id='previewImage' src='../uploads/" . $row['painter_image'] . "' class='img-thumbnail' width='200px' height='200px'></td>";
                                                                 ?>
                                                                 <td class="sorting_1"><?= $row['painter_name']; ?> <?= $row['painter_surname']; ?></td>
-                                                                <td class="sorting_1"><?= $row['about_painter']; ?></td>
-                                                                <?php
-                                                                $row_c = mysqli_fetch_array($result_category, MYSQLI_ASSOC)
-                                                                ?>
-                                                                 <td class="sorting_1"><?= $row_c['name']; ?></td>  
-                                                        <?php  ?>
-                                                        <td class="sorting_1 edit-buttons">
-                                                            <a href="works.php?painters=<?= $row['artist_id']; ?>" class="btn btn-secondary button-section d-block"><i class="far fa-images"></i></a>
-                                                        </td>
-                                                        <td class="edit-buttons">
-                                                            <div class="button-section">
-                                                                <a href="form-artist.php?id=<?= $row['artist_id']; ?>" class="btn btn-success"><i class="fas fa-edit"></i></a>
-                                                                <a href="artists.php?id=<?= $row['artist_id']; ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
-                                                            </div>
-                                                        </td>
-                                                        </tr>
-                                                    <?php
+                                                                <!-- <?php
+                                                                $list = [$row['categories']];
+                                                                foreach ($list as $key => $value) {
+                                                                    $new = explode(',', $list[0]);
+                                                                    // echo (count($list[0]));
+                                                                    foreach ($new as $key => $value) {
+                                                                        var_dump(intval($value));
+                                                                        if (intval($new[$key]) == $row['menu_id']) {
+                                                                            echo ($value);
+                                                                            // echo ($row['name']);
+                                                                ?> -->
+                                                                            <td class="sorting_1"><?= $row['name']; ?></td>
+                                                                <!-- <?php
+                                                                        }
+                                                                    }
+                                                                }
+                                                                ?> -->
+                                                                <input name="id" id="delete" value="<?= $row['artist_id']; ?>" style="display:none;"></input>
+                                                                <td class="sorting_1 edit-buttons">
+                                                                    <a href="works.php?painter=<?= $row['artist_id']; ?>" class="btn btn-secondary button-section d-block"><i class="far fa-images"></i></a>
+                                                                </td>
+                                                                <td class="edit-buttons">
+                                                                    <div class="button-section">
+                                                                        <a href="form-artist.php?id=<?= $row['artist_id']; ?>" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                                                                        <a onclick="sil();" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        <?php
                                                         }
-                                                    ?>
+                                                        ?>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -125,7 +129,28 @@ if ($_SESSION['logged_in'] == 1) {
         </div>
 
         <?php include 'includes/footer.php'; ?>
-
+        <script>
+            function sil() {
+                var id = document.getElementById("delete").value;
+                swal({
+                        title: "Silmək istəyirsinizmi?",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                        buttons: ['Xeyr', 'Bəli'],
+                    })
+                    .then((result) => {
+                        if (result) {
+                            swal("Silindi", {
+                                icon: "success",
+                            });
+                            window.location.href = "artists.php?id=" + id;
+                        } else {
+                            swal("Silinmədi");
+                        }
+                    });
+            };
+        </script>
     </body>
 
     </html>

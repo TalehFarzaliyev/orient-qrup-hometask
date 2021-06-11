@@ -45,7 +45,7 @@ if ($_SESSION['logged_in'] == 1) {
                                 <div class="table-responsive">
                                     <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                         <div class="create-button">
-                                            <a href="form-works.php?painter=<?=$_GET['painters']?>" class="btn btn-primary"><i class="fas fa-plus-square"></i></a>
+                                            <a href="form-works.php?painter=<?= $_GET['painter'] ?>" class="btn btn-primary"><i class="fas fa-plus-square"></i></a>
                                         </div>
                                         <br>
                                         <div class="row">
@@ -68,8 +68,8 @@ if ($_SESSION['logged_in'] == 1) {
                                                     <tbody>
                                                         <?php
                                                         include '../config/config.php';
-                                                        if (isset($_GET['painters']) and !empty($_GET['painters'])) {
-                                                            $painter     = intval($_GET['painters']);
+                                                        if (isset($_GET['painter']) and !empty($_GET['painter'])) {
+                                                            $painter     = intval($_GET['painter']);
                                                             $select_sql  = "SELECT * FROM orient_ressamlar.painters p 
                                                                             INNER JOIN orient_ressamlar.works w 
                                                                             INNER JOIN orient_ressamlar.works_translation wt ON w.id=wt.work_id 
@@ -85,11 +85,11 @@ if ($_SESSION['logged_in'] == 1) {
                                                                         echo "<td><img id='previewImage' src='../uploads/" . $row['work_image'] . "' class='img-thumbnail' width='200px' height='200px'></td>";
                                                                     ?>
                                                                     <td class="sorting_1"><?= $row['work_name']; ?></td>
-
+                                                                    <input name="id" id="delete" value="<?= $row['id']; ?>&painter=<?= $_GET['painter'] ?>" style="display:none;"></input>
                                                                     <td class="edit-buttons">
                                                                         <div class="button-section">
-                                                                            <a href="form-works.php?id=<?= $row['id']; ?>&painter=<?=$_GET['painters']?>" class="btn btn-success"><i class="fas fa-edit"></i></a>
-                                                                            <a href="works.php?id=<?= $row['id']; ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                                                            <a href="form-works.php?id=<?= $row['id']; ?>&painter=<?= $_GET['painter'] ?>" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                                                                            <a onclick="sil();" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -115,7 +115,28 @@ if ($_SESSION['logged_in'] == 1) {
         </div>
 
         <?php include 'includes/footer.php'; ?>
-
+        <script>
+            function sil() {
+                var id = document.getElementById("delete").value;
+                swal({
+                        title: "Silmək istəyirsinizmi?",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                        buttons: ['Xeyr', 'Bəli'],
+                    })
+                    .then((result) => {
+                        if (result) {
+                            swal("Silindi", {
+                                icon: "success",
+                            });
+                            window.location.href = "works.php?id=" + id;
+                        } else {
+                            swal("Silinmədi");
+                        }
+                    });
+            };
+        </script>
     </body>
 
     </html>

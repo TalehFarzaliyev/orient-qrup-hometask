@@ -39,7 +39,7 @@ if ($_SESSION['logged_in'] == 1) {
         } else if (isset($_POST['post-type']) and !empty($_POST['post-type']) and $_POST['post-type'] == 'edit') {
 
             if ($_POST['hidden'] == "0")
-                $image     = uploadImage('../uploads/noPhoto.png');
+                $image     = 'noPhoto.png';
             elseif (empty($_FILES['image']['tmp_name']) || !is_uploaded_file($_FILES['image']['tmp_name']))
                 $image     = $post_row['image'];
             else
@@ -101,7 +101,6 @@ if ($_SESSION['logged_in'] == 1) {
                                             <div class="form-group">
                                                 <label for="exampleFormControlSelect1">Kateqoriya</label>
                                                 <select class="form-control" name="category_id" id="exampleFormControlSelect1">
-                                                    <option value="0">Seç</option>
                                                     <?php
                                                     $select_sql       = "SELECT * FROM orient_ressamlar.menu_translation mt 
                                                                          INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
@@ -155,7 +154,7 @@ if ($_SESSION['logged_in'] == 1) {
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="exampleFormControlInput1">Məzmun</label>
-                                                        <input type="text" name="translation[<?= $row['id'] ?>][content]" required class="form-control" id="exampleFormControlInput1" placeholder="Məzmun">
+                                                        <textarea name="translation[<?= $row['id'] ?>][content]" cols="40" rows="10" required class="form-control editor" id="editor<?= $row['id'] ?>" placeholder="Məzmun" style="visibility:hidden; display: none;"></textarea>
                                                     </div>
                                                 </div>
                                             <?php
@@ -195,7 +194,6 @@ if ($_SESSION['logged_in'] == 1) {
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">Kateqoriya</label>
                                             <select class="form-control" name="category_id" id="exampleFormControlSelect1">
-                                                <option value="0">Seç</option>
                                                 <?php
                                                 $select_sql  = "SELECT * FROM orient_ressamlar.menu_translation mt 
                                                                 INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
@@ -246,8 +244,8 @@ if ($_SESSION['logged_in'] == 1) {
                                                         <input type="text" name="translation[<?= $value['lang_id'] ?>][title]" required value="<?= $value['title']; ?>" class="form-control" id="exampleFormControlInput1" placeholder="Başlıq">
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="exampleFormControlInput1">Haqqında</label>
-                                                        <input type="text" name="translation[<?= $value['lang_id'] ?>][content]" required value="<?= $value['content']; ?>" class="form-control" id="exampleFormControlInput1" placeholder="Məzmun">
+                                                        <label for="exampleFormControlInput1">Məzmun</label>
+                                                        <textarea name="translation[<?= $value['lang_id'] ?>][content]" cols="40" rows="10" required class="form-control editor" id="editor<?= $value['lang_id'] ?>" placeholder="Məzmun" style="visibility:hidden; display: none;"><?= $value['content']; ?></textarea>
                                                     </div>
                                                 </div>
                                             <?php
@@ -277,7 +275,18 @@ if ($_SESSION['logged_in'] == 1) {
         </div>
 
         <?php include 'includes/footer.php'; ?>
+
         <script type="text/javascript">
+            var id=1;
+            $('textarea.editor').each(function() {
+                $(this).attr("id", "editor"+id);
+                CKEDITOR.replace('editor'+id, {
+                    height: '300px',
+
+                });
+                id=id+1;
+            });
+
             function PreviewImageCreate() {
                 var oFReader = new FileReader();
                 oFReader.readAsDataURL(document.getElementById("uploadImage-create").files[0]);

@@ -5,7 +5,7 @@
     </a>
     <a class="bars-icon" onclick="showMenu();"><i class="fas fa-bars"></i></a>
     <div class="menu-items">
-        <div class="dropdown-item menu-item">
+        <div class="dropdown-item menu-item single-item">
             <a href="index.php" class="menu-color hover-color btn-secondary">Əsas səhİfə</a>
         </div>
         <div class="dropdown menu-item">
@@ -39,7 +39,7 @@
                 <a class="dropdown-item hover-color" href="altmenu.php">Köhnə afİşalar</a>
             </div>
         </div>
-        <div class="dropdown-item menu-item">
+        <div class="dropdown-item menu-item single-item">
             <a href="contact.php" class="menu-color hover-color btn-secondary">Əlaqə</a>
         </div>
         <div class="dropdown menu-item">
@@ -50,7 +50,7 @@
                 <a class="dropdown-item hover-color" href="elanlar.php">Elanlar</a>
             </div>
         </div>
-        <div class="dropdown-item menu-item">
+        <div class="dropdown-item menu-item single-item">
             <a href="satis.php" class="menu-color hover-color btn-secondary">Satış</a>
         </div>
         <div class="dropdown menu-item">
@@ -58,7 +58,6 @@
             <div class="dropdown-menu lang-icon" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item hover-color" href=""><i class="flag flag-azerbaijan"></i> az</a>
                 <a class="dropdown-item hover-color" href=""><i class="flag flag-united-kingdom"></i> en</a>
-
             </div>
         </div>
     </div>
