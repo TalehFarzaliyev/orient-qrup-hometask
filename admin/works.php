@@ -78,11 +78,10 @@ if ($_SESSION['logged_in'] == 1) {
                                                                         echo "<td><img id='previewImage' src='../uploads/" . $row['work_image'] . "' class='img-thumbnail' width='200px' height='200px'></td>";
                                                                     ?>
                                                                     <td class="sorting_1"><?= $row['work_name']; ?></td>
-                                                                    <input name="id" id="delete" value="<?= $row['id']; ?>&painter=<?= $_GET['painter'] ?>" style="display:none;"></input>
                                                                     <td class="edit-buttons">
                                                                         <div class="button-section">
                                                                             <a href="form-works.php?id=<?= $row['id']; ?>&painter=<?= $_GET['painter'] ?>" class="btn btn-success"><i class="fas fa-edit"></i></a>
-                                                                            <a onclick="sil();" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                                                            <a onclick="sil(this);" data-id-number="<?= $row['id']; ?>&painter=<?= $_GET['painter'] ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -109,8 +108,8 @@ if ($_SESSION['logged_in'] == 1) {
 
         <?php include 'includes/footer.php'; ?>
         <script>
-            function sil() {
-                var id = document.getElementById("delete").value;
+            function sil(id) {
+                var thisId = id.getAttribute("data-id-number");
                 swal({
                         title: "Silmək istəyirsinizmi?",
                         icon: "warning",
@@ -123,7 +122,7 @@ if ($_SESSION['logged_in'] == 1) {
                             swal("Silindi", {
                                 icon: "success",
                             });
-                            window.location.href = "works.php?id=" + id;
+                            window.location.href = "works.php?id=" + thisId;
                         } else {
                             swal("Silinmədi");
                         }

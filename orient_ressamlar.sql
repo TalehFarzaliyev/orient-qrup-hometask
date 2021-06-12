@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jun 11, 2021 at 09:58 PM
+-- Generation Time: Jun 12, 2021 at 06:20 AM
 -- Server version: 5.7.31
--- PHP Version: 7.4.9
+-- PHP Version: 7.3.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `menu` (
   `order_number` int(11) DEFAULT '0',
   `status` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8 COMMENT='Menu for sites';
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8 COMMENT='Menu for sites';
 
 --
 -- Dumping data for table `menu`
@@ -119,7 +119,8 @@ INSERT INTO `menu` (`id`, `type`, `parent_id`, `order_number`, `status`) VALUES
 (68, 'post', 66, 2, 1),
 (69, 'post', 66, 3, 1),
 (70, '', 0, 7, 1),
-(71, 'post', 66, 4, 0);
+(71, 'post', 66, 4, 0),
+(73, '', 0, 90, 1);
 
 -- --------------------------------------------------------
 
@@ -208,7 +209,7 @@ CREATE TABLE IF NOT EXISTS `painters` (
   `painter_image` varchar(255) DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `painters`
@@ -217,7 +218,7 @@ CREATE TABLE IF NOT EXISTS `painters` (
 INSERT INTO `painters` (`id`, `painter_name`, `painter_surname`, `categories`, `painter_image`, `status`) VALUES
 (11, 'Metin', 'Quliyev', '55,56', '95+-Funky-Computer-4K-Wallpapers-WallpaperYou.jpg', 1),
 (22, 'Puste', 'Agayeva', '57,58', '235506.jpg', 1),
-(35, 'Ayten', 'Seyidova', '55,57,60,61', 'galaxy-wallpaper-hd-20.jpg', 1);
+(36, 'Ayten', 'Seyidova', '55,57,60', '7wcFi9.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -239,10 +240,10 @@ CREATE TABLE IF NOT EXISTS `painter_translation` (
 INSERT INTO `painter_translation` (`painter_id`, `lang_id`, `about_painter`) VALUES
 (11, 1, '<p>Bu ressam haqqinda melumatdir</p>\r\n'),
 (11, 2, '<p>This is information about painter</p>\r\n'),
-(35, 1, '<p>text</p>\r\n'),
-(35, 2, '<p>text</p>\r\n'),
 (22, 1, '<p>melumat</p>\r\n'),
-(22, 2, '<p>information</p>\r\n');
+(22, 2, '<p>information</p>\r\n'),
+(36, 1, '<p>eterte</p>\r\n'),
+(36, 2, '<p>tryrtyr</p>\r\n');
 
 -- --------------------------------------------------------
 
@@ -259,7 +260,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `hits` int(11) NOT NULL DEFAULT '0',
   `status` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `posts`
@@ -268,7 +269,8 @@ CREATE TABLE IF NOT EXISTS `posts` (
 INSERT INTO `posts` (`id`, `image`, `created_date`, `category_id`, `hits`, `status`) VALUES
 (5, '4WUfMQ.jpg', '2021-06-02 10:56:11', 1, 0, 1),
 (8, '', '2021-06-11 16:22:27', 0, 0, 1),
-(13, 'Parallel-Universe-Wallpaper.jpg', '2021-06-11 17:49:29', 53, 0, 1);
+(13, 'Parallel-Universe-Wallpaper.jpg', '2021-06-11 17:49:29', 53, 0, 1),
+(15, '', '2021-06-12 10:12:33', 53, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -282,14 +284,17 @@ CREATE TABLE IF NOT EXISTS `posts_gallery` (
   `post_id` int(11) DEFAULT NULL,
   `gallery_image` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=98 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `posts_gallery`
 --
 
 INSERT INTO `posts_gallery` (`id`, `post_id`, `gallery_image`) VALUES
-(89, 13, '../uploads/planet_stars_galaxy_125401_1920x1080.jpg');
+(92, 13, '../uploads/2.jpg'),
+(93, 13, '../uploads/2c56685f7698b00db68846979259230a.jpg'),
+(96, 13, '../uploads/4.jpg'),
+(97, 13, '../uploads/4WUfMQ.jpg');
 
 -- --------------------------------------------------------
 
@@ -315,7 +320,9 @@ INSERT INTO `posts_translation` (`post_id`, `lang_id`, `title`, `content`) VALUE
 (8, 1, 'ghjgj', '<p>ghjgh</p>\r\n'),
 (8, 2, 'ghjgjg', '<p>ghjhgjg</p>\r\n'),
 (13, 1, 'sdfsdsdf', '<p>sdfdsf</p>\r\n'),
-(13, 2, 'sdfsdf', '<p>sdfsdfs</p>\r\n');
+(13, 2, 'sdfsdf', '<p>sdfsdfs</p>\r\n'),
+(15, 1, '2', '<p>fdgdf</p>\r\n'),
+(15, 2, 'gfdgdf', '<p>dfgdf</p>\r\n');
 
 -- --------------------------------------------------------
 
@@ -387,7 +394,6 @@ CREATE TABLE IF NOT EXISTS `slider` (
 
 INSERT INTO `slider` (`id`, `image`, `painter_name`, `painter_surname`, `status`) VALUES
 (41, '47878.jpg', 'Puste', 'Aghayeva', 1),
-(43, 'ebe39def5ad5e741b9bf510c8a96120e.jpg', 'Ayten', 'Seyidova', 1),
 (44, 'planets-in-the-night-sky-25818-1920x1080.jpg', 'Gunel', 'Mehnetli', 1);
 
 -- --------------------------------------------------------
@@ -410,8 +416,6 @@ CREATE TABLE IF NOT EXISTS `slider_translation` (
 INSERT INTO `slider_translation` (`slider_id`, `lang_id`, `title`) VALUES
 (41, 1, 'basliq basliq'),
 (41, 2, 'ingilis basliq'),
-(43, 1, 'Basliq elave etmek'),
-(43, 2, 'Add title'),
 (44, 1, 'Basliq elave etmek1'),
 (44, 2, 'title');
 
@@ -428,7 +432,7 @@ CREATE TABLE IF NOT EXISTS `works` (
   `work_image` varchar(255) DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `works`
@@ -437,7 +441,8 @@ CREATE TABLE IF NOT EXISTS `works` (
 INSERT INTO `works` (`id`, `painter_id`, `work_image`, `status`) VALUES
 (9, 11, 'abstract-wallpapers-hd-experiment.jpg', 1),
 (10, 20, 'banner2.jpg', 1),
-(22, 22, '4WUfMQ.jpg', 1);
+(22, 22, '4WUfMQ.jpg', 1),
+(25, 22, '', 1);
 
 -- --------------------------------------------------------
 
@@ -462,7 +467,9 @@ INSERT INTO `works_translation` (`work_id`, `lang_id`, `work_name`) VALUES
 (9, 1, 'eser adik'),
 (9, 2, 'work namek'),
 (22, 1, 'ad ad ad1'),
-(22, 2, 'name name name1');
+(22, 2, 'name name name1'),
+(25, 1, '22'),
+(25, 2, 'dsafsd');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

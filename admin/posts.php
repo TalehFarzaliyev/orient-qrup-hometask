@@ -83,14 +83,13 @@ if ($_SESSION['logged_in'] == 1) {
                                                                 ?>
                                                                 <td class="sorting_1"><?= $row['title']; ?></td>
                                                                 <td class="sorting_1"><?= $row['name']; ?></td>
-                                                                <input name="id" id="delete" value="<?= $row['id_post']; ?>" style="display:none;"></input>
                                                                 <td class="sorting_1 edit-buttons">
                                                                     <a href="gallery.php?post=<?= $row['id_post']; ?>" class="btn btn-secondary button-section d-block"><i class="far fa-images"></i></a>
                                                                 </td>
                                                                 <td class="edit-buttons">
                                                                     <div class="button-section">
                                                                         <a href="form-posts.php?id=<?= $row['id_post']; ?>" class="btn btn-success"><i class="fas fa-edit"></i></a>
-                                                                        <a onclick="sil();" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                                                        <a onclick="sil(this);" data-id-number="<?= $row['id_post']; ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -117,8 +116,8 @@ if ($_SESSION['logged_in'] == 1) {
 
     </body>
     <script>
-        function sil() {
-            var id = document.getElementById("delete").value;
+        function sil(id) {
+            var thisId = id.getAttribute("data-id-number");
             swal({
                     title: "Silmək istəyirsinizmi?",
                     icon: "warning",
@@ -131,7 +130,7 @@ if ($_SESSION['logged_in'] == 1) {
                         swal("Silindi", {
                             icon: "success",
                         });
-                        window.location.href = "posts.php?id=" + id;
+                        window.location.href = "posts.php?id=" + thisId;
                     } else {
                         swal("Silinmədi");
                     }

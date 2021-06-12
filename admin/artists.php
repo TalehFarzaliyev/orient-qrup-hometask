@@ -95,14 +95,13 @@ if ($_SESSION['logged_in'] == 1) {
                                                                     }
                                                                     ?>
                                                                 </td>
-                                                                <input name="id" id="delete" value="<?= $row['artist_id']; ?>" style="display:none;"></input>
                                                                 <td class="sorting_1 edit-buttons">
                                                                     <a href="works.php?painter=<?= $row['artist_id']; ?>" class="btn btn-secondary button-section d-block"><i class="far fa-images"></i></a>
                                                                 </td>
                                                                 <td class="edit-buttons">
                                                                     <div class="button-section">
                                                                         <a href="form-artist.php?id=<?= $row['artist_id']; ?>" class="btn btn-success"><i class="fas fa-edit"></i></a>
-                                                                        <a onclick="sil();" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                                                        <a onclick="sil(this);" data-id-number="<?= $row['artist_id']; ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -127,8 +126,8 @@ if ($_SESSION['logged_in'] == 1) {
 
         <?php include 'includes/footer.php'; ?>
         <script>
-            function sil() {
-                var id = document.getElementById("delete").value;
+            function sil(id) {
+                var thisId = id.getAttribute("data-id-number");
                 swal({
                         title: "Silmək istəyirsinizmi?",
                         icon: "warning",
@@ -141,7 +140,7 @@ if ($_SESSION['logged_in'] == 1) {
                             swal("Silindi", {
                                 icon: "success",
                             });
-                            window.location.href = "artists.php?id=" + id;
+                            window.location.href = "artists.php?id=" + thisId;
                         } else {
                             swal("Silinmədi");
                         }
