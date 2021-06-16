@@ -708,7 +708,9 @@ body {
       margin-bottom: 20px; }
     body .header .menu-side .menu-items {
       visibility: visible !important;
-      margin-right: 0; } }
+      margin-right: 0; }
+  body .header .menu-name {
+    height: 140px; } }
 @media screen and (max-width: 992px) and (min-width: 769px) {
   body .header .menu-side {
     flex-direction: column; }
@@ -718,6 +720,8 @@ body {
     body .header .menu-side .menu-items {
       visibility: visible !important;
       margin-right: 0; }
+  body .header .menu-name {
+    height: 140px; }
   body .header .carousel .carousel-inner .carousel-item .homepage-caption .homepage-text {
     font-size: 60px; }
   body .header .carousel .carousel-inner .carousel-item .slider-caption .row {
@@ -761,6 +765,8 @@ body {
           text-align: center; }
           body .header .menu-side .menu-items .menu-item .dropdown-menu .dropdown-item {
             color: #fff; }
+  body .header .menu-name {
+    height: 140px; }
   body .header .carousel .carousel-inner .carousel-item {
     height: 100vh;
     width: 100vw; }
@@ -820,25 +826,36 @@ body {
         body .header .menu-side .logo-item .menu-logo2 {
           width: 130px; }
       body .header .menu-side .bars-icon {
-        display: block; }
+        display: block;
+        border: none;
+        margin-top: -25px;
+        margin-bottom: 10px; }
+        body .header .menu-side .bars-icon .fa-bars {
+          font-size: 13px; }
       body .header .menu-side .menu-items {
         visibility: hidden;
         height: 0;
         margin-right: 0;
         flex-direction: column;
         text-align: center;
-        border: 1px solid #fff;
-        border-top: none;
-        width: 200px; }
+        border: none;
+        min-width: 170px; }
         body .header .menu-side .menu-items .menu-item {
           border: 1px solid #fff;
-          border-top: none; }
+          border-bottom: none; }
+          body .header .menu-side .menu-items .menu-item:last-child {
+            border-bottom: 1px solid #fff; }
           body .header .menu-side .menu-items .menu-item .dropdown-menu {
             position: static;
             background: transparent;
             text-align: center; }
             body .header .menu-side .menu-items .menu-item .dropdown-menu .dropdown-item {
-              color: #fff; }
+              color: #fff;
+              font-size: 10px; }
+          body .header .menu-side .menu-items .menu-item .btn-secondary {
+            font-size: 12px; }
+    body .header .menu-name {
+      height: 90px; }
     body .header .carousel .carousel-inner .carousel-item {
       width: 100vw;
       height: 50vh;

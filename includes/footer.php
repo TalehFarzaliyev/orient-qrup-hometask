@@ -19,7 +19,6 @@
       });
    });
 </script>
-<!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script> -->
 <script src="assets/js/owl.carousel.min.js"></script>
 <script src="assets/js/main.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>

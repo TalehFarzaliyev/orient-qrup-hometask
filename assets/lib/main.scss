@@ -941,6 +941,9 @@ body {
                     margin-right: 0;
                 }
             }
+            .menu-name {
+                height: 140px;
+            }
         }
     }
 }
@@ -958,6 +961,9 @@ body {
                     visibility: visible !important;
                     margin-right: 0;
                 }
+            }
+            .menu-name {
+                height: 140px;
             }
             .carousel {
                 .carousel-inner {
@@ -1044,6 +1050,9 @@ body {
                         }
                     }
                 }
+            }
+            .menu-name {
+                height: 140px;
             }
             .carousel {
                 .carousel-inner {
@@ -1158,6 +1167,12 @@ body {
                 }
                 .bars-icon {
                     display: block;
+                    border: none;
+                    margin-top: -25px;
+                    margin-bottom: 10px;
+                    .fa-bars {
+                        font-size: 13px;
+                    }
                 }
                 .menu-items {
                     visibility: hidden;
@@ -1165,22 +1180,31 @@ body {
                     margin-right: 0;
                     flex-direction: column;
                     text-align: center;
-                    border: 1px solid #fff;
-                    border-top: none;
-                    width: 200px;
+                    border: none;
+                    min-width: 170px;
                     .menu-item {
                         border: 1px solid #fff;
-                        border-top: none;
+                        border-bottom: none;
+                        &:last-child {
+                            border-bottom: 1px solid #fff;
+                        }
                         .dropdown-menu {
                             position: static;
                             background: transparent;
                             text-align: center;
                             .dropdown-item {
                                 color: #fff;
+                                font-size: 10px;
                             }
+                        }
+                        .btn-secondary {
+                            font-size: 12px;
                         }
                     }
                 }
+            }
+            .menu-name {
+                height: 90px;
             }
             .carousel {
                 .carousel-inner {
