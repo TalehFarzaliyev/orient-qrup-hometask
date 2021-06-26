@@ -97,7 +97,7 @@
             <div class="card wow bounceIn">
                 <img class="card-img-top" src="uploads/<?=$post['image'];?>" alt="Card image cap">
                 <div class="card-body">
-                    <h6 class="card-title"><?=$post['title'];?>ayten ayten ayten ayten ayten</h6>
+                    <h6 class="card-title text-center"><?=$post['title'];?></h6>
                     <p class="card-text"><?=substr($post['content'],0,100);?></p>
                     <div class="date_button">
                         <span><i class="far fa-clock"></i>&nbsp;&nbsp;<?=date('d.m.Y H:i', strtotime($post['created_date']));?></span>

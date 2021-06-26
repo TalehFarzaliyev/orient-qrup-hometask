@@ -517,25 +517,29 @@ body {
       margin: auto; }
       body .news-section .owl-carousel .card .card-img-top {
         height: 180px; }
-      body .news-section .owl-carousel .card .card-body p {
-        font-size: 13px; }
-      body .news-section .owl-carousel .card .card-body .date_button {
+      body .news-section .owl-carousel .card .card-body {
         display: flex;
-        justify-content: space-between;
-        align-items: center; }
-        body .news-section .owl-carousel .card .card-body .date_button span {
-          font-size: 12px; }
-        body .news-section .owl-carousel .card .card-body .date_button .change_button_color {
-          font-size: 13px;
-          padding: 5px 10px;
-          text-transform: inherit;
-          background-color: #A91C51;
-          border: none; }
-          body .news-section .owl-carousel .card .card-body .date_button .change_button_color:hover {
-            background-color: #fff;
-            color: #A91C51; }
-          body .news-section .owl-carousel .card .card-body .date_button .change_button_color:focus {
-            box-shadow: none; }
+        flex-direction: column;
+        justify-content: space-between; }
+        body .news-section .owl-carousel .card .card-body p {
+          font-size: 13px; }
+        body .news-section .owl-carousel .card .card-body .date_button {
+          display: flex;
+          justify-content: space-between;
+          align-items: center; }
+          body .news-section .owl-carousel .card .card-body .date_button span {
+            font-size: 12px; }
+          body .news-section .owl-carousel .card .card-body .date_button .change_button_color {
+            font-size: 13px;
+            padding: 5px 10px;
+            text-transform: inherit;
+            background-color: #A91C51;
+            border: none; }
+            body .news-section .owl-carousel .card .card-body .date_button .change_button_color:hover {
+              background-color: #fff;
+              color: #A91C51; }
+            body .news-section .owl-carousel .card .card-body .date_button .change_button_color:focus {
+              box-shadow: none; }
   body .blog {
     background-color: #000;
     color: #fff;
