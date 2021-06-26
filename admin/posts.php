@@ -36,44 +36,39 @@ if ($_SESSION['logged_in'] == 1) {
                                 <h6 class="m-0 font-weight-bold text-primary">Siyahı paylaşımlar</h6>
                             </div>
                             <div class="card-body">
-                                <div class="table-responsive">
-                                    <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                                        <div class="create-button">
-                                            <a href="form-posts.php" class="btn btn-primary"><i class="fas fa-plus-square"></i></a>
-                                        </div>
-                                        <br>
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
-                                                    <thead>
-                                                        <tr role="row" style="text-align: center;">
-                                                            <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 180px;">Şəkil</th>
-                                                            <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Başlıq</th>
-                                                            <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Kateqoriya</th>
-                                                            <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 100px;">Qalereya</th>
-                                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 163px;">Əməliyyatlar</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tfoot>
-                                                        <tr style="text-align: center;">
-                                                            <th rowspan="1" colspan="1">Şəkil</th>
-                                                            <th rowspan="1" colspan="1">Başlıq</th>
-                                                            <th rowspan="1" colspan="1">Kateqoriya</th>
-                                                            <th rowspan="1" colspan="1">Qalereya</th>
-                                                            <th rowspan="1" colspan="1">Əməliyyatlar</th>
-                                                        </tr>
-                                                    </tfoot>
-                                                    <tbody>
-                                                        <?php
-                                                        include '../config/config.php';
-                                                        $select_sql  = "SELECT p.id as id_post, p.image, p.category_id, pt.*, mt.*, m.* FROM orient_ressamlar.posts p 
-                                                                        INNER JOIN orient_ressamlar.posts_translation pt ON pt.post_id=p.id
-                                                                        INNER JOIN orient_ressamlar.menu_translation mt 
-                                                                        INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
-                                                                        WHERE pt.lang_id=1 && p.status=1 && p.category_id=m.id && mt.lang_id=1 ORDER BY p.`id` desc";
-                                                        $result      = mysqli_query($conn, $select_sql);
+                                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                    <div class="create-button">
+                                        <a href="form-posts.php" class="btn btn-primary"><i class="fas fa-plus-square"></i></a>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                                <thead>
+                                                    <tr role="row" style="text-align: center;">
+                                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 180px;">Şəkil</th>
+                                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Başlıq</th>
+                                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Kateqoriya</th>
+                                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 100px;">Qalereya</th>
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 163px;">Əməliyyatlar</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    include '../config/config.php';
+                                                    $page = isset($_GET['page']) ? $_GET['page'] : 1;
+                                                    $number_of_content = mysqli_num_rows(mysqli_query($conn, 'SELECT `id` FROM `posts`'));
+                                                    $limit = 3;
+                                                    $lastpage = ceil($number_of_content / $limit);
+                                                    $start = ($page - 1) * $limit;
+                                                    if ($lastpage >= $page) {
+                                                        $result = mysqli_query($conn, 'SELECT p.id as id_post, p.image, p.category_id, pt.*, mt.*, m.* FROM orient_ressamlar.posts p 
+                                                                                       INNER JOIN orient_ressamlar.posts_translation pt ON pt.post_id=p.id
+                                                                                       INNER JOIN orient_ressamlar.menu_translation mt 
+                                                                                       INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
+                                                                                       WHERE pt.lang_id=1 && p.status=1 && p.category_id=m.id && mt.lang_id=1 ORDER BY p.`id` desc LIMIT ' . $start . ',' . $limit);
                                                         while ($row  = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                                                        ?>
+                                                    ?>
                                                             <tr role="row" class="even">
                                                                 <?php
                                                                 if (empty($row['image']))
@@ -89,16 +84,54 @@ if ($_SESSION['logged_in'] == 1) {
                                                                 <td class="edit-buttons">
                                                                     <div class="button-section">
                                                                         <a href="form-posts.php?id=<?= $row['id_post']; ?>" class="btn btn-success"><i class="fas fa-edit"></i></a>
-                                                                        <a onclick="sil(this);" data-id-number="<?= $row['id_post']; ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                                                        <a onclick="deleteItem(this);" data-id-number="<?= $row['id_post']; ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
                                                                     </div>
                                                                 </td>
                                                             </tr>
                                                         <?php
                                                         }
                                                         ?>
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                                </tbody>
+                                            </table>
+                                        <?php
+                                                    }
+                                                    if ($number_of_content > $limit) {
+                                                        $x = 2;
+                                                        if ($page > 1) {
+                                                            $previous = $page - 1;
+                                                            echo '<a href="?page=' . $previous . '" style= "margin-left: 45%; display: inline-block;">« Öncəki </a>';
+                                                        }
+                                                        if ($page == 1) {
+                                                            echo '<a style= "margin-left: 45%;">[1]</a>';
+                                                        } else {
+                                                            echo '<a href="?page=1" style= "margin-left: 10px;">1</a>';
+                                                        }
+                                                        if ($page - $x > 2) {
+                                                            echo '...';
+                                                            $i = $page - $x;
+                                                        } else {
+                                                            $i = 2;
+                                                        }
+                                                        for ($i; $i <= $page + $x; $i++) {
+                                                            if ($i == $page) {
+                                                                echo '&nbsp;<a style= "margin-left: 10px;">[' . $i . ']</a>&nbsp;';
+                                                            } else {
+                                                                echo '<a href="?page=' . $i . '" style= "margin-left: 10px;">' . $i . '</a>';
+                                                            }
+                                                            if ($i == $lastpage) break;
+                                                        }
+                                                        if ($page + $x < $lastpage - 1) {
+                                                            echo '...';
+                                                            echo '<a href="?page=' . $lastpage . '" style= "margin-left: 10px;">' . $lastpage . '</a>';
+                                                        } elseif ($page + $x == $lastpage - 1) {
+                                                            echo '<a href="?page=' . $lastpage . '" style= "margin-left: 10px;">' . $lastpage . '</a>';
+                                                        }
+                                                        if ($page < $lastpage) {
+                                                            $next = $page + 1;
+                                                            echo '<a href="?page=' . $next . '" style= "margin-left: 10px;"> Sonrakı » </a>';
+                                                        }
+                                                    }
+                                        ?>
                                         </div>
                                     </div>
                                 </div>
@@ -116,7 +149,7 @@ if ($_SESSION['logged_in'] == 1) {
 
     </body>
     <script>
-        function sil(id) {
+        function deleteItem(id) {
             var thisId = id.getAttribute("data-id-number");
             swal({
                     title: "Silmək istəyirsinizmi?",

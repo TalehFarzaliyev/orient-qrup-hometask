@@ -14,20 +14,19 @@ if ($_SESSION['logged_in'] == 1) {
         $slider_row = mysqli_fetch_assoc($result);
         $result_tr  = mysqli_query($conn, $sql_tr);
         $slider_tr  = mysqli_fetch_all($result_tr, MYSQLI_ASSOC);
-    }else{
+    } else {
         $slider_row = [];
         $slider_tr  = [];
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (isset($_POST['post-type']) and !empty($_POST['post-type']) and $_POST['post-type'] == 'create') {
-            $painter_name    = (isset($_POST['painter_name'])) ? trim($_POST['painter_name']) : '';
-            $painter_surname = (isset($_POST['painter_surname'])) ? trim($_POST['painter_surname']) : '';
+            $painter_id      = (isset($_POST['painter_id'])) ? intval($_POST['painter_id']) : 0;
             $image           = uploadImage($_FILES['image']);
             $status          = (isset($_POST['status'])) ? intval($_POST['status']) : 0;
             $translation     = (isset($_POST['translation'])) ? $_POST['translation'] : [];
 
-            $insert_slider   = "INSERT INTO `slider`(`painter_name`, `painter_surname`, `image`,`status`) VALUES ('$painter_name','$painter_surname','$image','$status')";
+            $insert_slider   = "INSERT INTO `slider`(`painter_id`, `image`,`status`) VALUES ('$painter_id','$image','$status')";
             $result_insert   = mysqli_query($conn, $insert_slider);
             if ($result_insert) {
                 $slider_id   = mysqli_insert_id($conn);
@@ -38,8 +37,7 @@ if ($_SESSION['logged_in'] == 1) {
             }
             header("Location: slides.php");
         } else if (isset($_POST['post-type']) and !empty($_POST['post-type']) and $_POST['post-type'] == 'edit') {
-            $painter_name    = (isset($_POST['painter_name'])) ? trim($_POST['painter_name']) : '';
-            $painter_surname = (isset($_POST['painter_surname'])) ? trim($_POST['painter_surname']) : '';
+            $painter_id      = (isset($_POST['painter_id'])) ? intval($_POST['painter_id']) : 0;
 
             if ($_POST['hidden'] == "0")
                 $image  = 'noPhoto.png';
@@ -51,7 +49,7 @@ if ($_SESSION['logged_in'] == 1) {
             $status          = (isset($_POST['status'])) ? intval($_POST['status']) : 0;
             $translation     = (isset($_POST['translation'])) ? $_POST['translation'] : [];
 
-            $update_slider   = "UPDATE `slider` SET `painter_name`='$painter_name', `painter_surname`='$painter_surname', `image`='$image',`status`='$status' WHERE `id`=$slider_id";
+            $update_slider   = "UPDATE `slider` SET `painter_id`='$painter_id', `image`='$image',`status`='$status' WHERE `id`=$slider_id";
             $result_update   = mysqli_query($conn, $update_slider);
             if ($result_update) {
                 mysqli_query($conn, "DELETE FROM `slider_translation` WHERE `slider_id`=$slider_id");
@@ -93,12 +91,20 @@ if ($_SESSION['logged_in'] == 1) {
                                     <div class="col-4 form-section">
                                         <br>
                                         <div class="form-group">
-                                            <label for="exampleFormControlInput1">Rəssamın adı</label>
-                                            <input type="text" name="painter_name" required class="form-control" id="exampleFormControlInput1" placeholder="Rəssamın adı">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleFormControlInput1">Rəssamın soyadı</label>
-                                            <input type="text" name="painter_surname" required class="form-control" id="exampleFormControlInput1" placeholder="Rəssamın soyadı">
+                                            <label for="exampleFormControlSelect1">Rəssam</label>
+                                            <select class="form-control" name="painter_id" id="exampleFormControlSelect1">
+                                                <option value="0">Seç</option>
+                                                <?php
+                                                $select_sql       = "SELECT * FROM orient_ressamlar.painters 
+                                                                     WHERE `status`=1";
+                                                $result           = mysqli_query($conn, $select_sql);
+                                                while ($row1      = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                                                ?>
+                                                    <option value="<?= $row1['id']; ?>"><?= $row1['painter_name']; ?> <?= $row1['painter_surname']; ?></option>;
+                                                <?php
+                                                }
+                                                ?>
+                                            </select>
                                         </div>
                                         <div class="form-group img-section">
                                             <label for="exampleFormControlFile1">Şəkil</label>
@@ -165,14 +171,22 @@ if ($_SESSION['logged_in'] == 1) {
                                     <div class="col-4 form-section">
                                         <br>
                                         <div class="form-group">
-                                            <label for="exampleFormControlInput1">Rəssamın adı</label>
-                                            <input type="text" name="painter_name" required class="form-control" value="<?= $slider_row['painter_name']; ?>" id="exampleFormControlInput1" placeholder="Rəssamın adı">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleFormControlInput1">Rəssamın soyadı</label>
-                                            <input type="text" name="painter_surname" required class="form-control" value="<?= $slider_row['painter_surname']; ?>" id="exampleFormControlInput1" placeholder="Rəssamın soyadı">
-                                        </div>
+                                            <label for="exampleFormControlSelect1">Rəssam</label>
+                                            <select class="form-control" name="painter_id" id="exampleFormControlSelect1">
+                                                <option value="0">Seç</option>
+                                                <?php
+                                                $select_sql  = "SELECT * FROM orient_ressamlar.painters  
+                                                                WHERE `status`=1";
+                                                $result      = mysqli_query($conn, $select_sql);
+                                                while ($rows = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                                                ?>
+                                                    <option value="<?= $rows['id']; ?>" <?php echo ($slider_row['painter_id'] == $rows['id']) ? 'selected' : ''; ?>><?= $rows['painter_name']; ?> <?= $rows['painter_surname']; ?></option>
+                                                <?php
+                                                }
+                                                ?>
 
+                                            </select>
+                                        </div>
                                         <div class="form-group img-section">
                                             <label for="exampleFormControlFile1">Şəkil</label>
                                             <input id="uploadImage" value="<?= $slider_row['image']; ?>" type="file" name="image" class="form-control-file" id="exampleFormControlFile1" onchange="PreviewImage();">
@@ -270,7 +284,7 @@ if ($_SESSION['logged_in'] == 1) {
                 var oFReader = new FileReader();
                 oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
                 oFReader.onload = function(oFREvent) {
-                document.getElementById("previewImage").src = oFREvent.target.result;
+                    document.getElementById("previewImage").src = oFREvent.target.result;
                 };
             };
 

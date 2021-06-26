@@ -1,3 +1,4 @@
+<?php include 'config/config.php' ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -69,8 +70,19 @@
     <?php include 'includes/theme.php'; ?>
 
     <div class="portfolio change-theme portfolio-button">
-        <a href="portfolio.php" class="view_button">BİRLİYİN PROFİLİ</a>
+        <a href="portfolio.php" class="view_button wow swing">BİRLİYİN PROFİLİ</a>
     </div>
+
+    <?php
+    $result = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, pt.*, mt.*, m.* FROM orient_ressamlar.posts p 
+                                   INNER JOIN orient_ressamlar.posts_translation pt ON pt.post_id=p.id
+                                   INNER JOIN orient_ressamlar.menu_translation mt 
+                                   INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
+                                   WHERE pt.lang_id=1 && p.status=1 && p.category_id=m.id && mt.name='xəbərlər' && mt.lang_id=1 ORDER BY p.`id` desc LIMIT 8");
+    $news  = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    if(!empty($news))
+{
+    ?>
     <div class="blog change-theme news-section">
         <div class="section-header">
             <h2>Xəbərlər</h2>
@@ -79,101 +91,32 @@
             </div>
         </div>
         <div class="owl-carousel owl-theme container">
-            <div class="card">
-                <img class="card-img-top" src="assets/img/2-4.jpg" alt="Card image cap">
+        <?php 
+        foreach($news as $post) {
+        ?>
+            <div class="card wow bounceIn">
+                <img class="card-img-top" src="uploads/<?=$post['image'];?>" alt="Card image cap">
                 <div class="card-body">
-                    <h6 class="card-title">Xəbər başlığı</h6>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <h6 class="card-title"><?=$post['title'];?>ayten ayten ayten ayten ayten</h6>
+                    <p class="card-text"><?=substr($post['content'],0,100);?></p>
                     <div class="date_button">
-                        <span><i class="far fa-clock"></i>&nbsp;21.10.2020 15:48</span>
-                        <a href="single_news.php" class="btn btn-primary change_button_color">Ətraflı</a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="assets/img/6.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h6 class="card-title">Xəbər başlığı</h6>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <div class="date_button">
-                        <span><i class="far fa-clock"></i>&nbsp;21.10.2020 15:48</span>
-                        <a href="single_news.php" class="btn btn-primary change_button_color">Ətraflı</a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="assets/img/2-2.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h6 class="card-title">Xəbər başlığı</h6>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <div class="date_button">
-                        <span><i class="far fa-clock"></i>&nbsp;21.10.2020 15:48</span>
-                        <a href="single_news.php" class="btn btn-primary change_button_color">Ətraflı</a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="assets/img/2-3.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h6 class="card-title">Xəbər başlığı</h6>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <div class="date_button">
-                        <span><i class="far fa-clock"></i>&nbsp;21.10.2020 15:48</span>
-                        <a href="single_news.php" class="btn btn-primary change_button_color">Ətraflı</a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="assets/img/2-5.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h6 class="card-title">Xəbər başlığı</h6>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <div class="date_button">
-                        <span><i class="far fa-clock"></i>&nbsp;21.10.2020 15:48</span>
-                        <a href="single_news.php" class="btn btn-primary change_button_color">Ətraflı</a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="assets/img/2-6.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h6 class="card-title">Xəbər başlığı</h6>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <div class="date_button">
-                        <span><i class="far fa-clock"></i>&nbsp;21.10.2020 15:48</span>
-                        <a href="single_news.php" class="btn btn-primary change_button_color">Ətraflı</a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="assets/img/1.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h6 class="card-title">Xəbər başlığı</h6>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <div class="date_button">
-                        <span><i class="far fa-clock"></i>&nbsp;21.10.2020 15:48</span>
-                        <a href="single_news.php" class="btn btn-primary change_button_color">Ətraflı</a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="assets/img/2.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h6 class="card-title">Xəbər başlığı</h6>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <div class="date_button">
-                        <span><i class="far fa-clock"></i>&nbsp;21.10.2020 15:48</span>
-                        <a href="single_news.php" class="btn btn-primary change_button_color">Ətraflı</a>
+                        <span><i class="far fa-clock"></i>&nbsp;&nbsp;<?=date('d.m.Y H:i', strtotime($post['created_date']));?></span>
+                        <a href="single_news.php?post=<?=$post['id_post'];?>" class="btn btn-primary change_button_color">Ətraflı</a>
                     </div>
                 </div>
             </div>
 
+            <?php 
+            }
+            ?>
         </div>
     </div>
-
+<?php
+}
+?>
     <div class="blog change-theme">
         <div class="section-header">
-            <h2>Əsərlər</h2>
+            <h2>Rəssam materialları</h2>
             <div class="title-line">
                 <img class="line" src="assets/img/title-line.png" alt="">
             </div>
@@ -202,15 +145,15 @@
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>
-                <div class="col-xl-6 col-lg-6 col-md-12 acrylic">
-                    <h2>Əsər 1</h2>
+                <div class="col-xl-6 col-lg-6 col-md-12 acrylic wow bounceIn">
+                    <h2>Fırça</h2>
                     <p>1971-ci ilin iyun ayında Naxçıvan Rəssamlar Təşkilatının yaradılmasına hazırlıq işlərinin tamamlanması barədə hökumət strukturlarına və Rəssamlar İttifaqına göstəriş verən ümummilli liderimiz yeni təşkilatın sədri vəzifəsinə bu məsələnin
                         əsas təşəbbüskarı olan və hələ özünün Naxçıvanda işlədiyi illərdən istedadlı gənc teatr rəssamı kimi tanıdığı Məmməd Qasımovun namizədliyini tövsiyə etmişdir.</p>
                 </div>
             </div>
             <div class="vc_item row">
-                <div class="col-xl-6 col-lg-6 col-md-12 acrylic">
-                    <h2>Əsər 2</h2>
+                <div class="col-xl-6 col-lg-6 col-md-12 acrylic wow bounceIn">
+                    <h2>Boya</h2>
                     <p>1971-ci ilin iyun ayında Naxçıvan Rəssamlar Təşkilatının yaradılmasına hazırlıq işlərinin tamamlanması barədə hökumət strukturlarına və Rəssamlar İttifaqına göstəriş verən ümummilli liderimiz yeni təşkilatın sədri vəzifəsinə bu məsələnin
                         əsas təşəbbüskarı olan və hələ özünün Naxçıvanda işlədiyi illərdən istedadlı gənc teatr rəssamı kimi tanıdığı Məmməd Qasımovun namizədliyini tövsiyə etmişdir.</p>
                 </div>
@@ -261,15 +204,15 @@
                     </button>
 
                 </div>
-                <div class="col-xl-6 col-lg-6 col-md-12 acrylic">
-                    <h2>Əsər 3</h2>
+                <div class="col-xl-6 col-lg-6 col-md-12 acrylic wow bounceIn">
+                    <h2>Rəngkarlıq</h2>
                     <p>1971-ci ilin iyun ayında Naxçıvan Rəssamlar Təşkilatının yaradılmasına hazırlıq işlərinin tamamlanması barədə hökumət strukturlarına və Rəssamlar İttifaqına göstəriş verən ümummilli liderimiz yeni təşkilatın sədri vəzifəsinə bu məsələnin
                         əsas təşəbbüskarı olan və hələ özünün Naxçıvanda işlədiyi illərdən istedadlı gənc teatr rəssamı kimi tanıdığı Məmməd Qasımovun namizədliyini tövsiyə etmişdir.</p>
                 </div>
             </div>
             <div class="vc_item row">
-                <div class="col-xl-6 col-lg-6 col-md-12 acrylic">
-                    <h2>Əsər 4</h2>
+                <div class="col-xl-6 col-lg-6 col-md-12 acrylic wow bounceIn">
+                    <h2>Heykəltəraşlıq</h2>
                     <p>1971-ci ilin iyun ayında Naxçıvan Rəssamlar Təşkilatının yaradılmasına hazırlıq işlərinin tamamlanması barədə hökumət strukturlarına və Rəssamlar İttifaqına göstəriş verən ümummilli liderimiz yeni təşkilatın sədri vəzifəsinə bu məsələnin
                         əsas təşəbbüskarı olan və hələ özünün Naxçıvanda işlədiyi illərdən istedadlı gənc teatr rəssamı kimi tanıdığı Məmməd Qasımovun namizədliyini tövsiyə etmişdir.</p>
                 </div>

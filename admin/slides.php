@@ -3,11 +3,10 @@ session_start();
 if ($_SESSION['logged_in'] == 1) {
     include '../config/config.php';
 
-    if(isset($_GET['id']) and !empty($_GET['id']))
-    {
+    if (isset($_GET['id']) and !empty($_GET['id'])) {
         $slider_id = intval($_GET['id']);
-        mysqli_query($conn,"DELETE FROM `slider` WHERE `id`=$slider_id");
-        mysqli_query($conn,"DELETE FROM `slider_translation` WHERE `slider_id`=$slider_id");
+        mysqli_query($conn, "DELETE FROM `slider` WHERE `id`=$slider_id");
+        mysqli_query($conn, "DELETE FROM `slider_translation` WHERE `slider_id`=$slider_id");
         header('slider.php');
     }
 ?>
@@ -36,43 +35,63 @@ if ($_SESSION['logged_in'] == 1) {
                                 <h6 class="m-0 font-weight-bold text-primary">Siyahı Slayder</h6>
                             </div>
                             <div class="card-body">
-                                <div class="table-responsive">
-                                    <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                                        <div class="create-button">
-                                            <a href="form-slider.php" class="btn btn-primary"><i class="fas fa-plus-square"></i></a>
-                                        </div>
-                                        <br>
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
-                                                    <thead>
-                                                        <tr role="row"  style="text-align: center;">
-                                                            <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 180px;">Şəkil</th>
-                                                            <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Rəssamın adı</th>
-                                                            <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Başlıq</th>
-                                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 163px;">Əməliyyatlar</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tfoot>
-                                                        <tr style="text-align: center;">
-                                                            <th rowspan="1" colspan="1">Şəkil</th>
-                                                            <th rowspan="1" colspan="1">Rəssamın adı</th>
-                                                            <th rowspan="1" colspan="1">Başlıq</th>
-                                                            <th rowspan="1" colspan="1">Əməliyyatlar</th>
-                                                        </tr>
-                                                    </tfoot>
-                                                    <tbody>
+                                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                    <div class="create-button">
+                                        <a href="form-slider.php" class="btn btn-primary"><i class="fas fa-plus-square"></i></a>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                                <thead>
+                                                    <tr role="row" style="text-align: center;">
+                                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 180px;">Şəkil</th>
+                                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Rəssamın adı</th>
+                                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Başlıq</th>
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 163px;">Əməliyyatlar</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    include '../config/config.php';
+
+                                                    $select_sql = "SELECT s.id as id_slider, s.painter_id, s.image, s.status, st.* FROM orient_ressamlar.slider s 
+                                                                       INNER JOIN orient_ressamlar.slider_translation st ON st.slider_id=s.id
+                                                                       Where st.lang_id=1 and s.status=1 and s.painter_id=0 ORDER BY s.`id` desc";
+                                                    $result     = mysqli_query($conn, $select_sql);
+                                                    $rows       = mysqli_fetch_array($result, MYSQLI_ASSOC)
+                                                    ?>
+                                                    <tr role="row" class="even bg-gray-400 bg-gradient">
                                                         <?php
-                                                        include '../config/config.php';
-                                                        include '../config/vars.php';
-                                                        $select_sql = "SELECT * FROM orient_ressamlar.slider_translation st 
-                                                               INNER JOIN orient_ressamlar.slider s ON st.slider_id=s.id 
-                                                               Where st.lang_id=1 and s.status=1 ORDER BY `id` desc";
-                                                        $result     = mysqli_query($conn, $select_sql);
-                                                        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                                                        if (empty($rows['image']))
+                                                            echo "<td><img src='../uploads/noPhoto.png' class='img-thumbnail' width='200px' height='200px'></td>";
+                                                        else
+                                                            echo "<td><img id='previewImage' src='../uploads/" . $rows['image'] . "' class='img-thumbnail' width='200px' height='200px'></td>";
                                                         ?>
+                                                        <td class="sorting_1">Əsas şəkil</td>
+                                                        <td class="sorting_1"><?= $rows['title']; ?></td>
+                                                        <td class="edit-buttons">
+                                                            <div class="button-section">
+                                                                <a href="form-slider.php?id=<?= $rows['id_slider']; ?>" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                                                                <a onclick="deleteItem(this);" data-id-number="<?= $rows['id_slider']; ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                    $page = isset($_GET['page']) ? $_GET['page'] : 1;
+                                                    $number_of_content = mysqli_num_rows(mysqli_query($conn, 'SELECT `id` FROM `slider`'));
+                                                    $limit = 3;
+                                                    $lastpage = ceil($number_of_content / $limit);
+                                                    $start = ($page - 1) * $limit;
+                                                    if ($lastpage >= $page) {
+                                                        $result = mysqli_query($conn, 'SELECT s.id as id_slider, s.painter_id, s.image, s.status, st.*, p.* FROM orient_ressamlar.slider s 
+                                                                                           INNER JOIN orient_ressamlar.slider_translation st ON st.slider_id=s.id
+                                                                                           INNER JOIN orient_ressamlar.painters p ON p.id=s.painter_id
+                                                                                           Where st.lang_id=1 and s.status=1 ORDER BY s.`id` desc LIMIT ' . $start . ',' . $limit);
+                                                        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                                                    ?>
                                                             <tr role="row" class="even">
-                                                            <?php
+                                                                <?php
                                                                 if (empty($row['image']))
                                                                     echo "<td><img src='../uploads/noPhoto.png' class='img-thumbnail' width='200px' height='200px'></td>";
                                                                 else
@@ -82,18 +101,55 @@ if ($_SESSION['logged_in'] == 1) {
                                                                 <td class="sorting_1"><?= $row['title']; ?></td>
                                                                 <td class="edit-buttons">
                                                                     <div class="button-section">
-                                                                        <a href="form-slider.php?id=<?= $row['id']; ?>" class="btn btn-success"><i class="fas fa-edit"></i></a>
-                                                                        <a onclick="sil(this);" data-id-number="<?= $row['id']; ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                                                        <a href="form-slider.php?id=<?= $row['id_slider']; ?>" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                                                                        <a onclick="deleteItem(this);" data-id-number="<?= $row['id_slider']; ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
                                                                     </div>
                                                                 </td>
                                                             </tr>
                                                         <?php
                                                         }
                                                         ?>
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                                </tbody>
+                                            </table>
+                                        <?php
+                                                    }
+                                                    if ($number_of_content > $limit) {
+                                                        $x = 2;
+                                                        if ($page > 1) {
+                                                            $previous = $page - 1;
+                                                            echo '<a href="?page=' . $previous . '" style= "margin-left: 45%; display: inline-block;">« Öncəki </a>';
+                                                        }
+                                                        if ($page == 1) {
+                                                            echo '<a style= "margin-left: 45%;">[1]</a>';
+                                                        } else {
+                                                            echo '<a href="?page=1" style= "margin-left: 10px;">1</a>';
+                                                        }
+                                                        if ($page - $x > 2) {
+                                                            echo '...';
+                                                            $i = $page - $x;
+                                                        } else {
+                                                            $i = 2;
+                                                        }
+                                                        for ($i; $i <= $page + $x; $i++) {
+                                                            if ($i == $page) {
+                                                                echo '&nbsp;<a style= "margin-left: 10px;">[' . $i . ']</a>&nbsp;';
+                                                            } else {
+                                                                echo '<a href="?page=' . $i . '" style= "margin-left: 10px;">' . $i . '</a>';
+                                                            }
+                                                            if ($i == $lastpage) break;
+                                                        }
+                                                        if ($page + $x < $lastpage - 1) {
+                                                            echo '...';
+                                                            echo '<a href="?page=' . $lastpage . '" style= "margin-left: 10px;">' . $lastpage . '</a>';
+                                                        } elseif ($page + $x == $lastpage - 1) {
+                                                            echo '<a href="?page=' . $lastpage . '" style= "margin-left: 10px;">' . $lastpage . '</a>';
+                                                        }
+                                                        if ($page < $lastpage) {
+                                                            $next = $page + 1;
+                                                            echo '<a href="?page=' . $next . '" style= "margin-left: 10px;"> Sonrakı » </a>';
+                                                        }
+                                                    }
+                                        ?>
                                         </div>
                                     </div>
                                 </div>
@@ -111,27 +167,28 @@ if ($_SESSION['logged_in'] == 1) {
 
     </body>
     <script>
-            function sil(id) {
-                var thisId = id.getAttribute("data-id-number");
-                swal({
-                        title: "Silmək istəyirsinizmi?",
-                        icon: "warning",
-                        buttons: true,
-                        dangerMode: true,
-                        buttons: ['Xeyr', 'Bəli'],
-                    })
-                    .then((result) => {
-                        if (result) {
-                            swal("Silindi", {
-                                icon: "success",
-                            });
-                            window.location.href = "slides.php?id=" + thisId;
-                        } else {
-                            swal("Silinmədi");
-                        }
-                    });
-            };
-        </script>
+        function deleteItem(id) {
+            var thisId = id.getAttribute("data-id-number");
+            swal({
+                    title: "Silmək istəyirsinizmi?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                    buttons: ['Xeyr', 'Bəli'],
+                })
+                .then((result) => {
+                    if (result) {
+                        swal("Silindi", {
+                            icon: "success",
+                        });
+                        window.location.href = "slides.php?id=" + thisId;
+                    } else {
+                        swal("Silinmədi");
+                    }
+                });
+        };
+    </script>
+
     </html>
 
 <?php

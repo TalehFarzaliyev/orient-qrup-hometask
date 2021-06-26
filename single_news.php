@@ -11,23 +11,29 @@
         <div class="menu-name"></div>
     </div>
 
-    <?php include 'includes/theme.php'; ?>
+    <?php include 'includes/theme.php';
+    include 'config/config.php';
+    if (isset($_GET['post']) and !empty($_GET['post'])) {
+        $post           = intval($_GET['post']);
+        $select_news    = "SELECT p.id as id_post, p.image, p.created_date, p.category_id, pt.*, mt.*, m.* FROM orient_ressamlar.posts p 
+                           INNER JOIN orient_ressamlar.posts_translation pt ON pt.post_id=p.id
+                           INNER JOIN orient_ressamlar.menu_translation mt 
+                           INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
+                           WHERE pt.lang_id=1 && p.status=1 && p.category_id=m.id && mt.name='xəbərlər' && mt.lang_id=1 && p.`id`='$post'";
+        $result         = mysqli_query($conn, $select_news);
+        $news_row       = mysqli_fetch_array($result, MYSQLI_ASSOC);
+    }
+    ?>
 
     <div class="portfolio change-theme">
-        <div class="icon title-line">
-            <img src="assets/img/title-line.png">
-        </div>
         <div class="portfolio-pictures">
             <div id="first-category" class="port-picture container img-section">
                 <div class="single-img news-img">
-                    <img class="img-thumbnail" src="assets/img/1.jpg">
+                    <img class="img-thumbnail" src="uploads/<?= $news_row['image']; ?>">
                 </div>
-                <h4 class="news-head">Xəbərin başlığı</h4>
-                <p>Lorem mətn şəhəri ğasəliç ipsum dolor sit amet consectetur adipisicing elit. Molestiae eius pariatur repudiandae architecto ratione rem, voluptatum nisi maxime voluptate quod quo fuga dolores quaerat optio voluptatibus distinctio iste
-                    recusandae qui amet ex. Delectus sit magni nihil magnam vel accusantium nisi illum quod ipsa commodi laborum assumenda minima minus, architecto quas fugit quo! Hic, velit iste dolore voluptatibus excepturi quia corporis sequi dicta.
-                    Harum natus quo dolor aliquam. Voluptatem, nam dolore dolor modi tempora aspernatur consequatur nulla aut repudiandae id numquam perferendis eum sed ab nesciunt repellat est pariatur vero ipsum quas! Laudantium est id unde, repudiandae
-                    o earum officiis necessitatibus.</p>
-                <span><i class="far fa-clock"></i>&nbsp;21.10.2020 15:48</span>
+                <h4 class="news-head"><?= $news_row['title']; ?></h4>
+                <p><?= $news_row['content']; ?></p>
+                <span><i class="far fa-clock"></i>&nbsp;<?= date('d.m.Y H:i', strtotime($news_row['created_date'])); ?></span>
             </div>
         </div>
     </div>

@@ -206,7 +206,6 @@ if ($_SESSION['logged_in'] == 1) {
                                                 <?php
                                                 }
                                                 ?>
-
                                             </select>
                                         </div>
                                         <div class="form-group">

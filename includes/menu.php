@@ -1,3 +1,10 @@
+<?php
+// include 'config/config.php';
+// $result = mysqli_query($conn, 'SELECT * FROM orient_ressamlar.menu_translation mt 
+//                                INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
+//                                Where mt.lang_id=1 and m.status=1 order by m.`order_number` ASC');
+// $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
+?>
 <div class="menu-side">
     <a href="index.php" class="logo-item">
         <img class="menu-logo1" src="assets/img/logo_img.png" alt="">

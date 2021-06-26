@@ -513,6 +513,7 @@ body {
     body .news-section .owl-carousel .card {
       background: #a19e9e;
       width: 250px;
+      height: 370px;
       margin: auto; }
       body .news-section .owl-carousel .card .card-img-top {
         height: 180px; }

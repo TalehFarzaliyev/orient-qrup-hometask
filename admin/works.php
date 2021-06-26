@@ -35,41 +35,38 @@ if ($_SESSION['logged_in'] == 1) {
                                 <h6 class="m-0 font-weight-bold text-primary"></h6>
                             </div>
                             <div class="card-body">
-                                <div class="table-responsive">
-                                    <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                                        <div class="create-button">
-                                            <a href="form-works.php?painter=<?= $_GET['painter'] ?>" class="btn btn-primary"><i class="fas fa-plus-square"></i></a>
-                                        </div>
-                                        <br>
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
-                                                    <thead>
-                                                        <tr role="row" style="text-align: center;">
-                                                            <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 180px;">Şəkil</th>
-                                                            <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Əsərin adı</th>
-                                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 163px;">Əməliyyatlar</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tfoot>
-                                                        <tr style="text-align: center;">
-                                                            <th rowspan="1" colspan="1">Şəkil</th>
-                                                            <th rowspan="1" colspan="1">Əsərin adı</th>
-                                                            <th rowspan="1" colspan="1">Əməliyyatlar</th>
-                                                        </tr>
-                                                    </tfoot>
-                                                    <tbody>
-                                                        <?php
-                                                        include '../config/config.php';
-                                                        if (isset($_GET['painter']) and !empty($_GET['painter'])) {
-                                                            $painter     = intval($_GET['painter']);
-                                                            $select_sql  = "SELECT * FROM orient_ressamlar.painters p 
-                                                                            INNER JOIN orient_ressamlar.works w 
-                                                                            INNER JOIN orient_ressamlar.works_translation wt ON w.id=wt.work_id 
-                                                                            Where w.painter_id=p.id && wt.lang_id=1 && w.`painter_id`='$painter' ORDER BY w.`id` desc";
-                                                            $result      = mysqli_query($conn, $select_sql);
+                                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                    <div class="create-button">
+                                        <a href="form-works.php?painter=<?= $_GET['painter'] ?>" class="btn btn-primary"><i class="fas fa-plus-square"></i></a>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                                <thead>
+                                                    <tr role="row" style="text-align: center;">
+                                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 180px;">Şəkil</th>
+                                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Əsərin adı</th>
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 163px;">Əməliyyatlar</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    include '../config/config.php';
+                                                    if (isset($_GET['painter']) and !empty($_GET['painter'])) {
+                                                        $painter     = intval($_GET['painter']);
+                                                        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT `id` FROM `works` WHERE `painter_id`='$painter'"));
+                                                        $limit = 3;
+                                                        $lastpage = ceil($number_of_content / $limit);
+                                                        $start = ($page - 1) * $limit;
+                                                        if ($lastpage >= $page) {
+                                                            $result = mysqli_query($conn, "SELECT * FROM orient_ressamlar.painters p 
+                                                                                    INNER JOIN orient_ressamlar.works w 
+                                                                                    INNER JOIN orient_ressamlar.works_translation wt ON w.id=wt.work_id 
+                                                                                    Where w.painter_id=p.id && wt.lang_id=1 && w.`painter_id`='$painter' ORDER BY w.`id` desc LIMIT " . $start . ',' . $limit);
                                                             while ($row  = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                                                        ?>
+                                                    ?>
                                                                 <tr role="row" class="even">
                                                                     <?php
                                                                     if (empty($row['work_image']))
@@ -81,17 +78,54 @@ if ($_SESSION['logged_in'] == 1) {
                                                                     <td class="edit-buttons">
                                                                         <div class="button-section">
                                                                             <a href="form-works.php?id=<?= $row['id']; ?>&painter=<?= $_GET['painter'] ?>" class="btn btn-success"><i class="fas fa-edit"></i></a>
-                                                                            <a onclick="sil(this);" data-id-number="<?= $row['id']; ?>&painter=<?= $_GET['painter'] ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                                                            <a onclick="deleteItem(this);" data-id-number="<?= $row['id']; ?>&painter=<?= $_GET['painter'] ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
                                                                         </div>
                                                                     </td>
-                                                                </tr>
-                                                        <?php
+                                                            <?php
                                                             }
                                                         }
-                                                        ?>
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                                            ?>
+                                                </tbody>
+                                            </table>
+                                        <?php
+                                                    }
+                                                    if ($number_of_content > $limit) {
+                                                        $x = 2;
+                                                        if ($page > 1) {
+                                                            $previous = $page - 1;
+                                                            echo '<a href="?page=' . $previous . '&painter= ' . $_GET['painter'] . '" style= "margin-left: 45%; display: inline-block;">« Öncəki </a>';
+                                                        }
+                                                        if ($page == 1) {
+                                                            echo '<a style= "margin-left: 45%;">[1]</a>';
+                                                        } else {
+                                                            echo '<a href="?page=1&painter= ' . $_GET['painter'] . '" style= "margin-left: 10px;">1</a>';
+                                                        }
+                                                        if ($page - $x > 2) {
+                                                            echo '...';
+                                                            $i = $page - $x;
+                                                        } else {
+                                                            $i = 2;
+                                                        }
+                                                        for ($i; $i <= $page + $x; $i++) {
+                                                            if ($i == $page) {
+                                                                echo '&nbsp;<a style= "margin-left: 10px;">[' . $i . ']</a>&nbsp;';
+                                                            } else {
+                                                                echo '<a href="?page=' . $i . '&painter= ' . $_GET['painter'] . '" style= "margin-left: 10px;">' . $i . '</a>';
+                                                            }
+                                                            if ($i == $lastpage) break;
+                                                        }
+                                                        if ($page + $x < $lastpage - 1) {
+                                                            echo '...';
+                                                            echo '<a href="?page=' . $lastpage . '&painter= ' . $_GET['painter'] . '" style= "margin-left: 10px;">' . $lastpage . '</a>';
+                                                        } elseif ($page + $x == $lastpage - 1) {
+                                                            echo '<a href="?page=' . $lastpage . '&painter= ' . $_GET['painter'] . '" style= "margin-left: 10px;">' . $lastpage . '</a>';
+                                                        }
+                                                        if ($page < $lastpage) {
+                                                            $next = $page + 1;
+                                                            echo '<a href="?page=' . $next . '&painter= ' . $_GET['painter'] . '" style= "margin-left: 10px;"> Sonrakı » </a>';
+                                                        }
+                                                    }
+                                        ?>
                                         </div>
                                     </div>
                                 </div>
@@ -108,7 +142,7 @@ if ($_SESSION['logged_in'] == 1) {
 
         <?php include 'includes/footer.php'; ?>
         <script>
-            function sil(id) {
+            function deleteItem(id) {
                 var thisId = id.getAttribute("data-id-number");
                 swal({
                         title: "Silmək istəyirsinizmi?",
