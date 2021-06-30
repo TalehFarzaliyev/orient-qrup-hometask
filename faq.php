@@ -20,12 +20,12 @@
 
     <div class="blog contact change-theme">
         <div class="section-header">
-            <h2>PRIVACY POLICY</h2>
+            <h2>FAQ</h2>
             <div class="title-line">
                 <img class="line" src="assets/img/title-line.png" alt="">
             </div>
         </div>
-        <div class="container privacy-text"><?=$setting['privacy_policy'];?></div>
+        <div class="container privacy-text"><?=$setting['faq'];?></div>
     </div>
 
     <?php } include 'includes/footer.php'; ?>

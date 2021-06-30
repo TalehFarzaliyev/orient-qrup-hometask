@@ -19,24 +19,24 @@ if ($_SESSION['logged_in'] == 1) {
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $facebook    = (isset($_POST['facebook'])) ? trim($_POST['facebook']) : '';
-            $instagram   = (isset($_POST['instagram'])) ? trim($_POST['instagram']) : '';
-            $gmail       = (isset($_POST['gmail'])) ? trim($_POST['gmail']) : '';
-            $youtube     = (isset($_POST['youtube'])) ? trim($_POST['youtube']) : '';
-            $phone       = (isset($_POST['phone'])) ? trim($_POST['phone']) : '';
-            $translation     = (isset($_POST['translation'])) ? $_POST['translation'] : [];
+        $facebook    = (isset($_POST['facebook'])) ? trim($_POST['facebook']) : '';
+        $instagram   = (isset($_POST['instagram'])) ? trim($_POST['instagram']) : '';
+        $gmail       = (isset($_POST['gmail'])) ? trim($_POST['gmail']) : '';
+        $youtube     = (isset($_POST['youtube'])) ? trim($_POST['youtube']) : '';
+        $phone       = (isset($_POST['phone'])) ? trim($_POST['phone']) : '';
+        $translation     = (isset($_POST['translation'])) ? $_POST['translation'] : [];
 
-            $update_settings = "UPDATE `settings` SET `facebook`='$facebook', `instagram`='$instagram', `gmail`='$gmail',`youtube`='$youtube', `phone`='$phone' WHERE `id`=$settings_id";
-            $result_update   = mysqli_query($conn, $update_settings);
-            if ($result_update) {
-                mysqli_query($conn, "DELETE FROM `settings_translation` WHERE `settings_id`=$settings_id");
-                foreach ($translation as $key => $value) {
-                    $insert_translation       = "INSERT INTO `settings_translation`(`settings_id`,`lang_id`,`title`,`description`,`keywords`,`address`) VALUES ('$settings_id','$key','" . $value['title'] . "','" . $value['description'] . "','" . $value['keywords'] . "','" . $value['address'] . "')";
-                    mysqli_query($conn, $insert_translation);
-                }
+        $update_settings = "UPDATE `settings` SET `facebook`='$facebook', `instagram`='$instagram', `gmail`='$gmail',`youtube`='$youtube', `phone`='$phone' WHERE `id`=$settings_id";
+        $result_update   = mysqli_query($conn, $update_settings);
+        if ($result_update) {
+            mysqli_query($conn, "DELETE FROM `settings_translation` WHERE `settings_id`=$settings_id");
+            foreach ($translation as $key => $value) {
+                $insert_translation       = "INSERT INTO `settings_translation`(`settings_id`,`lang_id`,`title`,`description`,`keywords`,`address`,`privacy_policy`,`terms_of_use`,`faq`) VALUES ('$settings_id','$key','" . $value['title'] . "','" . $value['description'] . "','" . $value['keywords'] . "','" . $value['address'] . "','" . $value['privacy_policy'] . "','" . $value['terms_of_use'] . "','" . $value['faq'] . "')";
+                mysqli_query($conn, $insert_translation);
             }
-            header("Location: form-settings.php?id=1");
         }
+        header("Location: form-settings.php?id=1");
+    }
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -121,6 +121,18 @@ if ($_SESSION['logged_in'] == 1) {
                                                     <label for="exampleFormControlInput1">Adres</label>
                                                     <input type="text" name="translation[<?= $value['lang_id'] ?>][address]" required value="<?= $value['address']; ?>" class="form-control" id="exampleFormControlInput1">
                                                 </div>
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlInput1">Gizlilik siyasəti</label>
+                                                    <textarea name="translation[<?= $value['lang_id'] ?>][privacy_policy]" cols="40" rows="10" required class="form-control editor" id="editor<?= $value['lang_id'] ?>" style="visibility:hidden; display: none;"><?= $value['privacy_policy']; ?></textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlInput1">İstifadə şərtləri</label>
+                                                    <textarea name="translation[<?= $value['lang_id'] ?>][terms_of_use]" cols="40" rows="10" required class="form-control editor" id="editor<?= $value['lang_id'] ?>" style="visibility:hidden; display: none;"><?= $value['terms_of_use']; ?></textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlInput1">Tez-tez verilən suallar</label>
+                                                    <textarea name="translation[<?= $value['lang_id'] ?>][faq]" cols="40" rows="10" required class="form-control editor" id="editor<?= $value['lang_id'] ?>" style="visibility:hidden; display: none;"><?= $value['faq']; ?></textarea>
+                                                </div>
                                             </div>
                                         <?php
                                         }
@@ -142,7 +154,19 @@ if ($_SESSION['logged_in'] == 1) {
         </div>
 
         <?php include 'includes/footer.php'; ?>
-        
+
+        <script type="text/javascript">
+            var id = 1;
+            $('textarea.editor').each(function() {
+                $(this).attr("id", "editor" + id);
+                CKEDITOR.replace('editor' + id, {
+                    height: '300px',
+
+                });
+                id = id + 1;
+            });
+        </script>
+
     </body>
 
     </html>

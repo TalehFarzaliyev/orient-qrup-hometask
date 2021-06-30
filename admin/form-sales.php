@@ -185,7 +185,6 @@ if ($_SESSION['logged_in'] == 1) {
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">Rəssam</label>
                                             <select class="form-control" name="painter_id" id="exampleFormControlSelect1">
-                                                <option value="0">Seç</option>
                                                 <?php
                                                 $select_sql  = "SELECT * FROM orient_ressamlar.painters  
                                                                 WHERE `status`=1";

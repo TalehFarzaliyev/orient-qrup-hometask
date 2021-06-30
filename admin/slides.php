@@ -56,8 +56,8 @@ if ($_SESSION['logged_in'] == 1) {
                                                     include '../config/config.php';
 
                                                     $select_sql = "SELECT s.id as id_slider, s.painter_id, s.image, s.status, st.* FROM orient_ressamlar.slider s 
-                                                                       INNER JOIN orient_ressamlar.slider_translation st ON st.slider_id=s.id
-                                                                       Where st.lang_id=1 and s.status=1 and s.painter_id=0 ORDER BY s.`id` desc";
+                                                                   INNER JOIN orient_ressamlar.slider_translation st ON st.slider_id=s.id
+                                                                   Where st.lang_id=1 and s.status=1 and s.painter_id=0 ORDER BY s.`id` desc";
                                                     $result     = mysqli_query($conn, $select_sql);
                                                     $rows       = mysqli_fetch_array($result, MYSQLI_ASSOC)
                                                     ?>
@@ -85,9 +85,9 @@ if ($_SESSION['logged_in'] == 1) {
                                                     $start = ($page - 1) * $limit;
                                                     if ($lastpage >= $page) {
                                                         $result = mysqli_query($conn, 'SELECT s.id as id_slider, s.painter_id, s.image, s.status, st.*, p.* FROM orient_ressamlar.slider s 
-                                                                                           INNER JOIN orient_ressamlar.slider_translation st ON st.slider_id=s.id
-                                                                                           INNER JOIN orient_ressamlar.painters p ON p.id=s.painter_id
-                                                                                           Where st.lang_id=1 and s.status=1 ORDER BY s.`id` desc LIMIT ' . $start . ',' . $limit);
+                                                                                       INNER JOIN orient_ressamlar.slider_translation st ON st.slider_id=s.id
+                                                                                       INNER JOIN orient_ressamlar.painters p ON p.id=s.painter_id
+                                                                                       Where st.lang_id=1 and s.status=1 ORDER BY s.`id` desc LIMIT ' . $start . ',' . $limit);
                                                         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                                                     ?>
                                                             <tr role="row" class="even">
@@ -111,16 +111,17 @@ if ($_SESSION['logged_in'] == 1) {
                                                         ?>
                                                 </tbody>
                                             </table>
-                                        <?php
+                                            <div class="text-center">
+                                            <?php
                                                     }
                                                     if ($number_of_content > $limit) {
                                                         $x = 2;
                                                         if ($page > 1) {
                                                             $previous = $page - 1;
-                                                            echo '<a href="?page=' . $previous . '" style= "margin-left: 45%; display: inline-block;">« Öncəki </a>';
+                                                            echo '<a href="?page=' . $previous . '">« Öncəki </a>';
                                                         }
                                                         if ($page == 1) {
-                                                            echo '<a style= "margin-left: 45%;">[1]</a>';
+                                                            echo '<a>[1]</a>';
                                                         } else {
                                                             echo '<a href="?page=1" style= "margin-left: 10px;">1</a>';
                                                         }
@@ -149,7 +150,8 @@ if ($_SESSION['logged_in'] == 1) {
                                                             echo '<a href="?page=' . $next . '" style= "margin-left: 10px;"> Sonrakı » </a>';
                                                         }
                                                     }
-                                        ?>
+                                            ?>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

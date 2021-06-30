@@ -87,16 +87,17 @@ if ($_SESSION['logged_in'] == 1) {
                                                             ?>
                                                 </tbody>
                                             </table>
-                                        <?php
+                                            <div class="text-center">
+                                            <?php
                                                     }
                                                     if ($number_of_content > $limit) {
                                                         $x = 2;
                                                         if ($page > 1) {
                                                             $previous = $page - 1;
-                                                            echo '<a href="?page=' . $previous . '&painter= ' . $_GET['painter'] . '" style= "margin-left: 45%; display: inline-block;">« Öncəki </a>';
+                                                            echo '<a href="?page=' . $previous . '&painter= ' . $_GET['painter'] . '">« Öncəki </a>';
                                                         }
                                                         if ($page == 1) {
-                                                            echo '<a style= "margin-left: 45%;">[1]</a>';
+                                                            echo '<a>[1]</a>';
                                                         } else {
                                                             echo '<a href="?page=1&painter= ' . $_GET['painter'] . '" style= "margin-left: 10px;">1</a>';
                                                         }
@@ -125,7 +126,8 @@ if ($_SESSION['logged_in'] == 1) {
                                                             echo '<a href="?page=' . $next . '&painter= ' . $_GET['painter'] . '" style= "margin-left: 10px;"> Sonrakı » </a>';
                                                         }
                                                     }
-                                        ?>
+                                            ?>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

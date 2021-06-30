@@ -4,8 +4,8 @@
       <div class="first-row">
          <a class="footer-item" href="contact.php">contact</a>
          <a class="footer-item" href="privacy.php">privacy policy</a>
-         <a class="footer-item" href="privacy.php">terms of use</a>
-         <a class="footer-item" href="privacy.php">faq</a>
+         <a class="footer-item" href="terms_of_use.php">terms of use</a>
+         <a class="footer-item" href="faq.php">faq</a>
       </div>
    </div>
 </footer>
@@ -20,7 +20,6 @@
    });
 </script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/wow/0.1.12/wow.min.js"></script>
-<!-- <script src="assets/js/wow.min.js"></script> -->
 <script>
    new WOW().init();
 </script>
