@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jun 30, 2021 at 12:39 PM
+-- Generation Time: Jul 03, 2021 at 08:46 AM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -294,7 +294,7 @@ CREATE TABLE IF NOT EXISTS `posts_gallery` (
   `post_id` int(11) DEFAULT NULL,
   `gallery_image` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=205 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `posts_gallery`
@@ -331,7 +331,9 @@ INSERT INTO `posts_gallery` (`id`, `post_id`, `gallery_image`) VALUES
 (197, 15, 'uploaded-60d5d5594a9be4.11992486.jpg'),
 (198, 15, 'uploaded-60d5d886bd6401.52616722.jpg'),
 (199, 15, 'uploaded-60d5d91fd7fb82.57723366.jpg'),
-(200, 13, 'uploaded-60d612ecb873d5.73614072.jpg');
+(200, 13, 'uploaded-60d612ecb873d5.73614072.jpg'),
+(201, 19, 'uploaded-60df0e305629c0.73286596.jpg'),
+(203, 19, 'uploaded-60df0e30cd0566.04704061.jpg');
 
 -- --------------------------------------------------------
 

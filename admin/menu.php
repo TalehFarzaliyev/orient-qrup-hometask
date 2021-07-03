@@ -38,8 +38,19 @@ if ($_SESSION['logged_in'] == 1) {
                             </div>
                             <div class="card-body">
                                 <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                                    <div class="create-button">
-                                        <a href="form-menu.php" class="btn btn-primary"><i class="fas fa-plus-square"></i></a>
+                                    <div class="row">
+                                        <div class="create-button col-8">
+                                            <a href="form-menu.php" class="btn btn-primary"><i class="fas fa-plus-square"></i></a>
+                                        </div>
+
+                                        <div class="input-group col-4">
+                                            <form method="post" action="menu.php" class="d-flex">
+                                                <input type="text" class="form-control" style="height: 40px;" placeholder="Axtarış" name="search">
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                     <br>
                                     <div class="row">
@@ -57,14 +68,27 @@ if ($_SESSION['logged_in'] == 1) {
                                                     <?php
                                                     include '../config/config.php';
                                                     $page = isset($_GET['page']) ? $_GET['page'] : 1;
-                                                    $number_of_content = mysqli_num_rows(mysqli_query($conn, 'SELECT `id` FROM `menu`'));
+                                                    if (isset($_REQUEST['search'])) {
+                                                        $name = $_POST['search'];;
+                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT id FROM `menu` m
+                                                                                                                  INNER JOIN `menu_translation` mt ON m.id=mt.menu_id
+                                                                                                                  WHERE mt.lang_id=1 and m.status=1 and mt.`name` like '%" . $name . "%'"));
+                                                    } else {
+                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, 'SELECT `id` FROM `menu` WHERE `status`=1'));
+                                                    }
                                                     $limit = 7;
                                                     $lastpage = ceil($number_of_content / $limit);
                                                     $start = ($page - 1) * $limit;
                                                     if ($lastpage >= $page) {
-                                                        $result = mysqli_query($conn, 'SELECT * FROM orient_ressamlar.menu_translation mt 
-                                                                                       INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
-                                                                                       Where mt.lang_id=1 and m.status=1 order by m.`id` desc LIMIT ' . $start . ',' . $limit);
+                                                        if (isset($_REQUEST['search'])) {
+                                                            $result = mysqli_query($conn, "SELECT * FROM orient_ressamlar.menu_translation mt 
+                                                                                           INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
+                                                                                           Where mt.lang_id=1 and m.status=1 and mt.name like '%" . $name . "%' ORDER BY m.`id` desc LIMIT " . $start . ',' . $limit);
+                                                        } else {
+                                                            $result = mysqli_query($conn, 'SELECT * FROM orient_ressamlar.menu_translation mt 
+                                                                                           INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
+                                                                                           Where mt.lang_id=1 and m.status=1 order by m.`id` desc LIMIT ' . $start . ',' . $limit);
+                                                        }
                                                         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                                                     ?>
                                                             <tr role="row" class="even">

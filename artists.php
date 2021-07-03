@@ -41,7 +41,7 @@
                         </li>
                         <div class="linkhover">
                             <div class="hovericon">
-                                <a href="singleimg.html" class="circle"><i class="fas fa-link icons"></i></a>
+                                <a href="singleimg.php" class="circle"><i class="fas fa-link icons"></i></a>
                                 <a href="assets/img/s1.jpg" rel="prettyPhoto[gallery2]" id="search-button" class="circle"><i class="fas fa-search icons"></i></a>
                             </div>
                             <div class="hovertext">
@@ -57,7 +57,7 @@
                         </li>
                         <div class="linkhover">
                             <div class="hovericon">
-                                <a href="singleimg.html" class="circle"><i class="fas fa-link icons"></i></a>
+                                <a href="singleimg.php" class="circle"><i class="fas fa-link icons"></i></a>
                                 <a href="assets/img/s2.jpg" rel="prettyPhoto[gallery2]" id="search-button" class="circle"><i class="fas fa-search icons"></i></a>
                             </div>
                             <div class="hovertext">
@@ -75,7 +75,7 @@
                         </li>
                         <div class="linkhover">
                             <div class="hovericon">
-                                <a href="singleimg.html" class="circle"><i class="fas fa-link icons"></i></a>
+                                <a href="singleimg.php" class="circle"><i class="fas fa-link icons"></i></a>
                                 <a href="assets/img/s3.jpg" rel="prettyPhoto[gallery2]" id="search-button" class="circle"><i class="fas fa-search icons"></i></a>
                             </div>
                             <div class="hovertext">
@@ -91,7 +91,7 @@
                         </li>
                         <div class="linkhover">
                             <div class="hovericon">
-                                <a href="singleimg.html" class="circle"><i class="fas fa-link icons"></i></a>
+                                <a href="singleimg.php" class="circle"><i class="fas fa-link icons"></i></a>
                                 <a href="assets/img/s4.jpg" rel="prettyPhoto[gallery2]" id="search-button" class="circle"><i class="fas fa-search icons"></i></a>
                             </div>
                             <div class="hovertext">
@@ -109,7 +109,7 @@
                         </li>
                         <div class="linkhover">
                             <div class="hovericon">
-                                <a href="singleimg.html" class="circle"><i class="fas fa-link icons"></i></a>
+                                <a href="singleimg.php" class="circle"><i class="fas fa-link icons"></i></a>
                                 <a href="assets/img/s5.jpg" rel="prettyPhoto[gallery2]" id="search-button" class="circle"><i class="fas fa-search icons"></i></a>
                             </div>
                             <div class="hovertext">
@@ -125,7 +125,7 @@
                         </li>
                         <div class="linkhover">
                             <div class="hovericon">
-                                <a href="singleimg.html" class="circle"><i class="fas fa-link icons"></i></a>
+                                <a href="singleimg.php" class="circle"><i class="fas fa-link icons"></i></a>
                                 <a href="assets/img/s6.jpg" rel="prettyPhoto[gallery2]" id="search-button" class="circle"><i class="fas fa-search icons"></i></a>
                             </div>
                             <div class="hovertext">
@@ -143,7 +143,7 @@
                         </li>
                         <div class="linkhover">
                             <div class="hovericon">
-                                <a href="singleimg.html" class="circle"><i class="fas fa-link icons"></i></a>
+                                <a href="singleimg.php" class="circle"><i class="fas fa-link icons"></i></a>
                                 <a href="assets/img/s7.jpg" rel="prettyPhoto[gallery2]" id="search-button" class="circle"><i class="fas fa-search icons"></i></a>
                             </div>
                             <div class="hovertext">
@@ -159,7 +159,7 @@
                         </li>
                         <div class="linkhover">
                             <div class="hovericon">
-                                <a href="singleimg.html" class="circle"><i class="fas fa-link icons"></i></a>
+                                <a href="singleimg.php" class="circle"><i class="fas fa-link icons"></i></a>
                                 <a href="assets/img/s8.jpg" rel="prettyPhoto[gallery2]" id="search-button" class="circle"><i class="fas fa-search icons"></i></a>
                             </div>
                             <div class="hovertext">

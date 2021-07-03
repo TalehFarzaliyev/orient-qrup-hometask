@@ -2,7 +2,6 @@
 session_start();
 if ($_SESSION['logged_in'] == 1) {
     include '../config/config.php';
-
     if (isset($_GET['id']) and !empty($_GET['id'])) {
         $painter_id = intval($_GET['id']);
         mysqli_query($conn, "DELETE FROM `painters` WHERE `id`=$painter_id");
@@ -37,9 +36,21 @@ if ($_SESSION['logged_in'] == 1) {
                             </div>
                             <div class="card-body">
                                 <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                                    <div class="create-button">
-                                        <a href="form-artist.php" class="btn btn-primary"><i class="fas fa-plus-square"></i></a>
+                                    <div class="row">
+                                        <div class="create-button col-8">
+                                            <a href="form-artist.php" class="btn btn-primary"><i class="fas fa-plus-square"></i></a>
+                                        </div>
+
+                                        <div class="input-group col-4">
+                                            <form method="post" action="artists.php" class="d-flex">
+                                                <input type="text" class="form-control" style="height: 40px;" placeholder="Axtarış" name="search">
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
+
                                     <br>
                                     <div class="row">
                                         <div class="col-sm-12">
@@ -57,15 +68,27 @@ if ($_SESSION['logged_in'] == 1) {
                                                     <?php
                                                     include '../config/config.php';
                                                     $page = isset($_GET['page']) ? $_GET['page'] : 1;
-                                                    $number_of_content = mysqli_num_rows(mysqli_query($conn, 'SELECT `id` FROM `painters`'));
-                                                    $limit = 3;
+                                                    if (isset($_REQUEST['search'])) {
+                                                        $name = $_POST['search'];;
+                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `painters` WHERE `status`=1 and painter_name like '%" . $name . "%'"));
+                                                    } else {
+                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, 'SELECT `id` FROM `painters` WHERE `status`=1'));
+                                                    }
+                                                    $limit = 2;
                                                     $lastpage = ceil($number_of_content / $limit);
                                                     $start = ($page - 1) * $limit;
                                                     if ($lastpage >= $page) {
-                                                        $result = mysqli_query($conn, 'SELECT p.painter_name, p.id as artist_id, p.painter_surname, p.painter_image, p.categories, p.status, pt.*, mt.* FROM orient_ressamlar.painters p 
-                                                                                           INNER JOIN orient_ressamlar.painter_translation pt ON pt.painter_id=p.id
-                                                                                           INNER JOIN orient_ressamlar.menu_translation mt 
-                                                                                           WHERE pt.lang_id=1 && mt.lang_id=1 && p.categories=mt.menu_id && p.status=1 ORDER BY p.`id` desc LIMIT ' . $start . ',' . $limit);
+                                                        if (isset($_REQUEST['search'])) {
+                                                            $result = mysqli_query($conn, "SELECT p.painter_name, p.id as artist_id, p.painter_surname, p.painter_image, p.categories, p.status, pt.*, mt.* FROM orient_ressamlar.painters p 
+                                                            INNER JOIN orient_ressamlar.painter_translation pt ON pt.painter_id=p.id
+                                                            INNER JOIN orient_ressamlar.menu_translation mt 
+                                                            WHERE pt.lang_id=1 && mt.lang_id=1 && p.painter_name like '%" . $name . "%' && p.categories=mt.menu_id && p.status=1 ORDER BY p.`id` desc LIMIT " . $start . ',' . $limit);
+                                                        } else {
+                                                            $result = mysqli_query($conn, 'SELECT p.painter_name, p.id as artist_id, p.painter_surname, p.painter_image, p.categories, p.status, pt.*, mt.* FROM orient_ressamlar.painters p 
+                                                            INNER JOIN orient_ressamlar.painter_translation pt ON pt.painter_id=p.id
+                                                            INNER JOIN orient_ressamlar.menu_translation mt 
+                                                            WHERE pt.lang_id=1 && mt.lang_id=1 && p.categories=mt.menu_id && p.status=1 ORDER BY p.`id` desc LIMIT ' . $start . ',' . $limit);
+                                                        }
                                                         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                                                     ?>
                                                             <tr role="row" class="even">

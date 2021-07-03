@@ -36,8 +36,19 @@ if ($_SESSION['logged_in'] == 1) {
                             </div>
                             <div class="card-body">
                                 <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                                    <div class="create-button">
-                                        <a href="form-slider.php" class="btn btn-primary"><i class="fas fa-plus-square"></i></a>
+                                    <div class="row">
+                                        <div class="create-button col-8">
+                                            <a href="form-slider.php" class="btn btn-primary"><i class="fas fa-plus-square"></i></a>
+                                        </div>
+
+                                        <div class="input-group col-4">
+                                            <form method="post" action="slides.php" class="d-flex">
+                                                <input type="text" class="form-control" style="height: 40px;" placeholder="Axtarış" name="search">
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                     <br>
                                     <div class="row">
@@ -79,15 +90,29 @@ if ($_SESSION['logged_in'] == 1) {
                                                     </tr>
                                                     <?php
                                                     $page = isset($_GET['page']) ? $_GET['page'] : 1;
+                                                    if (isset($_REQUEST['search'])) {
+                                                        $name = $_POST['search'];;
+                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `slider` s INNER JOIN orient_ressamlar.painters p ON p.id=s.painter_id WHERE s.`status`=1 and p.painter_name like '%" . $name . "%'"));
+                                                        echo ($number_of_content);
+                                                    } else {
+                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, 'SELECT `id` FROM `slider` WHERE `status`=1'));
+                                                    }
                                                     $number_of_content = mysqli_num_rows(mysqli_query($conn, 'SELECT `id` FROM `slider`'));
                                                     $limit = 3;
                                                     $lastpage = ceil($number_of_content / $limit);
                                                     $start = ($page - 1) * $limit;
                                                     if ($lastpage >= $page) {
-                                                        $result = mysqli_query($conn, 'SELECT s.id as id_slider, s.painter_id, s.image, s.status, st.*, p.* FROM orient_ressamlar.slider s 
-                                                                                       INNER JOIN orient_ressamlar.slider_translation st ON st.slider_id=s.id
-                                                                                       INNER JOIN orient_ressamlar.painters p ON p.id=s.painter_id
-                                                                                       Where st.lang_id=1 and s.status=1 ORDER BY s.`id` desc LIMIT ' . $start . ',' . $limit);
+                                                        if (isset($_REQUEST['search'])) {
+                                                            $result = mysqli_query($conn, "SELECT s.id as id_slider, s.painter_id, s.image, s.status, st.*, p.* FROM orient_ressamlar.slider s 
+                                                                                           INNER JOIN orient_ressamlar.slider_translation st ON st.slider_id=s.id
+                                                                                           INNER JOIN orient_ressamlar.painters p ON p.id=s.painter_id
+                                                                                           Where st.lang_id=1 and s.status=1 && p.painter_name like '%" . $name . "%' ORDER BY p.`id` desc LIMIT " . $start . ',' . $limit);
+                                                        } else {
+                                                            $result = mysqli_query($conn, 'SELECT s.id as id_slider, s.painter_id, s.image, s.status, st.*, p.* FROM orient_ressamlar.slider s 
+                                                                                           INNER JOIN orient_ressamlar.slider_translation st ON st.slider_id=s.id
+                                                                                           INNER JOIN orient_ressamlar.painters p ON p.id=s.painter_id
+                                                                                           Where st.lang_id=1 and s.status=1 ORDER BY s.`id` desc LIMIT ' . $start . ',' . $limit);
+                                                        }
                                                         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                                                     ?>
                                                             <tr role="row" class="even">
