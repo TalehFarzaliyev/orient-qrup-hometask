@@ -19,15 +19,15 @@
     $lastpage = ceil($number_of_content / $limit);
     $start = ($page - 1) * $limit;
     if ($lastpage >= $page) {
-        $result = mysqli_query($conn, 'SELECT s.id as id_sales, s.painter_id, s.image, s.price, s.status, st.*, p.* FROM orient_ressamlar.sales s 
+        $result = mysqli_query($conn, "SELECT s.id as id_sales, s.painter_id, s.image, s.price, s.status, st.*, p.* FROM orient_ressamlar.sales s 
                                        INNER JOIN orient_ressamlar.sales_translation st ON st.sales_id=s.id
                                        INNER JOIN orient_ressamlar.painters p ON p.id=s.painter_id
-                                       Where st.lang_id=1 and s.status=1 ORDER BY s.`id` desc LIMIT ' . $start . ',' . $limit);
+                                       Where st.lang_id=$lang_id and s.status=1 ORDER BY s.`id` desc LIMIT " . $start . ',' . $limit);
         $row  = mysqli_fetch_all($result, MYSQLI_ASSOC);
         if (!empty($row)) {
     ?>
             <div class="portfolio change-theme">
-                <h2 class="head-text change-theme profile-header portfolio-header">SATIŞ</h2>
+                <h2 class="head-text change-theme profile-header portfolio-header"><?php if ($lang_id == 1) {echo 'SATIŞ';} else echo 'SHOP'; ?></h2>
                 <div class="icon title-line">
                     <img src="assets/img/title-line.png">
                 </div>
@@ -44,7 +44,7 @@
                                     </li>
                                     <div class="linkhover">
                                         <div class="hovericon">
-                                            <a href="satis_link.php?sales=<?= $sales['id_sales']; ?>" class="circle"><i class="fas fa-link icons"></i></a>
+                                            <a href="satis_link.php?sales=<?= $sales['id_sales']; ?>&lang=<?=$lang_name;?>" class="circle"><i class="fas fa-link icons"></i></a>
                                             <a href="uploads/<?= $sales['image']; ?>" rel="prettyPhoto[gallery2]" id="search-button" class="circle"><i class="fas fa-search icons"></i></a>
                                         </div>
                                         <div class="hovertext">
@@ -69,12 +69,12 @@
                 $x = 2;
                 if ($page > 1) {
                     $previous = $page - 1;
-                    echo '<a href="?page=' . $previous . '">« </a>';
+                    echo '<a href="?page=' . $previous . '&lang=' . $lang_name . '">« </a>';
                 }
                 if ($page == 1) {
                     echo '<a>[1]</a>';
                 } else {
-                    echo '<a href="?page=1" style= "margin-left: 10px;">1</a>';
+                    echo '<a href="?page=1&lang=' . $lang_name . '" style= "margin-left: 10px;">1</a>';
                 }
                 if ($page - $x > 2) {
                     echo '...';
@@ -86,19 +86,19 @@
                     if ($i == $page) {
                         echo '&nbsp;<a style= "margin-left: 10px;">[' . $i . ']</a>&nbsp;';
                     } else {
-                        echo '<a href="?page=' . $i . '" style= "margin-left: 10px;">' . $i . '</a>';
+                        echo '<a href="?page=' . $i . '&lang=' . $lang_name . '" style= "margin-left: 10px;">' . $i . '</a>';
                     }
                     if ($i == $lastpage) break;
                 }
                 if ($page + $x < $lastpage - 1) {
                     echo '...';
-                    echo '<a href="?page=' . $lastpage . '" style= "margin-left: 10px;">' . $lastpage . '</a>';
+                    echo '<a href="?page=' . $lastpage . '&lang=' . $lang_name . '" style= "margin-left: 10px;">' . $lastpage . '</a>';
                 } elseif ($page + $x == $lastpage - 1) {
-                    echo '<a href="?page=' . $lastpage . '" style= "margin-left: 10px;">' . $lastpage . '</a>';
+                    echo '<a href="?page=' . $lastpage . '&lang=' . $lang_name . '" style= "margin-left: 10px;">' . $lastpage . '</a>';
                 }
                 if ($page < $lastpage) {
                     $next = $page + 1;
-                    echo '<a href="?page=' . $next . '" style= "margin-left: 10px;"> » </a>';
+                    echo '<a href="?page=' . $next . '&lang=' . $lang_name . '" style= "margin-left: 10px;"> » </a>';
                 }
             }
         }

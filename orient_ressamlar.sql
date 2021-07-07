@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 03, 2021 at 08:46 AM
+-- Generation Time: Jul 07, 2021 at 12:02 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `menu` (
   `order_number` int(11) DEFAULT '0',
   `status` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8 COMMENT='Menu for sites';
+) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8 COMMENT='Menu for sites';
 
 --
 -- Dumping data for table `menu`
@@ -96,11 +96,11 @@ CREATE TABLE IF NOT EXISTS `menu` (
 INSERT INTO `menu` (`id`, `type`, `parent_id`, `order_number`, `status`) VALUES
 (46, '', 0, 1, 1),
 (47, 'post', 0, 2, 1),
-(48, '', 47, 1, 1),
-(49, '', 47, 2, 1),
-(50, '', 47, 3, 1),
-(51, '', 47, 4, 1),
-(52, '', 47, 5, 1),
+(48, 'post', 47, 1, 1),
+(49, 'post', 47, 2, 1),
+(50, 'painter', 47, 3, 1),
+(51, 'painter', 47, 4, 1),
+(52, 'painter', 47, 5, 1),
 (53, 'post', 47, 6, 1),
 (54, 'painter', 0, 3, 1),
 (55, 'painter', 54, 1, 1),
@@ -119,9 +119,9 @@ INSERT INTO `menu` (`id`, `type`, `parent_id`, `order_number`, `status`) VALUES
 (68, 'post', 66, 2, 1),
 (69, 'post', 66, 3, 1),
 (70, '', 0, 7, 1),
-(71, 'post', 66, 4, 0),
 (73, '', 0, 90, 1),
-(74, 'post', 66, 5, 0);
+(74, 'post', 66, 5, 0),
+(75, 'post', 66, 6, 0);
 
 -- --------------------------------------------------------
 
@@ -142,20 +142,8 @@ CREATE TABLE IF NOT EXISTS `menu_translation` (
 --
 
 INSERT INTO `menu_translation` (`menu_id`, `lang_id`, `name`, `slug`) VALUES
-(46, 1, 'Æsas sÉ™hifÉ™', 'esas-sehife'),
-(46, 2, 'Home page', 'home-page'),
 (47, 1, 'BÃ¶lmÉ™lÉ™r', 'bolmeler'),
 (47, 2, 'Sections', 'sections'),
-(48, 1, 'Struktur', 'struktur'),
-(48, 2, 'Structure', 'structure'),
-(49, 1, 'SÉ™rÉ™ncamlar', 'serencamlar'),
-(49, 2, 'Disposal', 'disposal'),
-(50, 1, 'ÃœzvlÉ™r', 'uzvler'),
-(50, 2, 'Members', 'members'),
-(51, 1, 'GÉ™nclÉ™r bÃ¶lmÉ™si', 'gencler-bolmesi'),
-(51, 2, 'Youth department', 'youth-department'),
-(52, 1, 'FÉ™xri Ã¼zvlÉ™r', 'fexri-uzvler'),
-(52, 2, 'Honorary members', 'honorary-members'),
 (53, 1, 'Festival', 'festival'),
 (53, 2, 'Festival', 'festival'),
 (54, 1, 'NRB kataloq', 'nrb-kataloq'),
@@ -188,14 +176,26 @@ INSERT INTO `menu_translation` (`menu_id`, `lang_id`, `name`, `slug`) VALUES
 (68, 2, 'Events', 'events'),
 (69, 1, 'Elanlar', 'elanlar'),
 (69, 2, 'Announcements', 'announcements'),
-(71, 1, 'XÉ™bÉ™rlÉ™r', 'xeberler'),
-(71, 2, 'News', 'news'),
 (64, 1, 'KÃ¶hnÉ™ afiÅŸalar', 'kohne-afisalar'),
 (64, 2, 'Old posters', 'old-posters'),
 (70, 2, 'Sale', 'sale'),
 (70, 1, 'SatÄ±ÅŸ', 'satis'),
-(74, 1, 'RÉ™ssam materiallarÄ±', 'ressam-materiallari'),
-(74, 2, 'Artist materials', 'artist-materials');
+(74, 1, 'RÉ™sm texnikalarÄ±', 'rÉ™sm-texnikalari'),
+(74, 2, 'Drawing techniques', 'drawing-techniques'),
+(49, 1, 'SÉ™rÉ™ncamlar', 'serencamlar'),
+(49, 2, 'Disposal', 'disposal'),
+(48, 1, 'Struktur', 'struktur'),
+(48, 2, 'Structure', 'structure'),
+(46, 1, 'Æsas sÉ™hifÉ™', ' '),
+(46, 2, 'Home page', ' '),
+(75, 1, 'Birliyin profili', 'birliyin-profili'),
+(75, 2, 'Association profile', 'association-profile'),
+(50, 1, 'ÃœzvlÉ™r', 'uzvler'),
+(50, 2, 'Members', 'members'),
+(51, 1, 'GÉ™nclÉ™r bÃ¶lmÉ™si', 'gencler-bolmesi'),
+(51, 2, 'Youth department', 'youth-department'),
+(52, 1, 'FÉ™xri Ã¼zvlÉ™r', 'fexri-uzvler'),
+(52, 2, 'Honorary members', 'honorary-members');
 
 -- --------------------------------------------------------
 
@@ -220,7 +220,7 @@ CREATE TABLE IF NOT EXISTS `painters` (
 
 INSERT INTO `painters` (`id`, `painter_name`, `painter_surname`, `categories`, `painter_image`, `status`) VALUES
 (11, 'Metin', 'Quliyev', '55,56', '95+-Funky-Computer-4K-Wallpapers-WallpaperYou.jpg', 1),
-(22, 'Puste', 'Agayeva', '57,58', '235506.jpg', 1),
+(22, 'Puste', 'Agayeva', '55,57,58', '235506.jpg', 1),
 (36, 'Ayten', 'Seyidova', '55,57,60', '7wcFi9.jpg', 1),
 (37, 'Gunel', 'Mehnetli', '56,60', '4.jpg', 1);
 
@@ -244,12 +244,12 @@ CREATE TABLE IF NOT EXISTS `painter_translation` (
 INSERT INTO `painter_translation` (`painter_id`, `lang_id`, `about_painter`) VALUES
 (11, 1, '<p>Bu ressam haqqinda melumatdir</p>\r\n'),
 (11, 2, '<p>This is information about painter</p>\r\n'),
-(22, 1, '<p>melumat</p>\r\n'),
-(22, 2, '<p>information</p>\r\n'),
 (36, 1, '<p>eterte</p>\r\n'),
 (36, 2, '<p>tryrtyr</p>\r\n'),
 (37, 1, '<p>gnghnjg</p>\r\n'),
-(37, 2, '<p>gfhfgnjgn</p>\r\n');
+(37, 2, '<p>gfhfgnjgn</p>\r\n'),
+(22, 1, '<p>melumat</p>\r\n'),
+(22, 2, '<p>information</p>\r\n');
 
 -- --------------------------------------------------------
 
@@ -266,21 +266,22 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `hits` int(11) NOT NULL DEFAULT '0',
   `status` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `posts`
 --
 
 INSERT INTO `posts` (`id`, `image`, `created_date`, `category_id`, `hits`, `status`) VALUES
-(5, '4WUfMQ.jpg', '2021-06-02 10:56:11', 71, 0, 1),
-(8, '6aa71bd6f3444a9df44593129cce1fba.jpg', '2021-06-11 16:22:27', 69, 0, 1),
-(13, 'Parallel-Universe-Wallpaper.jpg', '2021-06-11 17:49:29', 53, 0, 1),
-(15, '268e0b01144607b38cec0309896893c7.png', '2021-06-12 10:12:33', 63, 0, 1),
-(16, '95+-Funky-Computer-4K-Wallpapers-WallpaperYou.jpg', '2021-06-26 00:12:47', 71, 0, 1),
-(17, '413607.jpg', '2021-06-26 00:13:18', 71, 0, 1),
-(18, '12212.jpg', '2021-06-26 00:14:00', 71, 0, 1),
-(19, '3o3vcn0.jpg', '2021-06-26 00:14:32', 71, 0, 1);
+(5, '4WUfMQ.jpg', '2021-06-02 10:56:11', 48, 0, 1),
+(8, '6aa71bd6f3444a9df44593129cce1fba.jpg', '2021-06-11 16:22:27', 67, 0, 1),
+(13, 'Parallel-Universe-Wallpaper.jpg', '2021-06-11 17:49:29', 75, 0, 1),
+(15, '268e0b01144607b38cec0309896893c7.png', '2021-06-12 10:12:33', 74, 0, 1),
+(16, '95+-Funky-Computer-4K-Wallpapers-WallpaperYou.jpg', '2021-06-26 00:12:47', 74, 0, 1),
+(17, '413607.jpg', '2021-06-26 00:13:18', 75, 0, 1),
+(18, '12212.jpg', '2021-06-26 00:14:00', 74, 0, 1),
+(19, '3o3vcn0.jpg', '2021-06-26 00:14:32', 69, 0, 1),
+(20, '2c56685f7698b00db68846979259230a.jpg', '2021-07-07 15:45:19', 49, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -294,7 +295,7 @@ CREATE TABLE IF NOT EXISTS `posts_gallery` (
   `post_id` int(11) DEFAULT NULL,
   `gallery_image` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=205 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=213 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `posts_gallery`
@@ -332,8 +333,18 @@ INSERT INTO `posts_gallery` (`id`, `post_id`, `gallery_image`) VALUES
 (198, 15, 'uploaded-60d5d886bd6401.52616722.jpg'),
 (199, 15, 'uploaded-60d5d91fd7fb82.57723366.jpg'),
 (200, 13, 'uploaded-60d612ecb873d5.73614072.jpg'),
-(201, 19, 'uploaded-60df0e305629c0.73286596.jpg'),
-(203, 19, 'uploaded-60df0e30cd0566.04704061.jpg');
+(201, 18, 'uploaded-60e55a87b7f5a8.58321577.jpg'),
+(202, 18, 'uploaded-60e55a87b99077.87611247.jpg'),
+(203, 18, 'uploaded-60e55a8807fe24.35633116.jpg'),
+(204, 18, 'uploaded-60e55a880f26b9.10206956.jpg'),
+(205, 16, 'uploaded-60e55a9e411816.69538001.jpg'),
+(206, 16, 'uploaded-60e55a9e4d2f66.91382389.jpg'),
+(207, 16, 'uploaded-60e55a9e640aa7.44082382.jpg'),
+(208, 16, 'uploaded-60e55a9e74b915.62770107.png'),
+(209, 16, 'uploaded-60e58999679b59.87292808.jpg'),
+(210, 16, 'uploaded-60e589998bcb39.01991149.jpg'),
+(211, 16, 'uploaded-60e58999eabf63.98387816.jpg'),
+(212, 16, 'uploaded-60e5899a64f945.82193767.jpg');
 
 -- --------------------------------------------------------
 
@@ -354,22 +365,24 @@ CREATE TABLE IF NOT EXISTS `posts_translation` (
 --
 
 INSERT INTO `posts_translation` (`post_id`, `lang_id`, `title`, `content`) VALUES
-(13, 1, 'sdfsdsdf', '<p>sdfdsf</p>\r\n'),
-(13, 2, 'sdfsdf', '<p>sdfsdfs</p>\r\n'),
 (15, 1, '2', '<p>fdgdf</p>\r\n'),
 (15, 2, 'gfdgdf', '<p>dfgdf</p>\r\n'),
-(8, 1, 'ghjgj', '<p>ghjgh</p>\r\n'),
-(8, 2, 'ghjgjg', '<p>ghjhgjg</p>\r\n'),
-(18, 1, 'Where does it come from?', '<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of &quot;de Finibus Bonorum et Malorum&quot; (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, &quot;Lorem ipsum dolor sit amet..&quot;, comes from a line in section 1.10.32.</p>\r\n'),
-(18, 2, 'wfewwe', '<p>ewfwef</p>\r\n'),
-(17, 1, 'Where can I get some?', '<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#39;t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn&#39;t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</p>\r\n'),
-(17, 2, 'wdwcw', '<p>ewewffe</p>\r\n'),
-(16, 1, 'Where does it come from?', '<p>Vestibulum non laoreet diam. Vivamus bibendum, nisi sed pulvinar varius, eros velit dapibus ante, ut vulputate nisl neque sit amet neque. Phasellus rutrum in ex sit amet porttitor. Interdum et malesuada fames ac ante ipsum primis in faucibus. Duis convallis non mi nec viverra. Pellentesque ut leo tempor ipsum scelerisque aliquet. Suspendisse mi libero, luctus tristique erat vitae, cursus dignissim arcu. Duis eget ligula sed elit vestibulum tincidunt. Pellentesque tristique sem sed aliquam semper. Maecenas lacus sapien, lacinia eu venenatis quis, sagittis eu urna. Donec fringilla sit amet nisi vitae fermentum. Vivamus sodales dolor eu ligula rhoncus, quis convallis tortor pellentesque. Sed quis diam euismod leo consectetur mattis id tempor leo. Aenean non nulla at arcu ultricies congue.</p>\r\n\r\n<p>Duis vehicula scelerisque lectus auctor luctus. Nunc mattis quis mi in aliquam. Vestibulum placerat risus diam, eget sagittis quam aliquam eget. Donec non mi mi. Proin sagittis suscipit mi, a dictum neque consequat id. In hendrerit iaculis eleifend. Sed efficitur finibus vestibulum.</p>\r\n'),
-(16, 2, 'edefew', '<p>eewfwe</p>\r\n'),
 (5, 1, 'Where does it come from?', '<p>Ä°t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using &#39;Content here, content here&#39;, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for &#39;lorem ipsum&#39; will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>\r\n'),
 (5, 2, 'this is a title11', '<p>content</p>\r\n'),
+(17, 1, 'Where can I get some?', '<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#39;t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn&#39;t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</p>\r\n'),
+(17, 2, 'wdwcw', '<p>ewewffe</p>\r\n'),
+(13, 1, 'sdfsdsdf', '<p>sdfdsf</p>\r\n'),
+(13, 2, 'sdfsdf', '<p>sdfsdfs</p>\r\n'),
+(18, 1, 'Where does it come from?', '<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of &quot;de Finibus Bonorum et Malorum&quot; (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, &quot;Lorem ipsum dolor sit amet..&quot;, comes from a line in section 1.10.32.</p>\r\n'),
+(18, 2, 'wfewwe', '<p>ewfwef</p>\r\n'),
 (19, 1, 'Where can I get some?', '<p><strong>Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\r\n'),
-(19, 2, 'weefew', '<p>ewfwe</p>\r\n');
+(19, 2, 'weefew', '<p>ewfwe</p>\r\n'),
+(16, 1, 'Where does it come from?', '<p>Vestibulum non laoreet diam. Vivamus bibendum, nisi sed pulvinar varius, eros velit dapibus ante, ut vulputate nisl neque sit amet neque. Phasellus rutrum in ex sit amet porttitor. Interdum et malesuada fames ac ante ipsum primis in faucibus. Duis convallis non mi nec viverra. Pellentesque ut leo tempor ipsum scelerisque aliquet. Suspendisse mi libero, luctus tristique erat vitae, cursus dignissim arcu. Duis eget ligula sed elit vestibulum tincidunt. Pellentesque tristique sem sed aliquam semper. Maecenas lacus sapien, lacinia eu venenatis quis, sagittis eu urna. Donec fringilla sit amet nisi vitae fermentum. Vivamus sodales dolor eu ligula rhoncus, quis convallis tortor pellentesque. Sed quis diam euismod leo consectetur mattis id tempor leo. Aenean non nulla at arcu ultricies congue.</p>\r\n\r\n<p>Duis vehicula scelerisque lectus auctor luctus. Nunc mattis quis mi in aliquam. Vestibulum placerat risus diam, eget sagittis quam aliquam eget. Donec non mi mi. Proin sagittis suscipit mi, a dictum neque consequat id. In hendrerit iaculis eleifend. Sed efficitur finibus vestibulum.</p>\r\n'),
+(16, 2, 'edefew', '<p>eewfwe</p>\r\n'),
+(8, 1, 'ghjgj', '<p>ghjgh</p>\r\n'),
+(8, 2, 'ghjgjg en', '<p>ghjhgjg en</p>\r\n'),
+(20, 1, 'bu bir basliqdir', '<p>gfdgfdgdfg</p>\r\n'),
+(20, 2, 'this is a title11', '<p>dgdfgfg</p>\r\n');
 
 -- --------------------------------------------------------
 
@@ -478,7 +491,7 @@ CREATE TABLE IF NOT EXISTS `settings_translation` (
 
 INSERT INTO `settings_translation` (`settings_id`, `lang_id`, `title`, `description`, `keywords`, `address`, `privacy_policy`, `terms_of_use`, `faq`) VALUES
 (1, 1, 'az titleyuiyiyui', 'az description', 'az keywords', 'NaxÃ§Ä±van ÅŸÉ™hÉ™ri, HeydÉ™r Æliyev kÃ¼Ã§É™si 38', '<p><strong>Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\r\n\r\n<p><strong>Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\r\n', '<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using &#39;Content here, content here&#39;, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for &#39;lorem ipsum&#39; will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2>Where does it come from?</h2>\r\n\r\n<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of &quot;de Finibus Bonorum et Malorum&quot; (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, &quot;Lorem ipsum dolor sit amet..&quot;, comes from a line in section 1.10.32.</p>\r\n', '<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using &#39;Content here, content here&#39;, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for &#39;lorem ipsum&#39; will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>\r\n\r\n<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of &quot;de Finibus Bonorum et Malorum&quot; (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, &quot;Lorem ipsum dolor sit amet..&quot;, comes from a line in section 1.10.32.</p>\r\n'),
-(1, 2, 'en title', 'en description', 'en keywords', 'en address', '<p><u>gizlilik</u></p>\r\n', '<p><em>terms</em></p>\r\n', '<p><strong>faq faq</strong></p>\r\n');
+(1, 2, 'en title', 'en description', 'en keywords', 'en address', '<p><u>gizlilik LOREM LOREM LOREM EN</u></p>\r\n', '<p><em>terms</em></p>\r\n', '<p><strong>faq faq</strong></p>\r\n');
 
 -- --------------------------------------------------------
 
@@ -553,7 +566,7 @@ CREATE TABLE IF NOT EXISTS `works` (
   `work_image` varchar(255) DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `works`
@@ -566,7 +579,9 @@ INSERT INTO `works` (`id`, `painter_id`, `work_image`, `status`) VALUES
 (26, 22, '6.jpg', 1),
 (27, 22, 'blog-img3.jpg', 1),
 (28, 37, '5.jpg', 1),
-(29, 36, '2-6.jpg', 1);
+(29, 36, '2-6.jpg', 1),
+(30, 22, '2-3.jpg', 1),
+(31, 22, '2-4.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -601,7 +616,11 @@ INSERT INTO `works_translation` (`work_id`, `lang_id`, `work_name`) VALUES
 (27, 1, 'fdhfdh'),
 (27, 2, 'dfhfdh'),
 (25, 1, '22'),
-(25, 2, 'dsafsd');
+(25, 2, 'dsafsd'),
+(30, 1, 'scs'),
+(30, 2, 'sdsd'),
+(31, 1, 'sdsd'),
+(31, 2, 'sdsda');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

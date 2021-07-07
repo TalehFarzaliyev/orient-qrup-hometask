@@ -18,7 +18,7 @@
         $select_sales   = "SELECT s.id as id_sales, s.painter_id, s.image, s.price, s.status, st.*, p.* FROM orient_ressamlar.sales s 
                            INNER JOIN orient_ressamlar.sales_translation st ON st.sales_id=s.id
                            INNER JOIN orient_ressamlar.painters p ON p.id=s.painter_id
-                           Where st.lang_id=1 and s.status=1 and s.`id`='$sales'";
+                           Where st.lang_id=$lang_id and s.status=1 and s.`id`='$sales'";
         $result         = mysqli_query($conn, $select_sales);
         $sales_row      = mysqli_fetch_array($result, MYSQLI_ASSOC);
     }
@@ -35,16 +35,16 @@
                 </div>
                 <div class="text-division">
                     <div>
-                        <span class="text-head">Rəssamın adı: </span><span class="texts-body"><?= $sales_row['painter_name']; ?> <?= $sales_row['painter_surname']; ?></span>
+                        <span class="text-head"><?php if ($lang_id == 1) {echo 'Rəssamın adı: ';} else echo "Painter's name: "; ?></h2></span><span class="texts-body"><?= $sales_row['painter_name']; ?> <?= $sales_row['painter_surname']; ?></span>
                     </div>
                     <div>
-                        <span class="text-head">Qiyməti: </span><span class="texts-body"><?= $sales_row['price']; ?> AZN</span>
+                        <span class="text-head"><?php if ($lang_id == 1) {echo 'Qiyməti: ';} else echo 'Price: '; ?></span><span class="texts-body"><?= $sales_row['price']; ?> ₼</span>
                     </div>
                     <div>
-                        <span class="text-head">Ölçü: </span><span class="texts-body"><?= $sales_row['size']; ?></span>
+                        <span class="text-head"><?php if ($lang_id == 1) {echo 'Ölçü: ';} else echo "Size: "; ?></span><span class="texts-body"><?= $sales_row['size']; ?></span>
                     </div>
                     <div>
-                        <span class="text-head">Texnika: </span><span class="texts-body"><?= $sales_row['technique']; ?></span>
+                        <span class="text-head"><?php if ($lang_id == 1) {echo 'Texnika: ';} else echo "Technique: "; ?></span><span class="texts-body"><?= $sales_row['technique']; ?></span>
                     </div>
                 </div>
             </div>

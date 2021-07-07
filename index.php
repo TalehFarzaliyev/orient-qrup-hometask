@@ -12,7 +12,7 @@
                 <?php
                 $result = mysqli_query($conn, "SELECT * FROM orient_ressamlar.slider s
                                                INNER JOIN orient_ressamlar.slider_translation st ON st.slider_id=s.id
-                                               WHERE s.`painter_id`=0 && s.status=1");
+                                               WHERE s.`painter_id`=0 && s.status=1 && st.lang_id=$lang_id");
                 $main   = mysqli_fetch_array($result, MYSQLI_ASSOC);
                 if (!empty($main)) {
                 ?>
@@ -26,42 +26,30 @@
                 $result = mysqli_query($conn, "SELECT s.id as id_slider, s.painter_id, s.image, s.status, st.*, p.* FROM orient_ressamlar.slider s 
                                                INNER JOIN orient_ressamlar.slider_translation st ON st.slider_id=s.id
                                                INNER JOIN orient_ressamlar.painters p ON p.id=s.painter_id
-                                               Where st.lang_id=1 and s.status=1 ORDER BY s.`id` desc");
+                                               Where st.lang_id=$lang_id and s.status=1 ORDER BY s.`id` desc");
                 $artist = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 if (!empty($artist)) {
-                    foreach ($artist as $artist_row) {
-
+                    foreach ($artist as $key => $artist_row) {
+                        $sql = "SELECT * FROM works WHERE painter_id='" . $artist_row['painter_id'] . "' ORDER BY `id` desc LIMIT 6";
+                        $work = mysqli_fetch_all(mysqli_query($conn, $sql), MYSQLI_ASSOC);
                     ?>
                         <div class="carousel-item">
                             <img class="d-block w-100" src="uploads/<?= $artist_row['image']; ?>" alt="Second slide">
                             <div class="carousel-caption d-md-block slider-caption">
-                                <a href="artists.php" class="painter_name"><?= $artist_row['painter_name']; ?> <?= $artist_row['painter_surname']; ?></a>
+                                <a href="artists.php?painter=<?= $artist_row['id']; ?>&lang=<?= $lang_name; ?>" class="painter_name"><?= $artist_row['painter_name']; ?> <?= $artist_row['painter_surname']; ?></a>
                                 <p class="caption-head"><?= $artist_row['title']; ?></p>
                                 <div class="row">
-                                    <div class="col-4">
-                                        <div class="col-pictures">
-                                            <a href=""><img src="assets/img/_DSC0488.JPG" alt=""></a>
+                                    <?php
+                                    foreach ($work as $keyw => $valuew) {
+                                    ?>
+                                        <div class="col-4">
+                                            <div class="col-pictures">
+                                                <img src="uploads/<?= $valuew['work_image'] ?>" alt="">
+                                            </div>
                                         </div>
-                                        <div class="col-pictures">
-                                            <a href=""><img src="assets/img/_DSC0488.JPG" alt=""></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="col-pictures">
-                                            <a href=""><img src="assets/img/_DSC0497.JPG" alt=""></a>
-                                        </div>
-                                        <div class="col-pictures">
-                                            <a href=""><img src="assets/img/_DSC0501.JPG" alt=""></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="col-pictures">
-                                            <a href=""><img src="assets/img/2-2.jpg" alt=""></a>
-                                        </div>
-                                        <div class="col-pictures">
-                                            <a href=""><img src="assets/img/IMG_0724.JPG" alt=""></a>
-                                        </div>
-                                    </div>
+                                    <?php
+                                    }
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -95,21 +83,25 @@
             include 'includes/theme.php'; ?>
 
 <div class="portfolio change-theme portfolio-button">
-    <a href="portfolio.php" class="view_button wow swing">BİRLİYİN PROFİLİ</a>
+    <a href="portfolio.php?lang=<?= $lang_name; ?>" class="view_button wow swing"><?php if ($lang_id == 1) {
+                                                                                    echo 'BİRLİYİN PROFİLİ';
+                                                                                } else echo 'ASSOCIATION PROFILE'; ?></a>
 </div>
 
 <?php
 $result = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, pt.*, mt.*, m.* FROM orient_ressamlar.posts p 
-                                   INNER JOIN orient_ressamlar.posts_translation pt ON pt.post_id=p.id
-                                   INNER JOIN orient_ressamlar.menu_translation mt 
-                                   INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
-                                   WHERE pt.lang_id=1 && p.status=1 && p.category_id=m.id && mt.name='xəbərlər' && mt.lang_id=1 ORDER BY p.`id` desc LIMIT 8");
+                               INNER JOIN orient_ressamlar.posts_translation pt ON pt.post_id=p.id
+                               INNER JOIN orient_ressamlar.menu_translation mt 
+                               INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
+                               WHERE pt.lang_id=$lang_id && p.status=1 && p.category_id=m.id && mt.name='sərgilər' ORDER BY p.`id` desc LIMIT 8");
 $news  = mysqli_fetch_all($result, MYSQLI_ASSOC);
 if (!empty($news)) {
 ?>
     <div class="blog change-theme news-section">
         <div class="section-header">
-            <h2>Xəbərlər</h2>
+            <h2><?php if ($lang_id == 1) {
+                    echo 'Xəbərlər';
+                } else echo 'News'; ?></h2>
             <div class="title-line icon">
                 <img class="line" src="assets/img/title-line.png" alt="">
             </div>
@@ -125,7 +117,9 @@ if (!empty($news)) {
                         <p class="card-text"><?= substr($post['content'], 0, 100); ?></p>
                         <div class="date_button">
                             <span><i class="far fa-clock"></i>&nbsp;&nbsp;<?= date('d.m.Y H:i', strtotime($post['created_date'])); ?></span>
-                            <a href="single_news.php?post=<?= $post['id_post']; ?>" class="btn btn-primary change_button_color">Ətraflı</a>
+                            <a href="single_news.php?post=<?= $post['id_post']; ?>&lang=<?= $lang_name; ?>" class="btn btn-primary change_button_color"><?php if ($lang_id == 1) {
+                                                                                                                                                            echo 'Ardını oxu';
+                                                                                                                                                        } else echo 'Read more'; ?></a>
                         </div>
                     </div>
                 </div>
@@ -137,134 +131,77 @@ if (!empty($news)) {
     </div>
 <?php
 }
+
+$result    = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, pt.*, mt.*, m.* FROM orient_ressamlar.posts p 
+                                  INNER JOIN orient_ressamlar.posts_translation pt ON pt.post_id=p.id
+                                  INNER JOIN orient_ressamlar.menu_translation mt 
+                                  INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
+                                  WHERE pt.lang_id=$lang_id && p.status=1 && p.category_id=m.id && mt.name='rəsm texnikaları' ORDER BY p.`id` desc LIMIT 4");
+$materials = mysqli_fetch_all($result, MYSQLI_ASSOC);
+if (!empty($materials)) {
 ?>
-<div class="blog change-theme">
-    <div class="section-header">
-        <h2>Rəssam materialları</h2>
-        <div class="title-line">
-            <img class="line" src="assets/img/title-line.png" alt="">
+    <div class="blog change-theme">
+        <div class="section-header">
+            <h2><?php if ($lang_id == 1) {
+                    echo 'Rəsm texnikaları';
+                } else echo 'Drawing techniques'; ?></h2>
+            <div class="title-line">
+                <img class="line" src="assets/img/title-line.png" alt="">
+            </div>
         </div>
+        <div class="blog-slider">
+            <?php
+            foreach ($materials as $key => $material_row) {
+                $sql     = "SELECT * FROM posts_gallery WHERE post_id='" . $material_row['id_post'] . "' ORDER BY `id` desc";
+                $gallery = mysqli_fetch_all(mysqli_query($conn, $sql), MYSQLI_ASSOC);
+            ?>
+                <div class="vc_item row">
+                    <div id="carouselExampleControls-<?= $key; ?>" class="carousel slide col-xl-6 col-lg-6 col-md-12 <?php if ($key % 2 != 0) {
+                                                                                                                            echo 'order_class_right';
+                                                                                                                        } ?>" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <span class="carousel-line"></span>
+                            <?php
+                            foreach ($gallery as $keyg => $valueg) {
+                            ?>
+                                <div class="carousel-item <?php if ($keyg == 0) {
+                                                                echo 'active';
+                                                            } ?>">
+                                    <img src="uploads/<?= $valueg['gallery_image']; ?>" class="d-block w-100" alt="...">
+                                </div>
+                            <?php } ?>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls-<?= $key; ?>" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls-<?= $key; ?>" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-12 acrylic wow bounceIn <?php if ($key % 2 != 0) {
+                                                                                        echo 'order_class_left';
+                                                                                    } ?>">
+                        <h3><?= $material_row['title']; ?></h3>
+                        <p><?= substr($material_row['content'], 0, 200); ?></p>
+                        <a href="singleimg.php?post=<?= $material_row['id_post']; ?>&lang=<?= $lang_name; ?>" class="more_button"><?php if ($lang_id == 1) {
+                                                                                                echo 'Ətraflı';
+                                                                                            } else echo 'Read more'; ?></a>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
+        <br>
+        <div class="text-center">
+            <a href="drawings.php?lang=<?= $lang_name; ?>" class="see-more"><?php if ($lang_id == 1) {
+                                                            echo 'Daha çox gör';
+                                                        } else echo 'See more'; ?></a>
+        </div>
+        <br>
     </div>
-    <div class="blog-slider">
-        <div class="vc_item row">
-            <div id="carouselExampleControls-one" class="carousel slide col-xl-6 col-lg-6 col-md-12" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <span class="carousel-line"></span>
-                    <div class="carousel-item active">
-                        <img src="assets/img/_DSC0501.JPG" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="assets/img/_DSC0497.JPG" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="assets/img/_DSC0488.JPG" class="d-block w-100" alt="...">
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls-one" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls-one" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-            <div class="col-xl-6 col-lg-6 col-md-12 acrylic wow bounceIn">
-                <h2>Fırça</h2>
-                <p>1971-ci ilin iyun ayında Naxçıvan Rəssamlar Təşkilatının yaradılmasına hazırlıq işlərinin tamamlanması barədə hökumət strukturlarına və Rəssamlar İttifaqına göstəriş verən ümummilli liderimiz yeni təşkilatın sədri vəzifəsinə bu məsələnin
-                    əsas təşəbbüskarı olan və hələ özünün Naxçıvanda işlədiyi illərdən istedadlı gənc teatr rəssamı kimi tanıdığı Məmməd Qasımovun namizədliyini tövsiyə etmişdir.</p>
-            </div>
-        </div>
-        <div class="vc_item row">
-            <div class="col-xl-6 col-lg-6 col-md-12 acrylic wow bounceIn">
-                <h2>Boya</h2>
-                <p>1971-ci ilin iyun ayında Naxçıvan Rəssamlar Təşkilatının yaradılmasına hazırlıq işlərinin tamamlanması barədə hökumət strukturlarına və Rəssamlar İttifaqına göstəriş verən ümummilli liderimiz yeni təşkilatın sədri vəzifəsinə bu məsələnin
-                    əsas təşəbbüskarı olan və hələ özünün Naxçıvanda işlədiyi illərdən istedadlı gənc teatr rəssamı kimi tanıdığı Məmməd Qasımovun namizədliyini tövsiyə etmişdir.</p>
-            </div>
-            <div id="carouselExampleControls-two" class="carousel slide col-xl-6 col-lg-6 col-md-12" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <span class="carousel-line"></span>
-                    <div class="carousel-item active">
-                        <img src="assets/img/_DSC0487.JPG" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="assets/img/_DSC0488.JPG" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="assets/img/_DSC0501.JPG" class="d-block w-100" alt="...">
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls-two" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls-two" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-        </div>
-        <div class="vc_item row">
-            <div id="carouselExampleControls-three" class="carousel slide col-xl-6 col-lg-6 col-md-12" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <span class="carousel-line"></span>
-                    <div class="carousel-item active">
-                        <img src="assets/img/_DSC0488.JPG" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="assets/img/_DSC0497.JPG" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="assets/img/_DSC0487.JPG" class="d-block w-100" alt="...">
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls-three" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls-three" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-            <div class="col-xl-6 col-lg-6 col-md-12 acrylic wow bounceIn">
-                <h2>Rəngkarlıq</h2>
-                <p>1971-ci ilin iyun ayında Naxçıvan Rəssamlar Təşkilatının yaradılmasına hazırlıq işlərinin tamamlanması barədə hökumət strukturlarına və Rəssamlar İttifaqına göstəriş verən ümummilli liderimiz yeni təşkilatın sədri vəzifəsinə bu məsələnin
-                    əsas təşəbbüskarı olan və hələ özünün Naxçıvanda işlədiyi illərdən istedadlı gənc teatr rəssamı kimi tanıdığı Məmməd Qasımovun namizədliyini tövsiyə etmişdir.</p>
-            </div>
-        </div>
-        <div class="vc_item row">
-            <div class="col-xl-6 col-lg-6 col-md-12 acrylic wow bounceIn">
-                <h2>Heykəltəraşlıq</h2>
-                <p>1971-ci ilin iyun ayında Naxçıvan Rəssamlar Təşkilatının yaradılmasına hazırlıq işlərinin tamamlanması barədə hökumət strukturlarına və Rəssamlar İttifaqına göstəriş verən ümummilli liderimiz yeni təşkilatın sədri vəzifəsinə bu məsələnin
-                    əsas təşəbbüskarı olan və hələ özünün Naxçıvanda işlədiyi illərdən istedadlı gənc teatr rəssamı kimi tanıdığı Məmməd Qasımovun namizədliyini tövsiyə etmişdir.</p>
-            </div>
-            <div id="carouselExampleControls-four" class="carousel slide col-xl-6 col-lg-6 col-md-12" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <span class="carousel-line"></span>
-                    <div class="carousel-item active">
-                        <img class="d-block w-100" src="assets/img/_DSC0497.JPG" alt="First slide">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100" src="assets/img/_DSC0501.JPG" alt="Second slide">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100" src="assets/img/_DSC0488.JPG" alt="Third slide">
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls-four" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls-four" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<?php include 'includes/footer.php'; ?>
+<?php }
+include 'includes/footer.php'; ?>
 </body>
 
 </html>

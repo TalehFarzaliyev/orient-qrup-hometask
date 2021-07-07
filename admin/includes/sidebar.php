@@ -24,7 +24,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Səhifələr
+                Səhİfələr
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->

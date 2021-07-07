@@ -5,6 +5,7 @@ var miniMenu = document.querySelector('.menu-items'),
     menuItem = document.querySelectorAll('.hover-color'),
     hovertextItem = document.querySelectorAll(".hovertext-item"),
     darkText = document.querySelectorAll(".dark-text"),
+    seeMore = document.querySelectorAll(".see-more"),
     upTheme = document.querySelector(".up-theme"),
     upThemeIcon = document.querySelector(".fa-angle-double-up"),
     blogButton = document.querySelectorAll(".view_button"),
@@ -15,7 +16,8 @@ var miniMenu = document.querySelector('.menu-items'),
     formColor = document.querySelectorAll(".form-input"),
     linkHover = document.querySelectorAll(".linkhover"),
     circle = document.querySelectorAll('.circle'),
-    icons = document.querySelectorAll('.icons');
+    icons = document.querySelectorAll('.icons'),
+    moreButton = document.querySelectorAll('.more_button');
 
 window.addEventListener('DOMContentLoaded', (event) => {
     jQuery(window).scroll(function() {
@@ -71,11 +73,22 @@ function lightTheme() {
         darkText[i].addEventListener("mouseenter", (event) => { event.target.style.color = "#fff" });
         darkText[i].addEventListener("mouseleave", (event) => { event.target.style.color = "#000" });
     }
+    for (var i = 0; i < seeMore.length; i++) {
+        seeMore[i].style.color = "#000";
+        seeMore[i].addEventListener("mouseenter", (event) => { event.target.style.color = "#fff" });
+        seeMore[i].addEventListener("mouseleave", (event) => { event.target.style.color = "#000" });
+    }
     for (var c = 0; c < blogButton.length; c++) {
         blogButton[c].style.color = "#000";
         let buttonColor = blogButton[c].style.backgroundColor;
         blogButton[c].addEventListener("mouseenter", (event) => { event.target.style.backgroundColor = "#000", event.target.style.color = buttonColor });
         blogButton[c].addEventListener("mouseleave", (event) => { event.target.style.backgroundColor = buttonColor, event.target.style.color = "#000" });
+    }
+    for (var c = 0; c < moreButton.length; c++) {
+        moreButton[c].style.color = "#000";
+        let buttonColor = moreButton[c].style.backgroundColor;
+        moreButton[c].addEventListener("mouseenter", (event) => { event.target.style.backgroundColor = "#000", event.target.style.color = buttonColor });
+        moreButton[c].addEventListener("mouseleave", (event) => { event.target.style.backgroundColor = buttonColor, event.target.style.color = "#000" });
     }
     for (var c = 0; c < changeButtonColor.length; c++) {
         changeButtonColor[c].style.color = "#000";
@@ -103,11 +116,22 @@ function darkTheme() {
         darkText[i].addEventListener("mouseenter", (event) => { event.target.style.color = "#fff" });
         darkText[i].addEventListener("mouseleave", (event) => { event.target.style.color = "#fff" });
     }
+    for (var i = 0; i < seeMore.length; i++) {
+        seeMore[i].style.color = "#fff";
+        seeMore[i].addEventListener("mouseenter", (event) => { event.target.style.color = "#fff" });
+        seeMore[i].addEventListener("mouseleave", (event) => { event.target.style.color = "#fff" });
+    }
     for (var c = 0; c < blogButton.length; c++) {
         blogButton[c].style.color = "#fff";
         let buttonColor = blogButton[c].style.backgroundColor;
         blogButton[c].addEventListener("mouseenter", (event) => { event.target.style.backgroundColor = "#fff", event.target.style.color = buttonColor });
         blogButton[c].addEventListener("mouseleave", (event) => { event.target.style.backgroundColor = buttonColor, event.target.style.color = "#fff" });
+    }
+    for (var c = 0; c < moreButton.length; c++) {
+        moreButton[c].style.color = "#fff";
+        let buttonColor = moreButton[c].style.backgroundColor;
+        moreButton[c].addEventListener("mouseenter", (event) => { event.target.style.backgroundColor = "#fff", event.target.style.color = buttonColor });
+        moreButton[c].addEventListener("mouseleave", (event) => { event.target.style.backgroundColor = buttonColor, event.target.style.color = "#fff" });
     }
     for (var c = 0; c < changeButtonColor.length; c++) {
         changeButtonColor[c].style.color = "#fff";
@@ -138,12 +162,25 @@ function firstTheme(color) {
         darkText[a].addEventListener("mouseenter", (event) => { event.target.style.backgroundColor = thisColor, event.target.style.borderColor = thisColor });
         darkText[a].addEventListener("mouseleave", (event) => { event.target.style.backgroundColor = origColorStyle, event.target.style.borderColor = bordersColor });
     }
+    for (var a = 0; a < seeMore.length; a++) {
+        let origColorStyle = seeMore[a].style.backgroundColor;
+        let bordersColor = seeMore[a].style.borderColor;
+        seeMore[a].addEventListener("mouseenter", (event) => { event.target.style.backgroundColor = thisColor, event.target.style.borderColor = thisColor });
+        seeMore[a].addEventListener("mouseleave", (event) => { event.target.style.backgroundColor = origColorStyle, event.target.style.borderColor = bordersColor });
+    }
     for (var c = 0; c < blogButton.length; c++) {
         blogButton[c].style.backgroundColor = thisColor;
         let buttonColor = blogButton[c].style.backgroundColor,
             fontColor = blogButton[c].style.color;
         blogButton[c].addEventListener("mouseenter", (event) => { event.target.style.backgroundColor = fontColor, event.target.style.color = buttonColor });
         blogButton[c].addEventListener("mouseleave", (event) => { event.target.style.backgroundColor = buttonColor, event.target.style.color = fontColor });
+    }
+    for (var c = 0; c < moreButton.length; c++) {
+        moreButton[c].style.backgroundColor = thisColor;
+        let buttonColor = moreButton[c].style.backgroundColor,
+            fontColor = moreButton[c].style.color;
+        moreButton[c].addEventListener("mouseenter", (event) => { event.target.style.backgroundColor = fontColor, event.target.style.color = buttonColor });
+        moreButton[c].addEventListener("mouseleave", (event) => { event.target.style.backgroundColor = buttonColor, event.target.style.color = fontColor });
     }
     for (var c = 0; c < changeButtonColor.length; c++) {
         changeButtonColor[c].style.backgroundColor = thisColor;
