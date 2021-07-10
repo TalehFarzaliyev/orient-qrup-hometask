@@ -352,7 +352,7 @@ body {
       color: #fff;
       font-weight: 100;
       text-transform: uppercase;
-      font-size: 70px;
+      font-size: 40px;
       font-family: 'Raleway-Thin'; }
     body .portfolio .view_button {
       display: inline-block;
@@ -412,7 +412,7 @@ body {
         body .portfolio .portfolio-pictures .port-picture .port-img {
           margin: auto;
           width: 300px;
-          height: 300px;
+          height: 350px;
           border-top: 10px solid #2e2e2e;
           border-left: 10px solid #2e2e2e;
           border-bottom: 10px solid #000;
@@ -767,7 +767,7 @@ body {
   body .portfolio .profil-head {
     font-size: 30px !important; }
   body .portfolio .head-text {
-    font-size: 50px; }
+    font-size: 35px; }
   body .blog .section-header h2 {
     font-size: 50px; }
   body .blog .blog-slider .vc_item .order_class_right {
@@ -818,7 +818,7 @@ body {
   body .portfolio .profil-head {
     font-size: 30px !important; }
   body .portfolio .head-text {
-    font-size: 40px; }
+    font-size: 30px; }
   body .portfolio .portfolio-header {
     margin-top: 40px; }
   body .portfolio .portfolio-pictures .port-picture {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 07, 2021 at 12:02 PM
+-- Generation Time: Jul 09, 2021 at 01:38 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -144,58 +144,58 @@ CREATE TABLE IF NOT EXISTS `menu_translation` (
 INSERT INTO `menu_translation` (`menu_id`, `lang_id`, `name`, `slug`) VALUES
 (47, 1, 'BÃ¶lmÉ™lÉ™r', 'bolmeler'),
 (47, 2, 'Sections', 'sections'),
-(53, 1, 'Festival', 'festival'),
-(53, 2, 'Festival', 'festival'),
 (54, 1, 'NRB kataloq', 'nrb-kataloq'),
 (54, 2, 'NRB catalog', 'nrb-catalog'),
-(55, 1, 'RÉ™ngkarlÄ±q', 'rengkarliq'),
-(55, 2, 'Painting', 'painting'),
-(56, 1, 'HeykÉ™ltÉ™raÅŸlÄ±q', 'heykelterasliq'),
-(56, 2, 'Sculpture', 'sculpture'),
-(57, 1, 'Dekorativ tÉ™tbiqi sÉ™nÉ™t', 'dekorativ-tetbiqi-senet'),
-(57, 2, 'Decorative applied art', 'decorative-applied-art'),
-(58, 1, 'Teatr kino vÉ™ TV', 'teatr-kino-ve-tv'),
-(58, 2, 'Theater cinema and tv', 'theater cinema and tv'),
-(59, 1, 'SÉ™nÉ™tÅŸÃ¼naslÄ±q', 'senetsunasliq'),
-(59, 2, 'Study of art', 'study-of-art'),
-(60, 1, 'KÃ¶hnÉ™ ustadlar', 'kohne-ustadlar'),
-(60, 2, 'Old masters', 'old-masters'),
-(61, 1, 'Qrafika', 'qrafika'),
-(61, 2, 'Graphics', 'graphics'),
 (62, 1, 'Arxiv', 'arxiv'),
 (62, 2, 'Archive', 'archive'),
-(63, 1, 'Tarixi fotolar', 'tarixi-fotolar'),
-(63, 2, 'Historical photos', 'historical-photos'),
-(65, 1, 'ÆlaqÉ™', 'elaqe'),
-(65, 2, 'Contact', 'contact'),
 (66, 1, 'FÉ™aliyyÉ™t', 'fealiyyet'),
 (66, 2, 'Activities', 'activities'),
-(67, 1, 'SÉ™rgilÉ™r', 'sergiler'),
-(67, 2, 'Exhibitions', 'exhibitions'),
-(68, 1, 'TÉ™dbirlÉ™r', 'tedbirler'),
-(68, 2, 'Events', 'events'),
-(69, 1, 'Elanlar', 'elanlar'),
-(69, 2, 'Announcements', 'announcements'),
-(64, 1, 'KÃ¶hnÉ™ afiÅŸalar', 'kohne-afisalar'),
-(64, 2, 'Old posters', 'old-posters'),
-(70, 2, 'Sale', 'sale'),
-(70, 1, 'SatÄ±ÅŸ', 'satis'),
 (74, 1, 'RÉ™sm texnikalarÄ±', 'rÉ™sm-texnikalari'),
 (74, 2, 'Drawing techniques', 'drawing-techniques'),
-(49, 1, 'SÉ™rÉ™ncamlar', 'serencamlar'),
-(49, 2, 'Disposal', 'disposal'),
-(48, 1, 'Struktur', 'struktur'),
-(48, 2, 'Structure', 'structure'),
-(46, 1, 'Æsas sÉ™hifÉ™', ' '),
-(46, 2, 'Home page', ' '),
 (75, 1, 'Birliyin profili', 'birliyin-profili'),
 (75, 2, 'Association profile', 'association-profile'),
-(50, 1, 'ÃœzvlÉ™r', 'uzvler'),
-(50, 2, 'Members', 'members'),
-(51, 1, 'GÉ™nclÉ™r bÃ¶lmÉ™si', 'gencler-bolmesi'),
-(51, 2, 'Youth department', 'youth-department'),
-(52, 1, 'FÉ™xri Ã¼zvlÉ™r', 'fexri-uzvler'),
-(52, 2, 'Honorary members', 'honorary-members');
+(61, 1, 'Qrafika', 'catalog.php?category=qrafika'),
+(61, 2, 'Graphics', 'catalog.php?category=graphics'),
+(69, 1, 'Elanlar', 'post-list.php?category=elanlar'),
+(69, 2, 'Announcements', 'post-list.php?category=announcements'),
+(68, 1, 'TÉ™dbirlÉ™r', 'post-list.php?category=tedbirler'),
+(68, 2, 'Events', 'post-list.php?category=events'),
+(67, 1, 'SÉ™rgilÉ™r', 'post-list.php?category=sergiler'),
+(67, 2, 'Exhibitions', 'post-list.php?category=exhibitions'),
+(65, 1, 'ÆlaqÉ™', 'contact.php'),
+(65, 2, 'Contact', 'contact.php'),
+(60, 1, 'KÃ¶hnÉ™ ustadlar', 'catalog.php?category=kohne-ustadlar'),
+(60, 2, 'Old masters', 'catalog.php?category=old-masters'),
+(59, 1, 'SÉ™nÉ™tÅŸÃ¼naslÄ±q', 'catalog.php?category=senetsunasliq'),
+(59, 2, 'Study of art', 'catalog.php?category=study-of-art'),
+(58, 1, 'Teatr kino vÉ™ TV', 'catalog.php?category=teatr-kino-ve-tv'),
+(58, 2, 'Theater cinema and tv', 'catalog.php?category=theater cinema and tv'),
+(57, 1, 'Dekorativ tÉ™tbiqi sÉ™nÉ™t', 'catalog.php?category=dekorativ-tetbiqi-senet'),
+(57, 2, 'Decorative applied art', 'catalog.php?category=decorative-applied-art'),
+(56, 1, 'HeykÉ™ltÉ™raÅŸlÄ±q', 'catalog.php?category=heykelterasliq'),
+(56, 2, 'Sculpture', 'catalog.php?category=sculpture'),
+(53, 1, 'Festival', 'post-list.php?category=festival'),
+(53, 2, 'Festival', 'post-list.php?category=festival'),
+(52, 1, 'FÉ™xri Ã¼zvlÉ™r', 'catalog.php?category=fexri-uzvler'),
+(52, 2, 'Honorary members', 'catalog.php?category=honorary-members'),
+(51, 1, 'GÉ™nclÉ™r bÃ¶lmÉ™si', 'catalog.php?category=gencler-bolmesi'),
+(51, 2, 'Youth department', 'catalog.php?category=youth-department'),
+(50, 1, 'ÃœzvlÉ™r', 'catalog.php?category=uzvler'),
+(50, 2, 'Members', 'catalog.php?category=members'),
+(55, 1, 'RÉ™ngkarlÄ±q', 'catalog.php?category=rengkarliq'),
+(55, 2, 'Painting', 'catalog.php?category=painting'),
+(70, 2, 'Shop', 'shop.php'),
+(70, 1, 'SatÄ±ÅŸ', 'shop.php'),
+(46, 1, 'Æsas sÉ™hifÉ™', 'index.php'),
+(46, 2, 'Home page', 'index.php'),
+(48, 1, 'Struktur', 'post-list.php?category=struktur'),
+(48, 2, 'Structure', 'post-list.php?category=structure'),
+(49, 1, 'SÉ™rÉ™ncamlar', 'post-list.php?category=serencamlar'),
+(49, 2, 'Disposal', 'post-list.php?category=disposal'),
+(64, 1, 'KÃ¶hnÉ™ afiÅŸalar', 'post-catalog.php?category=kohne-afisalar'),
+(64, 2, 'Old posters', 'post-catalog.php?category=.php?category=old-posters'),
+(63, 1, 'Tarixi fotolar', 'post-catalog.php?category=tarixi-fotolar'),
+(63, 2, 'Historical photos', 'post-catalog.php?category=historical-photos');
 
 -- --------------------------------------------------------
 
@@ -221,7 +221,7 @@ CREATE TABLE IF NOT EXISTS `painters` (
 INSERT INTO `painters` (`id`, `painter_name`, `painter_surname`, `categories`, `painter_image`, `status`) VALUES
 (11, 'Metin', 'Quliyev', '55,56', '95+-Funky-Computer-4K-Wallpapers-WallpaperYou.jpg', 1),
 (22, 'Puste', 'Agayeva', '55,57,58', '235506.jpg', 1),
-(36, 'Ayten', 'Seyidova', '55,57,60', '7wcFi9.jpg', 1),
+(36, 'Ayten', 'Seyidova', '55', '7wcFi9.jpg', 1),
 (37, 'Gunel', 'Mehnetli', '56,60', '4.jpg', 1);
 
 -- --------------------------------------------------------
@@ -244,12 +244,12 @@ CREATE TABLE IF NOT EXISTS `painter_translation` (
 INSERT INTO `painter_translation` (`painter_id`, `lang_id`, `about_painter`) VALUES
 (11, 1, '<p>Bu ressam haqqinda melumatdir</p>\r\n'),
 (11, 2, '<p>This is information about painter</p>\r\n'),
-(36, 1, '<p>eterte</p>\r\n'),
-(36, 2, '<p>tryrtyr</p>\r\n'),
 (37, 1, '<p>gnghnjg</p>\r\n'),
 (37, 2, '<p>gfhfgnjgn</p>\r\n'),
 (22, 1, '<p>melumat</p>\r\n'),
-(22, 2, '<p>information</p>\r\n');
+(22, 2, '<p>information</p>\r\n'),
+(36, 1, '<p>eterte</p>\r\n'),
+(36, 2, '<p>tryrtyr</p>\r\n');
 
 -- --------------------------------------------------------
 
@@ -266,7 +266,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `hits` int(11) NOT NULL DEFAULT '0',
   `status` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `posts`
@@ -279,9 +279,13 @@ INSERT INTO `posts` (`id`, `image`, `created_date`, `category_id`, `hits`, `stat
 (15, '268e0b01144607b38cec0309896893c7.png', '2021-06-12 10:12:33', 74, 0, 1),
 (16, '95+-Funky-Computer-4K-Wallpapers-WallpaperYou.jpg', '2021-06-26 00:12:47', 74, 0, 1),
 (17, '413607.jpg', '2021-06-26 00:13:18', 75, 0, 1),
-(18, '12212.jpg', '2021-06-26 00:14:00', 74, 0, 1),
+(18, '12212.jpg', '2021-06-26 00:14:00', 64, 0, 1),
 (19, '3o3vcn0.jpg', '2021-06-26 00:14:32', 69, 0, 1),
-(20, '2c56685f7698b00db68846979259230a.jpg', '2021-07-07 15:45:19', 49, 0, 1);
+(20, '2c56685f7698b00db68846979259230a.jpg', '2021-07-07 15:45:19', 49, 0, 1),
+(21, '4.jpg', '2021-07-08 17:13:19', 68, 0, 1),
+(22, 'windows-7-windows-11.jpg', '2021-07-09 16:38:51', 48, 0, 1),
+(23, 'internet merkezi.jpg', '2021-07-09 16:39:10', 48, 0, 1),
+(24, 'nakhinternet rabite.jpg', '2021-07-09 16:40:19', 48, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -373,16 +377,24 @@ INSERT INTO `posts_translation` (`post_id`, `lang_id`, `title`, `content`) VALUE
 (17, 2, 'wdwcw', '<p>ewewffe</p>\r\n'),
 (13, 1, 'sdfsdsdf', '<p>sdfdsf</p>\r\n'),
 (13, 2, 'sdfsdf', '<p>sdfsdfs</p>\r\n'),
-(18, 1, 'Where does it come from?', '<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of &quot;de Finibus Bonorum et Malorum&quot; (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, &quot;Lorem ipsum dolor sit amet..&quot;, comes from a line in section 1.10.32.</p>\r\n'),
-(18, 2, 'wfewwe', '<p>ewfwef</p>\r\n'),
-(19, 1, 'Where can I get some?', '<p><strong>Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\r\n'),
-(19, 2, 'weefew', '<p>ewfwe</p>\r\n'),
 (16, 1, 'Where does it come from?', '<p>Vestibulum non laoreet diam. Vivamus bibendum, nisi sed pulvinar varius, eros velit dapibus ante, ut vulputate nisl neque sit amet neque. Phasellus rutrum in ex sit amet porttitor. Interdum et malesuada fames ac ante ipsum primis in faucibus. Duis convallis non mi nec viverra. Pellentesque ut leo tempor ipsum scelerisque aliquet. Suspendisse mi libero, luctus tristique erat vitae, cursus dignissim arcu. Duis eget ligula sed elit vestibulum tincidunt. Pellentesque tristique sem sed aliquam semper. Maecenas lacus sapien, lacinia eu venenatis quis, sagittis eu urna. Donec fringilla sit amet nisi vitae fermentum. Vivamus sodales dolor eu ligula rhoncus, quis convallis tortor pellentesque. Sed quis diam euismod leo consectetur mattis id tempor leo. Aenean non nulla at arcu ultricies congue.</p>\r\n\r\n<p>Duis vehicula scelerisque lectus auctor luctus. Nunc mattis quis mi in aliquam. Vestibulum placerat risus diam, eget sagittis quam aliquam eget. Donec non mi mi. Proin sagittis suscipit mi, a dictum neque consequat id. In hendrerit iaculis eleifend. Sed efficitur finibus vestibulum.</p>\r\n'),
 (16, 2, 'edefew', '<p>eewfwe</p>\r\n'),
 (8, 1, 'ghjgj', '<p>ghjgh</p>\r\n'),
 (8, 2, 'ghjgjg en', '<p>ghjhgjg en</p>\r\n'),
 (20, 1, 'bu bir basliqdir', '<p>gfdgfdgdfg</p>\r\n'),
-(20, 2, 'this is a title11', '<p>dgdfgfg</p>\r\n');
+(20, 2, 'this is a title11', '<p>dgdfgfg</p>\r\n'),
+(19, 1, 'Where can I get some?', '<p>Lorem Ipsum&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\r\n'),
+(19, 2, 'weefew', '<p>ewfwe</p>\r\n'),
+(18, 1, 'Where does it come from?', '<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of &quot;de Finibus Bonorum et Malorum&quot; (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, &quot;Lorem ipsum dolor sit amet..&quot;, comes from a line in section 1.10.32.</p>\r\n'),
+(18, 2, 'wfewwe', '<p>ewfwef</p>\r\n'),
+(21, 1, 'bu bir basliqdir11', '<p>thhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</p>\r\n'),
+(21, 2, 'this is a title11', '<p>fggggggggggggggggggggggggggggg</p>\r\n'),
+(22, 1, '7iu5tiut', '<p>tyityity</p>\r\n'),
+(22, 2, 'tyityity', '<p>tyiy</p>\r\n'),
+(23, 1, '6ut6u', '<p>56u65u56</p>\r\n'),
+(23, 2, '56u56u65', '<p>u65u65u56</p>\r\n'),
+(24, 1, 'r4rrr', '<p>rrffrffcr</p>\r\n'),
+(24, 2, 'cfcrcrrc', '<p>crfccfcf</p>\r\n');
 
 -- --------------------------------------------------------
 

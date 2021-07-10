@@ -44,7 +44,7 @@
                                     </li>
                                     <div class="linkhover">
                                         <div class="hovericon">
-                                            <a href="satis_link.php?sales=<?= $sales['id_sales']; ?>&lang=<?=$lang_name;?>" class="circle"><i class="fas fa-link icons"></i></a>
+                                            <a href="product.php?sales=<?= $sales['id_sales']; ?>&lang=<?=$lang_name;?>" class="circle"><i class="fas fa-link icons"></i></a>
                                             <a href="uploads/<?= $sales['image']; ?>" rel="prettyPhoto[gallery2]" id="search-button" class="circle"><i class="fas fa-search icons"></i></a>
                                         </div>
                                         <div class="hovertext">

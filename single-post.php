@@ -34,35 +34,37 @@
                 <span><i class="far fa-clock"></i>&nbsp;&nbsp;<?= date('d.m.Y H:i', strtotime($news_row['created_date'])); ?></span>
             </div>
         </div>
-   
-    <?php
-    $sql = "SELECT * FROM posts_gallery WHERE post_id='" . $post . "' ORDER BY `id` desc";
-    $gallery = mysqli_fetch_all(mysqli_query($conn, $sql), MYSQLI_ASSOC);
-    ?>
 
-    <h6 class="head-text change-theme profile-header portfolio-header work_head"><?php if ($lang_id == 1) {
-                                                                                        echo 'Qalereya';
-                                                                                    } else echo 'Gallery'; ?></h6>
-    <div class="icon title-line">
-        <img src="assets/img/title-line.png">
-    </div>
-    <div class="portfolio-pictures row gallery">
         <?php
-        foreach ($gallery as $key => $value) {
+        $sql = "SELECT * FROM posts_gallery WHERE post_id='" . $post . "' ORDER BY `id` desc";
+        $gallery = mysqli_fetch_all(mysqli_query($conn, $sql), MYSQLI_ASSOC);
+        if (!empty($gallery)) {
         ?>
-            <div id="first-category" class="col-xl-3 col-lg-4 col-md-6 col-sm-12 port-picture">
-                <a href="uploads/<?= $value['gallery_image'] ?>" rel="prettyPhoto[gallery2]" id="search-button" class="circle">
-                    <div style="border-width: 8px;" class="port-img tiny-img">
-                        <figure style="border-width: 4px;">
-                            <li>
-                                <img src="uploads/<?= $value['gallery_image'] ?>" width="60" height="60" />
-                            </li>
-                        </figure>
+
+            <h6 class="head-text change-theme profile-header portfolio-header work_head"><?php if ($lang_id == 1) {
+                                                                                                echo 'Qalereya';
+                                                                                            } else echo 'Gallery'; ?></h6>
+            <div class="icon title-line">
+                <img src="assets/img/title-line.png">
+            </div>
+            <div class="portfolio-pictures row gallery">
+                <?php
+                foreach ($gallery as $key => $value) {
+                ?>
+                    <div id="first-category" class="col-xl-3 col-lg-4 col-md-6 col-sm-12 port-picture">
+                        <a href="uploads/<?= $value['gallery_image'] ?>" rel="prettyPhoto[gallery2]" id="search-button" class="circle">
+                            <div style="border-width: 8px;" class="port-img tiny-img">
+                                <figure style="border-width: 4px;">
+                                    <li>
+                                        <img src="uploads/<?= $value['gallery_image'] ?>" width="60" height="60" />
+                                    </li>
+                                </figure>
+                            </div>
+                        </a>
                     </div>
-                </a>
+                <?php } ?>
             </div>
         <?php } ?>
-    </div>
     </div>
     <?php include 'includes/footer.php'; ?>
 </body>

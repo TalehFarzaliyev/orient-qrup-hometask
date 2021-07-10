@@ -17,19 +17,16 @@
     ?>
 
     <?php
-    $result    = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, pt.*, mt.*, m.* FROM orient_ressamlar.posts p 
+    $result    = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, pt.*, mt.* FROM orient_ressamlar.posts p 
                                   INNER JOIN orient_ressamlar.posts_translation pt ON pt.post_id=p.id
-                                  INNER JOIN orient_ressamlar.menu_translation mt 
-                                  INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
-                                  WHERE pt.lang_id=$lang_id && p.status=1 && p.category_id=m.id && mt.name='rəsm texnikaları' ORDER BY p.`id` desc");
+                                  INNER JOIN orient_ressamlar.menu_translation mt ON mt.menu_id=p.category_id
+                                  WHERE pt.lang_id=$lang_id && p.status=1 && p.category_id=74 && mt.lang_id=$lang_id ORDER BY p.`id` desc");
     $materials = mysqli_fetch_all($result, MYSQLI_ASSOC);
     if (!empty($materials)) {
     ?>
         <div class="blog change-theme">
             <div class="section-header">
-                <h2><?php if ($lang_id == 1) {
-                        echo 'Rəsm texnikaları';
-                    } else echo 'Drawing techniques'; ?></h2>
+                <h2><?=$materials[0]['name'];?></h2>
                 <div class="title-line">
                     <img class="line" src="assets/img/title-line.png" alt="">
                 </div>
@@ -70,7 +67,7 @@
                                                                                         } ?>">
                             <h3><?= $material_row['title']; ?></h3>
                             <p><?= substr($material_row['content'], 0, 200); ?></p>
-                            <a href="singleimg.php?post=<?= $material_row['id_post']; ?>&lang=<?= $lang_name; ?>" class="more_button"><?php if ($lang_id == 1) {
+                            <a href="post.php?post=<?= $material_row['id_post']; ?>&lang=<?= $lang_name; ?>" class="more_button"><?php if ($lang_id == 1) {
                                                                                                     echo 'Ətraflı';
                                                                                                 } else echo 'Read more'; ?></a>
                         </div>

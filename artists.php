@@ -1,3 +1,4 @@
+<?php include 'config/config.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +13,6 @@
     </div>
 
     <?php include 'includes/theme.php';
-    include 'config/config.php';
     if (isset($_GET['painter']) and !empty($_GET['painter'])) {
         $painter        = intval($_GET['painter']);
         $select_painter = "SELECT p.id as id_painter, p.painter_name, p.painter_surname, p.painter_image, p.status, pt.* FROM orient_ressamlar.painters p 
@@ -48,26 +48,26 @@
             <img src="assets/img/title-line.png">
         </div>
         <div class="portfolio-pictures row gallery">
-        <?php
+            <?php
             foreach ($work as $key => $value) {
-        ?>
-            <div id="first-category" class="col-xl-3 col-lg-4 col-md-6 col-sm-12 port-picture">
-                <div class="port-img tiny-img" style="border-width: 8px;">
-                    <figure style="border-width: 4px;">
-                        <li>
-                            <img src="uploads/<?=$value['work_image']?>" width="60" height="60" alt="This is a pretty long title" />
-                        </li>
-                        <div class="linkhover">
-                            <div class="hovericon tiny-icon">
-                                <a href="uploads/<?=$value['work_image']?>" rel="prettyPhoto[gallery2]" id="search-button" class="circle"><i class="fas fa-search icons"></i></a>
+            ?>
+                <div id="first-category" class="col-xl-3 col-lg-4 col-md-6 col-sm-12 port-picture">
+                    <div class="port-img tiny-img" style="border-width: 8px;">
+                        <figure style="border-width: 4px;">
+                            <li>
+                                <img src="uploads/<?= $value['work_image'] ?>" width="60" height="60" alt="This is a pretty long title" />
+                            </li>
+                            <div class="linkhover">
+                                <div class="hovericon tiny-icon">
+                                    <a href="uploads/<?= $value['work_image'] ?>" rel="prettyPhoto[gallery2]" id="search-button" class="circle"><i class="fas fa-search icons"></i></a>
+                                </div>
+                                <div class="hovertext">
+                                    <span class="hovertext-mainitem"><?= $value['work_name'] ?></span>
+                                </div>
                             </div>
-                            <div class="hovertext">
-                                <span class="hovertext-mainitem"><?=$value['work_name']?></span>
-                            </div>
-                        </div>
-                    </figure>
+                        </figure>
+                    </div>
                 </div>
-            </div>
             <?php } ?>
         </div>
     </div>

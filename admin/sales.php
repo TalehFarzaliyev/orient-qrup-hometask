@@ -59,7 +59,7 @@ if ($_SESSION['logged_in'] == 1) {
                                                     include '../config/config.php';
                                                     $page = isset($_GET['page']) ? $_GET['page'] : 1;
                                                     $number_of_content = mysqli_num_rows(mysqli_query($conn, 'SELECT `id` FROM `sales`'));
-                                                    $limit = 3;
+                                                    $limit = 5;
                                                     $lastpage = ceil($number_of_content / $limit);
                                                     $start = ($page - 1) * $limit;
                                                     if ($lastpage >= $page) {

@@ -89,12 +89,19 @@
 </div>
 
 <?php
-$result = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, pt.*, mt.*, m.* FROM orient_ressamlar.posts p 
-                               INNER JOIN orient_ressamlar.posts_translation pt ON pt.post_id=p.id
-                               INNER JOIN orient_ressamlar.menu_translation mt 
-                               INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
-                               WHERE pt.lang_id=$lang_id && p.status=1 && p.category_id=m.id && mt.name='sərgilər' ORDER BY p.`id` desc LIMIT 8");
-$news  = mysqli_fetch_all($result, MYSQLI_ASSOC);
+$result1 = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, pt.*, mt.*, m.* FROM orient_ressamlar.posts p 
+                                INNER JOIN orient_ressamlar.posts_translation pt ON pt.post_id=p.id
+                                INNER JOIN orient_ressamlar.menu m ON  p.category_id=m.id
+                                INNER JOIN orient_ressamlar.menu_translation mt ON mt.menu_id=m.id 
+                                WHERE pt.lang_id=$lang_id && p.status=1 && p.category_id=67 && mt.lang_id=$lang_id ORDER BY p.`id` desc LIMIT 4");
+$result2 = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, pt.*, mt.*, m.* FROM orient_ressamlar.posts p 
+                                INNER JOIN orient_ressamlar.posts_translation pt ON pt.post_id=p.id
+                                INNER JOIN orient_ressamlar.menu m ON  p.category_id=m.id
+                                INNER JOIN orient_ressamlar.menu_translation mt ON mt.menu_id=m.id 
+                                WHERE pt.lang_id=$lang_id && p.status=1 && p.category_id=68 && mt.lang_id=$lang_id ORDER BY p.`id` desc LIMIT 4");
+$news1   = mysqli_fetch_all($result1, MYSQLI_ASSOC);
+$news2   = mysqli_fetch_all($result2, MYSQLI_ASSOC);
+$news    = array_merge($news1, $news2);
 if (!empty($news)) {
 ?>
     <div class="blog change-theme news-section">
@@ -117,7 +124,7 @@ if (!empty($news)) {
                         <p class="card-text"><?= substr($post['content'], 0, 100); ?></p>
                         <div class="date_button">
                             <span><i class="far fa-clock"></i>&nbsp;&nbsp;<?= date('d.m.Y H:i', strtotime($post['created_date'])); ?></span>
-                            <a href="single_news.php?post=<?= $post['id_post']; ?>&lang=<?= $lang_name; ?>" class="btn btn-primary change_button_color"><?php if ($lang_id == 1) {
+                            <a href="single-post.php?post=<?= $post['id_post']; ?>&lang=<?= $lang_name; ?>" class="btn btn-primary change_button_color"><?php if ($lang_id == 1) {
                                                                                                                                                             echo 'Ardını oxu';
                                                                                                                                                         } else echo 'Read more'; ?></a>
                         </div>
@@ -132,19 +139,16 @@ if (!empty($news)) {
 <?php
 }
 
-$result    = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, pt.*, mt.*, m.* FROM orient_ressamlar.posts p 
+$result    = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, pt.*, mt.* FROM orient_ressamlar.posts p 
                                   INNER JOIN orient_ressamlar.posts_translation pt ON pt.post_id=p.id
-                                  INNER JOIN orient_ressamlar.menu_translation mt 
-                                  INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
-                                  WHERE pt.lang_id=$lang_id && p.status=1 && p.category_id=m.id && mt.name='rəsm texnikaları' ORDER BY p.`id` desc LIMIT 4");
+                                  INNER JOIN orient_ressamlar.menu_translation mt ON mt.menu_id=p.category_id
+                                  WHERE pt.lang_id=$lang_id && p.status=1 && p.category_id=74 && mt.lang_id=$lang_id ORDER BY p.`id` desc LIMIT 4");
 $materials = mysqli_fetch_all($result, MYSQLI_ASSOC);
 if (!empty($materials)) {
 ?>
     <div class="blog change-theme">
         <div class="section-header">
-            <h2><?php if ($lang_id == 1) {
-                    echo 'Rəsm texnikaları';
-                } else echo 'Drawing techniques'; ?></h2>
+            <h2><?=$materials[0]['name'];?></h2>
             <div class="title-line">
                 <img class="line" src="assets/img/title-line.png" alt="">
             </div>
@@ -185,7 +189,7 @@ if (!empty($materials)) {
                                                                                     } ?>">
                         <h3><?= $material_row['title']; ?></h3>
                         <p><?= substr($material_row['content'], 0, 200); ?></p>
-                        <a href="singleimg.php?post=<?= $material_row['id_post']; ?>&lang=<?= $lang_name; ?>" class="more_button"><?php if ($lang_id == 1) {
+                        <a href="post.php?post=<?= $material_row['id_post']; ?>&lang=<?= $lang_name; ?>" class="more_button"><?php if ($lang_id == 1) {
                                                                                                 echo 'Ətraflı';
                                                                                             } else echo 'Read more'; ?></a>
                     </div>

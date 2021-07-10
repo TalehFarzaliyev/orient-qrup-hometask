@@ -140,7 +140,7 @@ if ($_SESSION['logged_in'] == 1) {
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="exampleFormControlInput1">Slug</label>
-                                                        <input type="text" name="translation[<?= $row['id'] ?>][slug]" required class="form-control" id="exampleFormControlInput1" placeholder="Slug">
+                                                        <input type="text" name="translation[<?= $row['id'] ?>][slug]" class="form-control" id="exampleFormControlInput1" placeholder="Slug">
                                                     </div>
                                                 </div>
                                             <?php
@@ -236,7 +236,7 @@ if ($_SESSION['logged_in'] == 1) {
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="exampleFormControlInput1">Slug</label>
-                                                        <input type="text" name="translation[<?= $value['lang_id'] ?>][slug]" required value="<?= $value['slug']; ?>" class="form-control" id="exampleFormControlInput1" placeholder="Slug">
+                                                        <input type="text" name="translation[<?= $value['lang_id'] ?>][slug]" value="<?= $value['slug']; ?>" class="form-control" id="exampleFormControlInput1" placeholder="Slug">
                                                     </div>
                                                 </div>
                                             <?php

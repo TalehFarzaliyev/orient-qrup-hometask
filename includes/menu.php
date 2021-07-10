@@ -25,14 +25,14 @@ $parent_menus = mysqli_fetch_all(mysqli_query($conn, $parent_sql), MYSQLI_ASSOC)
                     echo '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
                     foreach ($sub_menus as $submenu) {
                         if ($parent['menu_id'] == $submenu['parent_id']) {
-                            echo '<a class="dropdown-item hover-color" href="?category=' . $submenu['slug'] . '&lang=' . $lang_name . '">' . $submenu['name'] . '</a>';
+                            echo '<a class="dropdown-item hover-color" href="' . $submenu['slug'] . '&lang=' . $lang_name . '">' . $submenu['name'] . '</a>';
                         }
                     }
                     echo '</div>';
                     echo '</div>';
                 } else {
                     echo '<div class="dropdown-item menu-item single-item">';
-                    echo ' <a href="?category=' . $parent['slug'] . '&lang=' . $lang_name . '" class="menu-color hover-color btn-secondary">' . $parent['name'] . '</a>';
+                    echo ' <a href="' . $parent['slug'] . '?lang=' . $lang_name . '" class="menu-color hover-color btn-secondary">' . $parent['name'] . '</a>';
                     echo '</div>';
                 }
             }

@@ -57,7 +57,7 @@ if ($_SESSION['logged_in'] == 1) {
                                                         $painter     = intval($_GET['painter']);
                                                         $page = isset($_GET['page']) ? $_GET['page'] : 1;
                                                         $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT `id` FROM `works` WHERE `painter_id`='$painter'"));
-                                                        $limit = 3;
+                                                        $limit = 5;
                                                         $lastpage = ceil($number_of_content / $limit);
                                                         $start = ($page - 1) * $limit;
                                                         if ($lastpage >= $page) {
