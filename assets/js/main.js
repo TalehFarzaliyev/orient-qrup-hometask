@@ -57,8 +57,10 @@ function toggleTheme() {
             themeSide.style.marginLeft = "0px";
         }
     }
-
 }
+
+
+
 
 function lightTheme() {
     for (var i = 0; i < changeTheme.length; i++) {

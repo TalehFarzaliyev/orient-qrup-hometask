@@ -11,8 +11,8 @@
         <div class="menu-name"></div>
     </div>
 
-    <?php include 'includes/theme.php'; 
-    include 'config/config.php';
+    <?php include 'includes/theme.php';
+    include $_SERVER['DOCUMENT_ROOT'] . '/config/config.php';
     if (isset($_GET['sales']) and !empty($_GET['sales'])) {
         $sales          = intval($_GET['sales']);
         $select_sales   = "SELECT s.id as id_sales, s.painter_id, s.image, s.price, s.status, st.*, p.* FROM orient_ressamlar.sales s 
@@ -35,16 +35,16 @@
                 </div>
                 <div class="text-division">
                     <div>
-                        <span class="text-head"><?php if ($lang_id == 1) {echo 'Rəssamın adı: ';} else echo "Painter's name: "; ?></h2></span><span class="texts-body"><?= $sales_row['painter_name']; ?> <?= $sales_row['painter_surname']; ?></span>
+                        <span class="text-head"><?= translate('painter-name', $lang_name); ?></h2></span><span class="texts-body"><?= $sales_row['painter_name']; ?> <?= $sales_row['painter_surname']; ?></span>
                     </div>
                     <div>
-                        <span class="text-head"><?php if ($lang_id == 1) {echo 'Qiyməti: ';} else echo 'Price: '; ?></span><span class="texts-body"><?= $sales_row['price']; ?> ₼</span>
+                        <span class="text-head"><?= translate('price', $lang_name); ?></span><span class="texts-body"><?= $sales_row['price']; ?> ₼</span>
                     </div>
                     <div>
-                        <span class="text-head"><?php if ($lang_id == 1) {echo 'Ölçü: ';} else echo "Size: "; ?></span><span class="texts-body"><?= $sales_row['size']; ?></span>
+                        <span class="text-head"><?= translate('size', $lang_name); ?></span><span class="texts-body"><?= $sales_row['size']; ?></span>
                     </div>
                     <div>
-                        <span class="text-head"><?php if ($lang_id == 1) {echo 'Texnika: ';} else echo "Technique: "; ?></span><span class="texts-body"><?= $sales_row['technique']; ?></span>
+                        <span class="text-head"><?= translate('technique', $lang_name); ?></span><span class="texts-body"><?= $sales_row['technique']; ?></span>
                     </div>
                 </div>
             </div>

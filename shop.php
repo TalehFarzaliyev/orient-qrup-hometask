@@ -1,4 +1,4 @@
-<?php include 'config/config.php' ?>
+<?php include $_SERVER['DOCUMENT_ROOT'].'/config/config.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,7 +27,7 @@
         if (!empty($row)) {
     ?>
             <div class="portfolio change-theme">
-                <h2 class="head-text change-theme profile-header portfolio-header"><?php if ($lang_id == 1) {echo 'SATIŞ';} else echo 'SHOP'; ?></h2>
+                <h2 class="head-text change-theme profile-header portfolio-header"><?=translate('shop', $lang_name); ?></h2>
                 <div class="icon title-line">
                     <img src="assets/img/title-line.png">
                 </div>

@@ -1,4 +1,4 @@
-<?php include 'config/config.php' ?>
+<?php include $_SERVER['DOCUMENT_ROOT'].'/config/config.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -83,9 +83,7 @@
             include 'includes/theme.php'; ?>
 
 <div class="portfolio change-theme portfolio-button">
-    <a href="portfolio.php?lang=<?= $lang_name; ?>" class="view_button wow swing"><?php if ($lang_id == 1) {
-                                                                                    echo 'BİRLİYİN PROFİLİ';
-                                                                                } else echo 'ASSOCIATION PROFILE'; ?></a>
+    <a href="portfolio.php?lang=<?= $lang_name; ?>" class="view_button wow swing"><?=translate('association', $lang_name); ?></a>
 </div>
 
 <?php
@@ -106,9 +104,7 @@ if (!empty($news)) {
 ?>
     <div class="blog change-theme news-section">
         <div class="section-header">
-            <h2><?php if ($lang_id == 1) {
-                    echo 'Xəbərlər';
-                } else echo 'News'; ?></h2>
+            <h2><?=translate('news', $lang_name); ?></h2>
             <div class="title-line icon">
                 <img class="line" src="assets/img/title-line.png" alt="">
             </div>
@@ -124,9 +120,7 @@ if (!empty($news)) {
                         <p class="card-text"><?= substr($post['content'], 0, 100); ?></p>
                         <div class="date_button">
                             <span><i class="far fa-clock"></i>&nbsp;&nbsp;<?= date('d.m.Y H:i', strtotime($post['created_date'])); ?></span>
-                            <a href="single-post.php?post=<?= $post['id_post']; ?>&lang=<?= $lang_name; ?>" class="btn btn-primary change_button_color"><?php if ($lang_id == 1) {
-                                                                                                                                                            echo 'Ardını oxu';
-                                                                                                                                                        } else echo 'Read more'; ?></a>
+                            <a href="single-post.php?post=<?= $post['id_post']; ?>&lang=<?= $lang_name; ?>" class="btn btn-primary change_button_color"><?=translate('read-more', $lang_name); ?></a>
                         </div>
                     </div>
                 </div>
@@ -189,18 +183,14 @@ if (!empty($materials)) {
                                                                                     } ?>">
                         <h3><?= $material_row['title']; ?></h3>
                         <p><?= substr($material_row['content'], 0, 200); ?></p>
-                        <a href="post.php?post=<?= $material_row['id_post']; ?>&lang=<?= $lang_name; ?>" class="more_button"><?php if ($lang_id == 1) {
-                                                                                                echo 'Ətraflı';
-                                                                                            } else echo 'Read more'; ?></a>
+                        <a href="post.php?post=<?= $material_row['id_post']; ?>&lang=<?= $lang_name; ?>" class="more_button"><?=translate('read-more', $lang_name); ?></a>
                     </div>
                 </div>
             <?php } ?>
         </div>
         <br>
         <div class="text-center">
-            <a href="drawings.php?lang=<?= $lang_name; ?>" class="see-more"><?php if ($lang_id == 1) {
-                                                            echo 'Daha çox gör';
-                                                        } else echo 'See more'; ?></a>
+            <a href="drawings.php?lang=<?= $lang_name; ?>" class="see-more"><?=translate('see-more', $lang_name); ?></a>
         </div>
         <br>
     </div>

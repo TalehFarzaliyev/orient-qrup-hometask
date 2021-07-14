@@ -1,18 +1,19 @@
+<?php include $_SERVER['DOCUMENT_ROOT'].'/config/config.php'; ?>
 <div id="theme-side" class="theme-color">
     <div class="main-theme">
-        <p class="theme-header"><?php if ($lang_id == 1) {echo 'STİLİNİZİ SEÇİN';} else echo 'select your style'; ?></p>
-        <p><?php if ($lang_id == 1) {echo 'TEMA SEÇİN';} else echo 'choose your scheme'; ?></p>
+        <p class="theme-header"><?=translate('select-style', $lang_name); ?></p>
+        <p><?=translate('choose-theme', $lang_name); ?></p>
         <div class="theme-buttons">
             <button onclick="darkTheme();">
                 <span class="color-icon" style="background-color: black;"></span>
-                <span class="color-name"><?php if ($lang_id == 1) {echo 'Tünd';} else echo 'Dark'; ?></span>
+                <span class="color-name"><?=translate('dark', $lang_name); ?></span>
             </button>
             <button onclick="lightTheme();">
                 <span class="color-icon" style="background-color: white;"></span>
-                <span class="color-name"><?php if ($lang_id == 1) {echo 'Açıq';} else echo 'Light'; ?></span>
+                <span class="color-name"><?=translate('light', $lang_name); ?></span>
             </button>
         </div>
-        <p class="scheme"><?php if ($lang_id == 1) {echo 'RƏNG PALİTRASI';} else echo 'color scheme'; ?></p>
+        <p class="scheme"><?=translate('color-scheme', $lang_name); ?></p>
         <div class="all-colors">
             <div class="first-row">
                 <button onclick="firstTheme(this);" class="color-button" data-color-type="#A91C51" style="background-color: #A91C51"></button>

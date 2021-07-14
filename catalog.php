@@ -22,7 +22,7 @@ $category_id   = $category['menu_id'];
 
     <?php include 'includes/theme.php';
         $page = isset($_GET['page']) ? $_GET['page'] : 1;
-        $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT `categories` FROM `painters` p WHERE p.categories=$category_id"));
+        $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT `categories` FROM `painters` p WHERE p.categories LIKE '%$category_id%'"));
         $limit = 8;
         $lastpage = ceil($number_of_content / $limit);
         $start = ($page - 1) * $limit;
@@ -30,7 +30,7 @@ $category_id   = $category['menu_id'];
             $result = mysqli_query($conn, "SELECT p.id as id_painter, p.painter_name, p.painter_surname, p.painter_image, p.status, p.categories, pt.*, mt.* FROM orient_ressamlar.painters p 
                                         INNER JOIN orient_ressamlar.painter_translation pt ON pt.painter_id=p.id
                                         INNER JOIN orient_ressamlar.menu_translation mt ON p.categories=mt.menu_id
-                                        WHERE pt.lang_id=$lang_id && p.status=1 && p.categories=$category_id && mt.lang_id=$lang_id ORDER BY p.`id` desc LIMIT " . $start . ',' . $limit);
+                                        WHERE pt.lang_id=$lang_id && p.status=1 && p.categories LIKE '%$category_id%' && mt.lang_id=$lang_id ORDER BY p.`id` desc LIMIT " . $start . ',' . $limit);
             $painter  = mysqli_fetch_all($result, MYSQLI_ASSOC);
             if (!empty($painter)) {
     ?>

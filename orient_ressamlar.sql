@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 09, 2021 at 01:38 PM
+-- Generation Time: Jul 14, 2021 at 01:32 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -280,7 +280,7 @@ INSERT INTO `posts` (`id`, `image`, `created_date`, `category_id`, `hits`, `stat
 (16, '95+-Funky-Computer-4K-Wallpapers-WallpaperYou.jpg', '2021-06-26 00:12:47', 74, 0, 1),
 (17, '413607.jpg', '2021-06-26 00:13:18', 75, 0, 1),
 (18, '12212.jpg', '2021-06-26 00:14:00', 64, 0, 1),
-(19, '3o3vcn0.jpg', '2021-06-26 00:14:32', 69, 0, 1),
+(19, '3o3vcn0.jpg', '2021-06-26 00:14:32', 68, 0, 1),
 (20, '2c56685f7698b00db68846979259230a.jpg', '2021-07-07 15:45:19', 49, 0, 1),
 (21, '4.jpg', '2021-07-08 17:13:19', 68, 0, 1),
 (22, 'windows-7-windows-11.jpg', '2021-07-09 16:38:51', 48, 0, 1),
@@ -383,18 +383,18 @@ INSERT INTO `posts_translation` (`post_id`, `lang_id`, `title`, `content`) VALUE
 (8, 2, 'ghjgjg en', '<p>ghjhgjg en</p>\r\n'),
 (20, 1, 'bu bir basliqdir', '<p>gfdgfdgdfg</p>\r\n'),
 (20, 2, 'this is a title11', '<p>dgdfgfg</p>\r\n'),
-(19, 1, 'Where can I get some?', '<p>Lorem Ipsum&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\r\n'),
-(19, 2, 'weefew', '<p>ewfwe</p>\r\n'),
 (18, 1, 'Where does it come from?', '<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of &quot;de Finibus Bonorum et Malorum&quot; (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, &quot;Lorem ipsum dolor sit amet..&quot;, comes from a line in section 1.10.32.</p>\r\n'),
 (18, 2, 'wfewwe', '<p>ewfwef</p>\r\n'),
-(21, 1, 'bu bir basliqdir11', '<p>thhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</p>\r\n'),
-(21, 2, 'this is a title11', '<p>fggggggggggggggggggggggggggggg</p>\r\n'),
 (22, 1, '7iu5tiut', '<p>tyityity</p>\r\n'),
 (22, 2, 'tyityity', '<p>tyiy</p>\r\n'),
 (23, 1, '6ut6u', '<p>56u65u56</p>\r\n'),
 (23, 2, '56u56u65', '<p>u65u65u56</p>\r\n'),
 (24, 1, 'r4rrr', '<p>rrffrffcr</p>\r\n'),
-(24, 2, 'cfcrcrrc', '<p>crfccfcf</p>\r\n');
+(24, 2, 'cfcrcrrc', '<p>crfccfcf</p>\r\n'),
+(21, 1, 'bu bir basliqdir11', '<p style=\"text-align:justify\">thhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</p>\r\n'),
+(21, 2, 'this is a title11', '<p>fggggggggggggggggggggggggggggg</p>\r\n'),
+(19, 1, 'Where can I get some?', '<p style=\"text-align:justify\">Lorem Ipsum&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\r\n'),
+(19, 2, 'weefew', '<p>ewfwe</p>\r\n');
 
 -- --------------------------------------------------------
 

@@ -1,10 +1,11 @@
+<?php include $_SERVER['DOCUMENT_ROOT'].'/config/config.php'; ?>
 <footer>
    <div class="footer-line" style="background-image: url(assets/img/title-line.png);"></div>
    <div class="footer-text">
       <div class="first-row">
-         <a class="footer-item" href="contact.php?lang=<?=$lang_name;?>"><?php if($lang_id==1){echo 'Əlaqə';}else echo 'contact';?></a>
-         <a class="footer-item" href="privacy.php?page=privacy_policy&lang=<?=$lang_name;?>"><?php if($lang_id==1){echo 'Gİzlİlİk sİyasətİ';}else echo 'privacy policy';?></a>
-         <a class="footer-item" href="privacy.php?page=terms_of_use&lang=<?=$lang_name;?>"><?php if($lang_id==1){echo 'İstİfadə şərtlərİ';}else echo 'terms of use';?></a>
+         <a class="footer-item" href="contact.php?lang=<?=$lang_name;?>"><?=translate('contact', $lang_name); ?></a>
+         <a class="footer-item" href="privacy.php?page=privacy_policy&lang=<?=$lang_name;?>"><?=translate('privacy', $lang_name); ?></a>
+         <a class="footer-item" href="privacy.php?page=terms_of_use&lang=<?=$lang_name;?>"><?=translate('terms', $lang_name); ?></a>
          <a class="footer-item" href="privacy.php?page=faq&lang=<?=$lang_name;?>">faq</a>
       </div>
    </div>

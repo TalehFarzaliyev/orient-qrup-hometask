@@ -12,7 +12,7 @@
     </div>
 
     <?php include 'includes/theme.php';
-    include 'config/config.php';
+    include $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
     if (isset($_GET['post']) and !empty($_GET['post'])) {
         $post           = intval($_GET['post']);
         $select_news    = "SELECT p.id as id_post, p.image, p.created_date, p.category_id, pt.* FROM orient_ressamlar.posts p 
@@ -41,9 +41,7 @@
         if (!empty($gallery)) {
         ?>
 
-            <h6 class="head-text change-theme profile-header portfolio-header work_head"><?php if ($lang_id == 1) {
-                                                                                                echo 'Qalereya';
-                                                                                            } else echo 'Gallery'; ?></h6>
+            <h6 class="head-text change-theme profile-header portfolio-header work_head"><?=translate('gallery', $lang_name); ?></h6>
             <div class="icon title-line">
                 <img src="assets/img/title-line.png">
             </div>

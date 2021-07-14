@@ -3,7 +3,7 @@
 
 <?php 
     include 'includes/header.php'; 
-    include 'config/config.php';
+    include $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
 ?>
 
 <body>
@@ -30,7 +30,7 @@
     ?>
 
     <div class="portfolio change-theme">
-        <h2 class="head-text change-theme profile-header portfolio-header"><?php if ($lang_id == 1) {echo 'BİRLİYİN PROFİLİ';} else echo 'ASSOCIATION PROFILE'; ?></h2>
+        <h2 class="head-text change-theme profile-header portfolio-header"><?=translate('association', $lang_name); ?></h2>
         <div class="icon title-line">
             <img src="assets/img/title-line.png">
         </div>

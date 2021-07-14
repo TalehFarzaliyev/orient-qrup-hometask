@@ -1,4 +1,4 @@
-<?php include 'config/config.php' ?>
+<?php include $_SERVER['DOCUMENT_ROOT'].'/config/config.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,10 +13,6 @@
 
     <?php
     include 'includes/theme.php';
-    include 'config/config.php';
-    ?>
-
-    <?php
     $result    = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, pt.*, mt.* FROM orient_ressamlar.posts p 
                                   INNER JOIN orient_ressamlar.posts_translation pt ON pt.post_id=p.id
                                   INNER JOIN orient_ressamlar.menu_translation mt ON mt.menu_id=p.category_id
@@ -67,9 +63,7 @@
                                                                                         } ?>">
                             <h3><?= $material_row['title']; ?></h3>
                             <p><?= substr($material_row['content'], 0, 200); ?></p>
-                            <a href="post.php?post=<?= $material_row['id_post']; ?>&lang=<?= $lang_name; ?>" class="more_button"><?php if ($lang_id == 1) {
-                                                                                                    echo 'Ətraflı';
-                                                                                                } else echo 'Read more'; ?></a>
+                            <a href="post.php?post=<?= $material_row['id_post']; ?>&lang=<?= $lang_name; ?>" class="more_button"><?=translate('read-more', $lang_name); ?></a>
                         </div>
                     </div>
                 <?php } ?>

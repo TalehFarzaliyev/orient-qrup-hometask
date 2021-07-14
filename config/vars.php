@@ -7,4 +7,4 @@
     $lang_ids   = ['az'=>1, 'en'=>2];
     $langs      = ['AZ', 'EN'];
 
-    include 'check_lang.php';
+    include $_SERVER['DOCUMENT_ROOT'].'/config/check_lang.php';
