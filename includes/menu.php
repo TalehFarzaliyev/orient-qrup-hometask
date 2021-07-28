@@ -1,14 +1,29 @@
 <?php
 include 'config/config.php';
+function removeParam($url, $param)
+{
+    $url = preg_replace('/(&|\?)' . preg_quote($param) . '=[^&]*$/', '', $url);
+    $url = preg_replace('/(&|\?)' . preg_quote($param) . '=[^&]*&/', '$1', $url);
+    return $url;
+}
+
+$langUrl = basename($_SERVER["REQUEST_URI"]);
+$langUrl = removeParam($langUrl, 'lang');
+$langIcon = '?';
+if (isset($_GET['category']) || isset($_GET['page']) || isset($_GET['post']) || isset($_GET['painter']) || isset($_GET['sales'])) {
+    $langIcon = "&";
+}
 $parent_sql   = "SELECT * FROM orient_ressamlar.menu_translation mt 
                  INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
                  WHERE mt.lang_id=$lang_id and m.parent_id=0 and m.status=1 order by m.`order_number` ASC;";
 $parent_menus = mysqli_fetch_all(mysqli_query($conn, $parent_sql), MYSQLI_ASSOC);
 ?>
 <div class="menu-side">
-    <a href="index.php?lang=<?=$lang_name;?>" class="logo-item">
+    <a href="index.php?lang=<?= $lang_name; ?>" class="logo-item">
         <img class="menu-logo1" src="assets/img/logo_img.png" alt="">
-        <img class="menu-logo2" src="<?php if ($lang_id == 1) {echo 'assets/img/logo_word.png';} else echo 'assets/img/logo_eng.png'; ?>" alt="">
+        <img class="menu-logo2" src="<?php if ($lang_id == 1) {
+                                            echo 'assets/img/logo_word.png';
+                                        } else echo 'assets/img/logo_eng.png'; ?>" alt="">
     </a>
     <a class="bars-icon" onclick="showMenu();"><i class="fas fa-bars"></i></a>
     <div class="menu-items">
@@ -44,7 +59,10 @@ $parent_menus = mysqli_fetch_all(mysqli_query($conn, $parent_sql), MYSQLI_ASSOC)
                 <?php
                 foreach ($langs as $lang) {
                 ?>
-                    <a class="dropdown-item hover-color" href="<?= $site_url; ?>?lang=<?= strtolower($lang); ?>"><i class="flag flag-<?= strtolower($lang); if($lang=='EN'){echo('gb uk');} ?>"></i><?= $lang; ?></a>
+                    <a class="dropdown-item hover-color" href="<?= $langUrl ?><?= $langIcon ?>lang=<?= strtolower($lang); ?>"><i class="flag flag-<?= strtolower($lang);
+                                                                                                                                                    if ($lang == 'EN') {
+                                                                                                                                                        echo ('gb uk');
+                                                                                                                                                    } ?>"></i><?= $lang; ?></a>
                 <?php } ?>
             </div>
         </div>

@@ -3,8 +3,8 @@ session_start();
 if ($_SESSION['logged_in'] == 1) {
     include '../config/config.php';
 
-    if (isset($_GET['id']) and !empty($_GET['id'])) {
-        $menu_id = intval($_GET['id']);
+    if (isset($_GET['ids']) and !empty($_GET['ids'])) {
+        $menu_id = intval($_GET['ids']);
         mysqli_query($conn, "DELETE FROM `menu` WHERE `id`=$menu_id");
         mysqli_query($conn, "DELETE FROM `menu_translation` WHERE `menu_id`=$menu_id");
         header('menu.php');
@@ -44,7 +44,7 @@ if ($_SESSION['logged_in'] == 1) {
                                         </div>
 
                                         <div class="input-group col-4">
-                                            <form method="post" action="menu.php" class="d-flex">
+                                            <form method="get" action="menu.php" class="d-flex">
                                                 <input type="text" class="form-control" style="height: 40px;" placeholder="Axtarış" name="search">
                                                 <div class="input-group-btn">
                                                     <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
@@ -69,10 +69,10 @@ if ($_SESSION['logged_in'] == 1) {
                                                     include '../config/config.php';
                                                     $page = isset($_GET['page']) ? $_GET['page'] : 1;
                                                     if (isset($_REQUEST['search'])) {
-                                                        $name = $_POST['search'];;
+                                                        $name = $_GET['search'];
                                                         $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT id FROM `menu` m
                                                                                                                   INNER JOIN `menu_translation` mt ON m.id=mt.menu_id
-                                                                                                                  WHERE mt.lang_id=1 and m.status=1 and mt.`name` like '%" . $name . "%'"));
+                                                                                                                  WHERE mt.lang_id=1 and m.status=1 and mt.`name` like '" . $name . "%'"));
                                                     } else {
                                                         $number_of_content = mysqli_num_rows(mysqli_query($conn, 'SELECT `id` FROM `menu` WHERE `status`=1'));
                                                     }
@@ -81,9 +81,10 @@ if ($_SESSION['logged_in'] == 1) {
                                                     $start = ($page - 1) * $limit;
                                                     if ($lastpage >= $page) {
                                                         if (isset($_REQUEST['search'])) {
+                                                            $name = $_GET['search'];
                                                             $result = mysqli_query($conn, "SELECT * FROM orient_ressamlar.menu_translation mt 
                                                                                            INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
-                                                                                           Where mt.lang_id=1 and m.status=1 and mt.name like '%" . $name . "%' ORDER BY m.`id` desc LIMIT " . $start . ',' . $limit);
+                                                                                           Where mt.lang_id=1 and m.status=1 and mt.name like '" . $name . "%' ORDER BY m.`id` desc LIMIT " . $start . ',' . $limit);
                                                         } else {
                                                             $result = mysqli_query($conn, 'SELECT * FROM orient_ressamlar.menu_translation mt 
                                                                                            INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
@@ -113,12 +114,17 @@ if ($_SESSION['logged_in'] == 1) {
                                                     }
                                                     if ($number_of_content > $limit) {
                                                         $x = 2;
-                                                        if ($page > 1) {
+                                                        if ($page > 1 && !isset($_REQUEST['search'])) {
                                                             $previous = $page - 1;
                                                             echo '<a href="?page=' . $previous . '">« Öncəki </a>';
+                                                        } elseif ($page > 1 && isset($_REQUEST['search'])) {
+                                                            $previous = $page - 1;
+                                                            echo '<a href="?search=' . $name . '&page=' . $previous . '">« Öncəki </a>';
                                                         }
                                                         if ($page == 1) {
                                                             echo '<a>[1]</a>';
+                                                        } elseif (isset($_REQUEST['search'])) {
+                                                            echo '<a href="?search=' . $name . '&page=1" style= "margin-left: 10px;">1</a>';
                                                         } else {
                                                             echo '<a href="?page=1" style= "margin-left: 10px;">1</a>';
                                                         }
@@ -131,20 +137,27 @@ if ($_SESSION['logged_in'] == 1) {
                                                         for ($i; $i <= $page + $x; $i++) {
                                                             if ($i == $page) {
                                                                 echo '&nbsp;<a style= "margin-left: 10px;">[' . $i . ']</a>&nbsp;';
+                                                            } elseif (isset($_REQUEST['search'])) {
+                                                                echo '<a href="?search=' . $name . '&page=' . $i . '" style= "margin-left: 10px;">' . $i . '</a>';
                                                             } else {
                                                                 echo '<a href="?page=' . $i . '" style= "margin-left: 10px;">' . $i . '</a>';
                                                             }
                                                             if ($i == $lastpage) break;
                                                         }
-                                                        if ($page + $x < $lastpage - 1) {
+                                                        if ($page + $x < $lastpage - 1 && !isset($_REQUEST['search'])) {
                                                             echo '...';
                                                             echo '<a href="?page=' . $lastpage . '" style= "margin-left: 10px;">' . $lastpage . '</a>';
-                                                        } elseif ($page + $x == $lastpage - 1) {
+                                                        } elseif ($page + $x == $lastpage - 1 && !isset($_REQUEST['search'])) {
                                                             echo '<a href="?page=' . $lastpage . '" style= "margin-left: 10px;">' . $lastpage . '</a>';
+                                                        } elseif ($page + $x == $lastpage - 1 && isset($_REQUEST['search'])) {
+                                                            echo '<a href="?search=' . $name . '&page=' . $lastpage . '" style= "margin-left: 10px;">' . $lastpage . '</a>';
                                                         }
-                                                        if ($page < $lastpage) {
+                                                        if ($page < $lastpage && !isset($_REQUEST['search'])) {
                                                             $next = $page + 1;
                                                             echo '<a href="?page=' . $next . '" style= "margin-left: 10px;"> Sonrakı » </a>';
+                                                        } elseif ($page < $lastpage && isset($_REQUEST['search'])) {
+                                                            $next = $page + 1;
+                                                            echo '<a href="?search=' . $name . '&page=' . $next . '" style= "margin-left: 10px;"> Sonrakı » </a>';
                                                         }
                                                     }
                                             ?>
@@ -166,6 +179,10 @@ if ($_SESSION['logged_in'] == 1) {
         <script>
             function deleteItem(id) {
                 var thisId = id.getAttribute("data-id-number");
+                var url = document.URL;
+                if (url.includes("search=")) {
+                    var search = url.substring(url.lastIndexOf('search=') + 7);
+                }
                 swal({
                         title: "Silmək istəyirsinizmi?",
                         icon: "warning",
@@ -178,7 +195,11 @@ if ($_SESSION['logged_in'] == 1) {
                             swal("Silindi", {
                                 icon: "success",
                             });
-                            window.location.href = "menu.php?id=" + thisId;
+                            if (url.includes("search=")) {
+                                window.location.href = "menu.php?ids=" + thisId + "&search=" + search;
+                            } else {
+                                window.location.href = "menu.php?ids=" + thisId;
+                            }
                         } else {
                             swal("Silinmədi");
                         }

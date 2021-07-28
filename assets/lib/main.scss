@@ -219,6 +219,7 @@ body {
                                 .col-pictures {
                                     margin-bottom: 10px;
                                     object-fit: cover;
+                                    overflow: hidden;
                                     animation-name: flyingPic;
                                     animation-duration: 1s;
                                     animation-timing-function: ease-in-out;
@@ -234,8 +235,9 @@ body {
                                     }
                                     img {
                                         width: 100%;
-                                        height: 100%;
+                                        height: auto;
                                         display: block;
+                                        overflow: hidden;
                                         transition: 1s ease-in-out;
                                         &:hover {
                                             transform: scale(0.8);
@@ -470,6 +472,14 @@ body {
             font-size: 40px;
             font-family: 'Raleway-Thin';
         }
+        .post-head {
+            text-transform: none;
+            width: 80%;
+            margin: auto;
+            margin-bottom: 20px;
+            line-height: 1.7;
+            font-size: 20px;
+        }
         .view_button {
             display: inline-block;
             border-radius: 50px;
@@ -504,7 +514,7 @@ body {
             .port-picture {
                 padding-left: 0;
                 .single-img {
-                    width: 80%;
+                    width: 70%;
                     height: auto;
                     margin: auto;
                     margin-top: -30px;
@@ -559,7 +569,7 @@ body {
                         position: relative;
                         display: block;
                         &:hover>li>img {
-                            transform: scale(1.3);
+                            transform: translate(-50%, -50%) scale(1.3);
                         }
                         &:hover>.linkhover {
                             opacity: 1;
@@ -627,8 +637,14 @@ body {
                             }
                         }
                         img {
-                            width: 100%;
                             height: 100%;
+                            min-width: 100%;
+                            width: auto;
+                            position: absolute;
+                            transform: translate(-50%, -50%);
+                            top: 50%;
+                            left: 50%;
+                            overflow: hidden;
                             display: block;
                             transition: 1.5s ease-out;
                             box-shadow: 0px 0px 5px 0px rgb(0, 0, 0) inset;
@@ -644,17 +660,28 @@ body {
             justify-content: center;
             .port-picture {
                 .header-of-img {
+                    width: 70%;
+                    margin: auto;
                     font-family: 'Raleway-Thin';
                     margin-bottom: 30px;
                     font-weight: bold;
-                    font-size: 25px;
+                    font-size: 18px;
+                    line-height: 1.7;
                 }
                 .port-img {
                     margin: 0 auto;
-                    width: 550px;
+                    width: 500px;
                     height: 400px;
                     margin-bottom: 30px;
                     figure {
+                        li {
+                            img {
+                                width: 100%;
+                                min-height: 100%;
+                                height: auto;
+                                overflow: hidden;
+                            }
+                        }
                         .linkhover {
                             .hovericon {
                                 margin-top: 20%;
@@ -1035,6 +1062,9 @@ body {
             .head-text {
                 font-size: 35px;
             }
+            .post-head {
+                font-size: 18px;
+            }
         }
         .blog {
             .section-header {
@@ -1129,6 +1159,9 @@ body {
             .head-text {
                 font-size: 30px;
             }
+            .post-head {
+                font-size: 17px;
+            }
             .portfolio-header {
                 margin-top: 40px;
             }
@@ -1148,7 +1181,7 @@ body {
                 .port-picture {
                     width: auto;
                     .header-of-img {
-                        font-size: 20px;
+                        font-size: 17px;
                     }
                     .port-img {
                         width: 450px;
@@ -1313,6 +1346,9 @@ body {
             .head-text {
                 font-size: 25px;
             }
+            .post-head {
+                font-size: 14px;
+            }
             .view_button {
                 padding: 7px 14px;
                 font-size: 12px;
@@ -1325,6 +1361,9 @@ body {
                 .port-picture {
                     p {
                         font-size: 12px;
+                    }
+                    .single-img {
+                        margin-top: 0;
                     }
                     .news-img {
                         width: 100%;
@@ -1358,7 +1397,7 @@ body {
                 .port-picture {
                     .header-of-img {
                         margin-bottom: 25px;
-                        font-size: 18px;
+                        font-size: 14px;
                     }
                     .port-img {
                         width: 300px;

@@ -24,7 +24,7 @@
     }
     ?>
     <div class="portfolio change-theme">
-        <h2 class="head-text change-theme portfolio-header profile-header"><?= $sales_row['name']; ?></h2>
+        <h2 class="head-text post-head change-theme portfolio-header profile-header"><?= $sales_row['name']; ?></h2>
         <div class="icon title-line">
             <img src="assets/img/title-line.png">
         </div>

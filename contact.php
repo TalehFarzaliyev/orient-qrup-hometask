@@ -33,14 +33,14 @@
                     <h3 class="contact-header"><?=translate('contact-info', $lang_name); ?></h3>
                     <div class="adress contact-item"><i class="fas fa-map-marker-alt contact-icon"></i><span><?=translate('address', $lang_name); ?><?= $setting['address']; ?></span></div>
                     <div class="phone contact-item"><i class="fas fa-mobile-alt contact-icon"></i><span><?=translate('phone', $lang_name); ?></span>
-                        <a href="tel:+<?= $setting['phone']; ?>" class="contact-link"><?= $setting['phone']; ?></a>
+                        <a href="tel:+994<?= $setting['phone']; ?>" class="contact-link">+994 <?= $setting['phone']; ?></a>
                     </div>
                     <div class="email contact-item"><i class="far fa-envelope contact-icon"></i><span><?=translate('mail', $lang_name); ?>: </span>
                         <a href="mailto:" class="contact-link"><?= $setting['gmail']; ?></a>
                     </div>
                     <div class="social contact-item">
                         <a href="<?= $setting['facebook']; ?>"><i class="fab fa-facebook-square"></i></a>
-                        <a href="<?= $setting['gmail']; ?>"><i class="fas fa-envelope-square"></i></a>
+                        <a href="<?= $setting['gmail_link']; ?>"><i class="fas fa-envelope-square"></i></a>
                         <a href="<?= $setting['instagram']; ?>"><i class="fab fa-instagram-square"></i></a>
                         <a href="<?= $setting['youtube']; ?>"><i class="fab fa-youtube-square"></i></a>
                     </div>

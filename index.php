@@ -71,7 +71,7 @@
             if (!empty($social)) {
             ?>
                 <div class="social-icon">
-                    <a class="gmail" href="<?= $social['gmail']; ?>"><i class="fas fa-envelope social-media"></i></a>
+                    <a class="gmail" href="<?= $social['gmail_link']; ?>"><i class="fas fa-envelope social-media"></i></a>
                     <a class="instagram" href="<?= $social['instagram']; ?>"><i class="fab fa-instagram social-media"></i></a>
                     <a class="facebook" href="<?= $social['facebook']; ?>"><i class="fab fa-facebook-f social-media"></i></a>
                     <a class="youtube" href="<?= $social['youtube']; ?>"><i class="fab fa-youtube social-media"></i></a>
@@ -116,8 +116,8 @@ if (!empty($news)) {
                 <div class="card wow bounceIn">
                     <img class="card-img-top" src="uploads/<?= $post['image']; ?>" alt="Card image cap">
                     <div class="card-body">
-                        <h6 class="card-title text-center"><?= $post['title']; ?></h6>
-                        <p class="card-text"><?= substr($post['content'], 0, 100); ?></p>
+                        <h6 class="card-title text-center"><?= substr($post['title'], 0, 20); ?></h6>
+                        <p class="card-text"><?= substr($post['content'], 0, 100); ?>...</p>
                         <div class="date_button">
                             <span><i class="far fa-clock"></i>&nbsp;&nbsp;<?= date('d.m.Y H:i', strtotime($post['created_date'])); ?></span>
                             <a href="single-post.php?post=<?= $post['id_post']; ?>&lang=<?= $lang_name; ?>" class="btn btn-primary change_button_color"><?=translate('read-more', $lang_name); ?></a>
@@ -182,7 +182,7 @@ if (!empty($materials)) {
                                                                                         echo 'order_class_left';
                                                                                     } ?>">
                         <h3><?= $material_row['title']; ?></h3>
-                        <p><?= substr($material_row['content'], 0, 200); ?></p>
+                        <p><?= substr($material_row['content'], 0, 200); ?>...</p>
                         <a href="post.php?post=<?= $material_row['id_post']; ?>&lang=<?= $lang_name; ?>" class="more_button"><?=translate('read-more', $lang_name); ?></a>
                     </div>
                 </div>

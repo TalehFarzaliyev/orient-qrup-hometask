@@ -29,7 +29,7 @@
                 <div class="single-img news-img">
                     <img class="img-thumbnail" src="uploads/<?= $news_row['image']; ?>">
                 </div>
-                <h4 class="news-head"><?= $news_row['title']; ?></h4>
+                <h4 class="news-head post-head"><?= $news_row['title']; ?></h4>
                 <p><?= $news_row['content']; ?></p>
                 <span><i class="far fa-clock"></i>&nbsp;&nbsp;<?= date('d.m.Y H:i', strtotime($news_row['created_date'])); ?></span>
             </div>

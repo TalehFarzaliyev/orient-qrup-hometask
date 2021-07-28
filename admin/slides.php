@@ -3,8 +3,8 @@ session_start();
 if ($_SESSION['logged_in'] == 1) {
     include '../config/config.php';
 
-    if (isset($_GET['id']) and !empty($_GET['id'])) {
-        $slider_id = intval($_GET['id']);
+    if (isset($_GET['ids']) and !empty($_GET['ids'])) {
+        $slider_id = intval($_GET['ids']);
         mysqli_query($conn, "DELETE FROM `slider` WHERE `id`=$slider_id");
         mysqli_query($conn, "DELETE FROM `slider_translation` WHERE `slider_id`=$slider_id");
         header('slider.php');
@@ -42,7 +42,7 @@ if ($_SESSION['logged_in'] == 1) {
                                         </div>
 
                                         <div class="input-group col-4">
-                                            <form method="post" action="slides.php" class="d-flex">
+                                            <form method="get" action="slides.php" class="d-flex">
                                                 <input type="text" class="form-control" style="height: 40px;" placeholder="Axtarış" name="search">
                                                 <div class="input-group-btn">
                                                     <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
@@ -91,9 +91,8 @@ if ($_SESSION['logged_in'] == 1) {
                                                     <?php
                                                     $page = isset($_GET['page']) ? $_GET['page'] : 1;
                                                     if (isset($_REQUEST['search'])) {
-                                                        $name = $_POST['search'];;
-                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `slider` s INNER JOIN orient_ressamlar.painters p ON p.id=s.painter_id WHERE s.`status`=1 and p.painter_name like '%" . $name . "%'"));
-                                                        echo ($number_of_content);
+                                                        $name = $_GET['search'];;
+                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `slider` s INNER JOIN orient_ressamlar.painters p ON p.id=s.painter_id WHERE s.`status`=1 and p.painter_name like '" . $name . "%'"));
                                                     } else {
                                                         $number_of_content = mysqli_num_rows(mysqli_query($conn, 'SELECT `id` FROM `slider` WHERE `status`=1'));
                                                     }
@@ -106,7 +105,7 @@ if ($_SESSION['logged_in'] == 1) {
                                                             $result = mysqli_query($conn, "SELECT s.id as id_slider, s.painter_id, s.image, s.status, st.*, p.* FROM orient_ressamlar.slider s 
                                                                                            INNER JOIN orient_ressamlar.slider_translation st ON st.slider_id=s.id
                                                                                            INNER JOIN orient_ressamlar.painters p ON p.id=s.painter_id
-                                                                                           Where st.lang_id=1 and s.status=1 && p.painter_name like '%" . $name . "%' ORDER BY p.`id` desc LIMIT " . $start . ',' . $limit);
+                                                                                           Where st.lang_id=1 and s.status=1 && p.painter_name like '" . $name . "%' ORDER BY p.`id` desc LIMIT " . $start . ',' . $limit);
                                                         } else {
                                                             $result = mysqli_query($conn, 'SELECT s.id as id_slider, s.painter_id, s.image, s.status, st.*, p.* FROM orient_ressamlar.slider s 
                                                                                            INNER JOIN orient_ressamlar.slider_translation st ON st.slider_id=s.id
@@ -141,12 +140,17 @@ if ($_SESSION['logged_in'] == 1) {
                                                     }
                                                     if ($number_of_content > $limit) {
                                                         $x = 2;
-                                                        if ($page > 1) {
+                                                        if ($page > 1 && !isset($_REQUEST['search'])) {
                                                             $previous = $page - 1;
                                                             echo '<a href="?page=' . $previous . '">« Öncəki </a>';
+                                                        } elseif ($page > 1 && isset($_REQUEST['search'])) {
+                                                            $previous = $page - 1;
+                                                            echo '<a href="?search=' . $name . '&page=' . $previous . '">« Öncəki </a>';
                                                         }
                                                         if ($page == 1) {
                                                             echo '<a>[1]</a>';
+                                                        } elseif (isset($_REQUEST['search'])) {
+                                                            echo '<a href="?search=' . $name . '&page=1" style= "margin-left: 10px;">1</a>';
                                                         } else {
                                                             echo '<a href="?page=1" style= "margin-left: 10px;">1</a>';
                                                         }
@@ -159,20 +163,27 @@ if ($_SESSION['logged_in'] == 1) {
                                                         for ($i; $i <= $page + $x; $i++) {
                                                             if ($i == $page) {
                                                                 echo '&nbsp;<a style= "margin-left: 10px;">[' . $i . ']</a>&nbsp;';
+                                                            } elseif (isset($_REQUEST['search'])) {
+                                                                echo '<a href="?search=' . $name . '&page=' . $i . '" style= "margin-left: 10px;">' . $i . '</a>';
                                                             } else {
                                                                 echo '<a href="?page=' . $i . '" style= "margin-left: 10px;">' . $i . '</a>';
                                                             }
                                                             if ($i == $lastpage) break;
                                                         }
-                                                        if ($page + $x < $lastpage - 1) {
+                                                        if ($page + $x < $lastpage - 1 && !isset($_REQUEST['search'])) {
                                                             echo '...';
                                                             echo '<a href="?page=' . $lastpage . '" style= "margin-left: 10px;">' . $lastpage . '</a>';
-                                                        } elseif ($page + $x == $lastpage - 1) {
+                                                        } elseif ($page + $x == $lastpage - 1 && !isset($_REQUEST['search'])) {
                                                             echo '<a href="?page=' . $lastpage . '" style= "margin-left: 10px;">' . $lastpage . '</a>';
+                                                        } elseif ($page + $x == $lastpage - 1 && isset($_REQUEST['search'])) {
+                                                            echo '<a href="?search=' . $name . '&page=' . $lastpage . '" style= "margin-left: 10px;">' . $lastpage . '</a>';
                                                         }
-                                                        if ($page < $lastpage) {
+                                                        if ($page < $lastpage && !isset($_REQUEST['search'])) {
                                                             $next = $page + 1;
                                                             echo '<a href="?page=' . $next . '" style= "margin-left: 10px;"> Sonrakı » </a>';
+                                                        } elseif ($page < $lastpage && isset($_REQUEST['search'])) {
+                                                            $next = $page + 1;
+                                                            echo '<a href="?search=' . $name . '&page=' . $next . '" style= "margin-left: 10px;"> Sonrakı » </a>';
                                                         }
                                                     }
                                             ?>
@@ -196,6 +207,10 @@ if ($_SESSION['logged_in'] == 1) {
     <script>
         function deleteItem(id) {
             var thisId = id.getAttribute("data-id-number");
+            var url = document.URL;
+            if (url.includes("search=")) {
+                var search = url.substring(url.lastIndexOf('search=') + 7);
+            }
             swal({
                     title: "Silmək istəyirsinizmi?",
                     icon: "warning",
@@ -208,7 +223,11 @@ if ($_SESSION['logged_in'] == 1) {
                         swal("Silindi", {
                             icon: "success",
                         });
-                        window.location.href = "slides.php?id=" + thisId;
+                        if (url.includes("search=")) {
+                            window.location.href = "slides.php?ids=" + thisId + "&search=" + search;
+                        } else {
+                            window.location.href = "slides.php?ids=" + thisId;
+                        }
                     } else {
                         swal("Silinmədi");
                     }

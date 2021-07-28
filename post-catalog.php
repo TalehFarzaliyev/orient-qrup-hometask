@@ -29,15 +29,15 @@ include 'includes/header.php';
     $lastpage = ceil($number_of_content / $limit);
     $start = ($page - 1) * $limit;
     if ($lastpage >= $page) {
-        $result = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, pt.*, mt.* FROM orient_ressamlar.posts p 
+        $result = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, pt.*, m.* FROM orient_ressamlar.posts p 
                                    INNER JOIN orient_ressamlar.posts_translation pt ON pt.post_id=p.id
-                                   INNER JOIN orient_ressamlar.menu_translation mt ON mt.menu_id=p.category_id
-                                   WHERE pt.lang_id=$lang_id && p.status=1 && p.category_id=$category_id && mt.lang_id=$lang_id ORDER BY p.`id` desc LIMIT " . $start . ',' . $limit);
+                                   INNER JOIN orient_ressamlar.menu m ON m.id=p.category_id
+                                   WHERE pt.lang_id=$lang_id && p.status=1 && p.category_id=$category_id ORDER BY p.`id` desc LIMIT " . $start . ',' . $limit);
         $post  = mysqli_fetch_all($result, MYSQLI_ASSOC);
         if (!empty($post)) {
     ?>
             <div class="portfolio change-theme">
-                <h2 class="head-text change-theme profile-header portfolio-header"><?=$post[0]['name']?></h2>
+                <h2 class="head-text change-theme profile-header portfolio-header"><?=$category['name']?></h2>
                 <div class="icon title-line">
                     <img src="assets/img/title-line.png">
                 </div>
@@ -49,7 +49,7 @@ include 'includes/header.php';
                             <div class="port-img">
                                 <figure>
                                     <li>
-                                        <img src="uploads/<?= $value['image']; ?>" width="60" height="60" alt="This is a pretty long title" />
+                                        <img src="uploads/<?= $value['image']; ?>" width="60" height="60"/>
                                     </li>
                                     <div class="linkhover">
                                         <div class="hovericon">

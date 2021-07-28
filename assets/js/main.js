@@ -20,7 +20,7 @@ var miniMenu = document.querySelector('.menu-items'),
     moreButton = document.querySelectorAll('.more_button');
 
 window.addEventListener('DOMContentLoaded', (event) => {
-    jQuery(window).scroll(function() {
+    jQuery(window).scroll(function () {
         if (jQuery(window).scrollTop() > 0) {
             jQuery('.menu-side').css("background-color", "rgba(0, 0, 0, 0.8)");
             jQuery('.menu-side').css("padding", "0px 0");
@@ -59,8 +59,22 @@ function toggleTheme() {
     }
 }
 
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
 
-
+jQuery(document).ready(function () {
+    var colorMode = getCookie('colorMode');
+    if (colorMode == 'light') {
+        lightTheme();
+    } else {
+        darkTheme();
+    }
+    var colorBut = getCookie('colorBut');
+    firstTheme(colorBut);
+});
 
 function lightTheme() {
     for (var i = 0; i < changeTheme.length; i++) {
@@ -106,6 +120,7 @@ function lightTheme() {
     }
     footerColor.style.background = "#fff";
     document.body.style.background = "#fff";
+    document.cookie = 'colorMode=light; expires=Sun, 1 Jan 9999 00:00:00 UTC; path=/';
 }
 
 function darkTheme() {
@@ -149,10 +164,12 @@ function darkTheme() {
     }
     footerColor.style.background = "#000";
     document.body.style.background = "#000";
+    document.cookie = 'colorMode=dark; expires=Sun, 1 Jan 9999 00:00:00 UTC; path=/';
 }
 
+
 function firstTheme(color) {
-    var thisColor = color.getAttribute("data-color-type");
+    var thisColor = color;
     for (var i = 0; i < menuItem.length; i++) {
         let origColorStyle = menuItem[i].style.color;
         menuItem[i].addEventListener("mouseenter", (event) => { event.target.style.color = thisColor });
@@ -210,9 +227,10 @@ function firstTheme(color) {
     upTheme.style.background = thisColor;
     upTheme.addEventListener("mouseenter", (event) => { event.target.style.backgroundColor = "#fff", upThemeIcon.style.color = thisColor });
     upTheme.addEventListener("mouseleave", (event) => { event.target.style.backgroundColor = thisColor, upThemeIcon.style.color = "#fff" });
+    document.cookie = 'colorBut=' + thisColor + '; expires=Sun, 1 Jan 9999 00:00:00 UTC; path=/';
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     $('.owl-carousel').owlCarousel({
         loop: true,
         margin: 30,

@@ -62,7 +62,7 @@
                                                                                             echo 'order_class_left';
                                                                                         } ?>">
                             <h3><?= $material_row['title']; ?></h3>
-                            <p><?= substr($material_row['content'], 0, 200); ?></p>
+                            <p><?= substr($material_row['content'], 0, 200); ?>...</p>
                             <a href="post.php?post=<?= $material_row['id_post']; ?>&lang=<?= $lang_name; ?>" class="more_button"><?=translate('read-more', $lang_name); ?></a>
                         </div>
                     </div>

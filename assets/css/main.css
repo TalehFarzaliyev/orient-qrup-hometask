@@ -159,6 +159,7 @@ body {
           body .header .carousel .carousel-inner .carousel-item .slider-caption .row .col-4 .col-pictures {
             margin-bottom: 10px;
             object-fit: cover;
+            overflow: hidden;
             animation-name: flyingPic;
             animation-duration: 1s;
             animation-timing-function: ease-in-out;
@@ -171,8 +172,9 @@ body {
     margin-top: 0px; } }
             body .header .carousel .carousel-inner .carousel-item .slider-caption .row .col-4 .col-pictures img {
               width: 100%;
-              height: 100%;
+              height: auto;
               display: block;
+              overflow: hidden;
               transition: 1s ease-in-out; }
               body .header .carousel .carousel-inner .carousel-item .slider-caption .row .col-4 .col-pictures img:hover {
                 transform: scale(0.8);
@@ -354,6 +356,13 @@ body {
       text-transform: uppercase;
       font-size: 40px;
       font-family: 'Raleway-Thin'; }
+    body .portfolio .post-head {
+      text-transform: none;
+      width: 80%;
+      margin: auto;
+      margin-bottom: 20px;
+      line-height: 1.7;
+      font-size: 20px; }
     body .portfolio .view_button {
       display: inline-block;
       border-radius: 50px;
@@ -383,7 +392,7 @@ body {
       body .portfolio .portfolio-pictures .port-picture {
         padding-left: 0; }
         body .portfolio .portfolio-pictures .port-picture .single-img {
-          width: 80%;
+          width: 70%;
           height: auto;
           margin: auto;
           margin-top: -30px; }
@@ -429,7 +438,7 @@ body {
             position: relative;
             display: block; }
             body .portfolio .portfolio-pictures .port-picture .port-img figure:hover > li > img {
-              transform: scale(1.3); }
+              transform: translate(-50%, -50%) scale(1.3); }
             body .portfolio .portfolio-pictures .port-picture .port-img figure:hover > .linkhover {
               opacity: 1;
               visibility: visible;
@@ -486,8 +495,14 @@ body {
                   padding: 0;
                   color: #fff; }
             body .portfolio .portfolio-pictures .port-picture .port-img figure img {
-              width: 100%;
               height: 100%;
+              min-width: 100%;
+              width: auto;
+              position: absolute;
+              transform: translate(-50%, -50%);
+              top: 50%;
+              left: 50%;
+              overflow: hidden;
               display: block;
               transition: 1.5s ease-out;
               box-shadow: 0px 0px 5px 0px black inset; }
@@ -497,15 +512,23 @@ body {
       align-items: center;
       justify-content: center; }
       body .portfolio .structur .port-picture .header-of-img {
+        width: 70%;
+        margin: auto;
         font-family: 'Raleway-Thin';
         margin-bottom: 30px;
         font-weight: bold;
-        font-size: 25px; }
+        font-size: 18px;
+        line-height: 1.7; }
       body .portfolio .structur .port-picture .port-img {
         margin: 0 auto;
-        width: 550px;
+        width: 500px;
         height: 400px;
         margin-bottom: 30px; }
+        body .portfolio .structur .port-picture .port-img figure li img {
+          width: 100%;
+          min-height: 100%;
+          height: auto;
+          overflow: hidden; }
         body .portfolio .structur .port-picture .port-img figure .linkhover .hovericon {
           margin-top: 20%; }
   body .news-section .owl-carousel {
@@ -768,6 +791,8 @@ body {
     font-size: 30px !important; }
   body .portfolio .head-text {
     font-size: 35px; }
+  body .portfolio .post-head {
+    font-size: 18px; }
   body .blog .section-header h2 {
     font-size: 50px; }
   body .blog .blog-slider .vc_item .order_class_right {
@@ -819,6 +844,8 @@ body {
     font-size: 30px !important; }
   body .portfolio .head-text {
     font-size: 30px; }
+  body .portfolio .post-head {
+    font-size: 17px; }
   body .portfolio .portfolio-header {
     margin-top: 40px; }
   body .portfolio .portfolio-pictures .port-picture {
@@ -831,7 +858,7 @@ body {
   body .portfolio .structur .port-picture {
     width: auto; }
     body .portfolio .structur .port-picture .header-of-img {
-      font-size: 20px; }
+      font-size: 17px; }
     body .portfolio .structur .port-picture .port-img {
       width: 450px;
       height: 300px; }
@@ -932,6 +959,8 @@ body {
       font-size: 25px !important; }
     body .portfolio .head-text {
       font-size: 25px; }
+    body .portfolio .post-head {
+      font-size: 14px; }
     body .portfolio .view_button {
       padding: 7px 14px;
       font-size: 12px; }
@@ -941,6 +970,8 @@ body {
       border-width: 15px 15px 5px 15px; }
       body .portfolio .portfolio-pictures .port-picture p {
         font-size: 12px; }
+      body .portfolio .portfolio-pictures .port-picture .single-img {
+        margin-top: 0; }
       body .portfolio .portfolio-pictures .port-picture .news-img {
         width: 100%; }
       body .portfolio .portfolio-pictures .port-picture span {
@@ -961,7 +992,7 @@ body {
         height: 360px; }
     body .portfolio .structur .port-picture .header-of-img {
       margin-bottom: 25px;
-      font-size: 18px; }
+      font-size: 14px; }
     body .portfolio .structur .port-picture .port-img {
       width: 300px;
       height: 200px; }
