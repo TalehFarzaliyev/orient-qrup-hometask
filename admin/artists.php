@@ -45,8 +45,8 @@ if ($_SESSION['logged_in'] == 1) {
                                                 <select class="form-control" name="id" id="exampleFormControlSelect1">
                                                     <option value="" disabled selected>Kateqoriya seçin</option>
                                                     <?php
-                                                    $select_sql  = "SELECT * FROM orient_ressamlar.menu m
-                                                                    INNER JOIN orient_ressamlar.menu_translation mt ON m.id=mt.menu_id  
+                                                    $select_sql  = "SELECT * FROM menu m
+                                                                    INNER JOIN menu_translation mt ON m.id=mt.menu_id  
                                                                     WHERE m.type='painter' && mt.lang_id=1 && m.parent_id>0 && `status`=1";
                                                     $result      = mysqli_query($conn, $select_sql);
                                                     while ($row1 = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
@@ -81,6 +81,7 @@ if ($_SESSION['logged_in'] == 1) {
                                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Rəssamın adı</th>
                                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Kateqoriya</th>
                                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 100px;">Əsərləri</th>
+                                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 100px;">Status</th>
                                                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 163px;">Əməliyyatlar</th>
                                                     </tr>
                                                 </thead>
@@ -90,12 +91,12 @@ if ($_SESSION['logged_in'] == 1) {
                                                     $page = isset($_GET['page']) ? $_GET['page'] : 1;
                                                     if (isset($_REQUEST['search'])) {
                                                         $name = $_GET['search'];;
-                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `painters` WHERE `status`=1 and painter_name like '" . $name . "%'"));
+                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `painters` WHERE painter_name like '" . $name . "%'"));
                                                     } elseif (isset($_REQUEST['id'])) {
                                                         $category = $_GET['id'];;
-                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `painters` WHERE `status`=1 and categories like '%$category%'"));
+                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `painters` WHERE categories like '%$category%'"));
                                                     } else {
-                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, 'SELECT `id` FROM `painters` WHERE `status`=1'));
+                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, 'SELECT `id` FROM `painters`'));
                                                     }
                                                     $limit = 5;
                                                     $lastpage = ceil($number_of_content / $limit);
@@ -103,21 +104,21 @@ if ($_SESSION['logged_in'] == 1) {
                                                     if ($lastpage >= $page) {
                                                         if (isset($_REQUEST['search'])) {
                                                             $name = $_GET['search'];
-                                                            $result = mysqli_query($conn, "SELECT p.painter_name, p.id as artist_id, p.painter_surname, p.painter_image, p.categories, p.status, pt.*, mt.* FROM orient_ressamlar.painters p 
-                                                                                           INNER JOIN orient_ressamlar.painter_translation pt ON pt.painter_id=p.id
-                                                                                           INNER JOIN orient_ressamlar.menu_translation mt 
-                                                                                           WHERE pt.lang_id=1 && mt.lang_id=1 && p.painter_name like '" . $name . "%' && p.categories=mt.menu_id && p.status=1 ORDER BY p.`id` desc LIMIT " . $start . ',' . $limit);
+                                                            $result = mysqli_query($conn, "SELECT p.painter_name, p.id as artist_id, p.painter_surname, p.painter_image, p.categories, p.status as status_painter, pt.*, mt.* FROM painters p 
+                                                                                           INNER JOIN painter_translation pt ON pt.painter_id=p.id
+                                                                                           INNER JOIN menu_translation mt 
+                                                                                           WHERE pt.lang_id=1 && mt.lang_id=1 && p.painter_name like '" . $name . "%' && p.categories=mt.menu_id ORDER BY p.`id` desc LIMIT " . $start . ',' . $limit);
                                                         } elseif (isset($_REQUEST['id'])) {
                                                             $category = $_GET['id'];
-                                                            $result = mysqli_query($conn, "SELECT p.painter_name, p.id as artist_id, p.painter_surname, p.painter_image, p.categories, p.status, pt.*, mt.* FROM orient_ressamlar.painters p 
-                                                                                           INNER JOIN orient_ressamlar.painter_translation pt ON pt.painter_id=p.id
-                                                                                           INNER JOIN orient_ressamlar.menu_translation mt 
-                                                                                           WHERE pt.lang_id=1 && mt.lang_id=1 && p.categories like '%$category%' && p.categories=mt.menu_id && p.status=1 ORDER BY p.`id` desc LIMIT " . $start . ',' . $limit);
+                                                            $result = mysqli_query($conn, "SELECT p.painter_name, p.id as artist_id, p.painter_surname, p.painter_image, p.categories, p.status as status_painter, pt.*, mt.* FROM painters p 
+                                                                                           INNER JOIN painter_translation pt ON pt.painter_id=p.id
+                                                                                           INNER JOIN menu_translation mt 
+                                                                                           WHERE pt.lang_id=1 && mt.lang_id=1 && p.categories like '%$category%' && p.categories=mt.menu_id ORDER BY p.`id` desc LIMIT " . $start . ',' . $limit);
                                                         } else {
-                                                            $result = mysqli_query($conn, 'SELECT p.painter_name, p.id as artist_id, p.painter_surname, p.painter_image, p.categories, p.status, pt.*, mt.* FROM orient_ressamlar.painters p 
-                                                                                           INNER JOIN orient_ressamlar.painter_translation pt ON pt.painter_id=p.id
-                                                                                           INNER JOIN orient_ressamlar.menu_translation mt 
-                                                                                           WHERE pt.lang_id=1 && mt.lang_id=1 && p.categories=mt.menu_id && p.status=1 ORDER BY p.`id` desc LIMIT ' . $start . ',' . $limit);
+                                                            $result = mysqli_query($conn, 'SELECT p.painter_name, p.id as artist_id, p.painter_surname, p.painter_image, p.categories, p.status as status_painter, pt.*, mt.* FROM painters p 
+                                                                                           INNER JOIN painter_translation pt ON pt.painter_id=p.id
+                                                                                           INNER JOIN menu_translation mt 
+                                                                                           WHERE pt.lang_id=1 && mt.lang_id=1 && p.categories=mt.menu_id ORDER BY p.`id` desc LIMIT ' . $start . ',' . $limit);
                                                         }
                                                         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                                                     ?>
@@ -145,6 +146,14 @@ if ($_SESSION['logged_in'] == 1) {
                                                                 </td>
                                                                 <td class="sorting_1 edit-buttons">
                                                                     <a href="works.php?painter=<?= $row['artist_id']; ?>" class="btn btn-secondary button-section d-block"><i class="far fa-images"></i></a>
+                                                                </td>
+                                                                <td class="edit-buttons text-center align-middle">
+                                                                    <form action="" method="get">
+                                                                        <label class="switch button-section d-block">
+                                                                            <input type="checkbox" name="painters" data-onstyle="success" data-offstyle="danger" id='<?php echo $row['artist_id'] ?>' class="status-check" <?php echo $row['status_painter'] == 1 ? 'checked' : '' ?> />
+                                                                            <span class="slider round"></span>
+                                                                        </label>
+                                                                    </form>
                                                                 </td>
                                                                 <td class="edit-buttons">
                                                                     <div class="button-section">

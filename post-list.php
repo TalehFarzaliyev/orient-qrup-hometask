@@ -22,16 +22,21 @@ $category_id   = $category['menu_id'];
 
     <?php include 'includes/theme.php';
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
-    $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT `category_id` FROM `posts` p WHERE category_id=$category_id"));
+    $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT `category_id` FROM `posts` WHERE category_id=$category_id"));
     $limit = 4;
     $lastpage = ceil($number_of_content / $limit);
     $start = ($page - 1) * $limit;
     if ($lastpage >= $page) {
-        $result = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, pt.*, m.* FROM orient_ressamlar.posts p 
-                                   INNER JOIN orient_ressamlar.posts_translation pt ON pt.post_id=p.id
-                                   INNER JOIN orient_ressamlar.menu m ON m.id=p.category_id
+        $result = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, p.status, pt.*, m.* FROM posts p 
+                                   INNER JOIN posts_translation pt ON pt.post_id=p.id
+                                   INNER JOIN menu m ON m.id=p.category_id
                                    WHERE pt.lang_id=$lang_id && p.status=1 && p.category_id=$category_id ORDER BY p.`id` desc LIMIT " . $start . ',' . $limit);
         $post  = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        function cleaner($text, $character) {
+            $text = strip_tags($text);
+            $text = mb_substr($text, 0, $character);
+            return $text;
+        }
         if (!empty($post)) {
     ?>
 
@@ -57,11 +62,14 @@ $category_id   = $category['menu_id'];
                                             <a href="uploads/<?= $value['image']; ?>" rel="prettyPhoto[gallery2]" id="search-button" class="circle"><i class="fas fa-search icons"></i></a>
                                         </div>
                                         <div class="hovertext">
-                                            <span class="hovertext-mainitem"><?= substr($value['content'], 0, 30); ?></span>
+                                            <span class="hovertext-mainitem"><?= cleaner($value['content'], 50); ?></span>
                                         </div>
                                     </div>
                                 </figure>
                             </div>
+                        </div>
+                        <div class="icon">
+                            <img src="assets/img/title-line.png">
                         </div>
                     <?php } ?>
                 </div>

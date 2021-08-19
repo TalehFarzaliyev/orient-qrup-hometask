@@ -10,9 +10,9 @@
     </div>
 
     <?php include 'includes/theme.php';
-    include 'config/config.php';
-    $result = mysqli_query($conn, "SELECT * FROM orient_ressamlar.settings s
-                                   INNER JOIN orient_ressamlar.settings_translation st ON st.settings_id=s.id
+    include $_SERVER['DOCUMENT_ROOT'].'/config/config.php';;
+    $result = mysqli_query($conn, "SELECT * FROM settings s
+                                   INNER JOIN settings_translation st ON st.settings_id=s.id
                                    WHERE s.`id`=1 && st.lang_id=$lang_id");
     $setting  = mysqli_fetch_array($result, MYSQLI_ASSOC);
     $page     = trim($_GET['page']);

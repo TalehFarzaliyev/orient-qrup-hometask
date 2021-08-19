@@ -33,7 +33,7 @@ if ($_SESSION['logged_in'] == 1) {
             if ($result_insert) {
                 $work_id   = mysqli_insert_id($conn);
                 foreach ($translation as $key => $value) {
-                    $insert_translation       = "INSERT INTO `works_translation`(`work_id`,`lang_id`,`work_name`) VALUES ('$work_id','$key','" . $value['work_name'] . "')";
+                    $insert_translation       = "INSERT INTO `works_translation`(`work_id`,`lang_id`,`work_name`) VALUES ('$work_id','$key','" . mysqli_real_escape_string($conn, $value['work_name']) . "')";
                     mysqli_query($conn, $insert_translation);
                 }
             }
@@ -55,7 +55,7 @@ if ($_SESSION['logged_in'] == 1) {
             if ($result_update) {
                 mysqli_query($conn, "DELETE FROM `works_translation` WHERE `work_id`=$work_id");
                 foreach ($translation as $key => $value) {
-                    $insert_translation       = "INSERT INTO `works_translation`(`work_id`,`lang_id`,`work_name`) VALUES ('$work_id','$key','" . $value['work_name'] . "')";
+                    $insert_translation       = "INSERT INTO `works_translation`(`work_id`,`lang_id`,`work_name`) VALUES ('$work_id','$key','" . mysqli_real_escape_string($conn, $value['work_name']) . "')";
                     mysqli_query($conn, $insert_translation);
                 }
             }
@@ -201,7 +201,7 @@ if ($_SESSION['logged_in'] == 1) {
                                                 <div class="tab-pane fade show <?php if ($value['code'] == 'az') echo 'active' ?>" id="nav-<?= $value['code']; ?>" role="tabpanel" aria-labelledby="nav-<?= $value['code']; ?>-tab">
                                                     <div class="form-group">
                                                         <label for="exampleFormControlInput1">Başlıq</label>
-                                                        <input type="text" name="translation[<?= $value['lang_id'] ?>][work_name]" required value="<?= $value['work_name']; ?>" class="form-control" id="exampleFormControlInput1" placeholder="Başlıq">
+                                                        <input type="text" name="translation[<?= $value['lang_id'] ?>][work_name]" required value="<?= htmlentities($value['work_name']); ?>" class="form-control" id="exampleFormControlInput1" placeholder="Başlıq">
                                                     </div>
                                                 </div>
                                             <?php

@@ -31,7 +31,7 @@ if ($_SESSION['logged_in'] == 1) {
             if ($result_insert) {
                 $slider_id   = mysqli_insert_id($conn);
                 foreach ($translation as $key => $value) {
-                    $insert_translation       = "INSERT INTO `slider_translation`(`slider_id`,`lang_id`,`title`) VALUES ('$slider_id','$key','" . $value['title'] . "')";
+                    $insert_translation       = "INSERT INTO `slider_translation`(`slider_id`,`lang_id`,`title`) VALUES ('$slider_id','$key','" . mysqli_real_escape_string($conn, $value['title']) . "')";
                     mysqli_query($conn, $insert_translation);
                 }
             }
@@ -54,7 +54,7 @@ if ($_SESSION['logged_in'] == 1) {
             if ($result_update) {
                 mysqli_query($conn, "DELETE FROM `slider_translation` WHERE `slider_id`=$slider_id");
                 foreach ($translation as $key => $value) {
-                    $insert_translation       = "INSERT INTO `slider_translation`(`slider_id`,`lang_id`,`title`) VALUES ('$slider_id','$key','" . $value['title'] . "')";
+                    $insert_translation       = "INSERT INTO `slider_translation`(`slider_id`,`lang_id`,`title`) VALUES ('$slider_id','$key','" . mysqli_real_escape_string($conn, $value['title']) . "')";
                     mysqli_query($conn, $insert_translation);
                 }
             }
@@ -95,7 +95,7 @@ if ($_SESSION['logged_in'] == 1) {
                                             <select class="form-control" name="painter_id" id="exampleFormControlSelect1">
                                                 <option value="0">Seç</option>
                                                 <?php
-                                                $select_sql       = "SELECT * FROM orient_ressamlar.painters 
+                                                $select_sql       = "SELECT * FROM painters 
                                                                      WHERE `status`=1";
                                                 $result           = mysqli_query($conn, $select_sql);
                                                 while ($row1      = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
@@ -175,7 +175,7 @@ if ($_SESSION['logged_in'] == 1) {
                                             <select class="form-control" name="painter_id" id="exampleFormControlSelect1">
                                                 <option value="0">Seç</option>
                                                 <?php
-                                                $select_sql  = "SELECT * FROM orient_ressamlar.painters  
+                                                $select_sql  = "SELECT * FROM painters  
                                                                 WHERE `status`=1";
                                                 $result      = mysqli_query($conn, $select_sql);
                                                 while ($rows = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
@@ -232,7 +232,7 @@ if ($_SESSION['logged_in'] == 1) {
                                                 <div class="tab-pane fade show <?php if ($value['code'] == 'az') echo 'active' ?>" id="nav-<?= $value['code']; ?>" role="tabpanel" aria-labelledby="nav-<?= $value['code']; ?>-tab">
                                                     <div class="form-group">
                                                         <label for="exampleFormControlInput1">Başlıq</label>
-                                                        <input type="text" name="translation[<?= $value['lang_id'] ?>][title]" required value="<?= $value['title']; ?>" class="form-control" id="exampleFormControlInput1" placeholder="Başlıq">
+                                                        <input type="text" name="translation[<?= $value['lang_id'] ?>][title]" required value="<?= htmlentities($value['title']); ?>" class="form-control" id="exampleFormControlInput1" placeholder="Başlıq">
                                                     </div>
                                                 </div>
                                             <?php

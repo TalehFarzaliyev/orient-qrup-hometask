@@ -19,9 +19,9 @@
     $lastpage = ceil($number_of_content / $limit);
     $start = ($page - 1) * $limit;
     if ($lastpage >= $page) {
-        $result = mysqli_query($conn, "SELECT s.id as id_sales, s.painter_id, s.image, s.price, s.status, st.*, p.* FROM orient_ressamlar.sales s 
-                                       INNER JOIN orient_ressamlar.sales_translation st ON st.sales_id=s.id
-                                       INNER JOIN orient_ressamlar.painters p ON p.id=s.painter_id
+        $result = mysqli_query($conn, "SELECT s.id as id_sales, s.painter_id, s.image, s.price, s.status, st.*, p.* FROM sales s 
+                                       INNER JOIN sales_translation st ON st.sales_id=s.id
+                                       INNER JOIN painters p ON p.id=s.painter_id
                                        Where st.lang_id=$lang_id and s.status=1 ORDER BY s.`id` desc LIMIT " . $start . ',' . $limit);
         $row  = mysqli_fetch_all($result, MYSQLI_ASSOC);
         if (!empty($row)) {

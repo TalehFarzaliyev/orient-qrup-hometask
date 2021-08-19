@@ -25,13 +25,12 @@ if ($_SESSION['logged_in'] == 1) {
             $category      = (isset($_POST['category_id'])) ? intval($_POST['category_id']) : 0;
             $status        = (isset($_POST['status'])) ? intval($_POST['status']) : 0;
             $translation   = (isset($_POST['translation'])) ? $_POST['translation'] : [];
-
             $insert_post   = "INSERT INTO `posts`(`image`, `category_id`, `status`) VALUES ('$image', '$category', '$status')";
             $result_insert = mysqli_query($conn, $insert_post);
             if ($result_insert) {
                 $post_id   = mysqli_insert_id($conn);
                 foreach ($translation as $key => $value) {
-                    $insert_translation       = "INSERT INTO `posts_translation`(`post_id`,`lang_id`,`title`, `content`) VALUES ('$post_id','$key','" . $value['title'] . "', '" . $value['content'] . "')";
+                    $insert_translation       = "INSERT INTO `posts_translation`(`post_id`,`lang_id`,`title`, `content`) VALUES ('$post_id','$key','" . mysqli_real_escape_string($conn, $value['title']) . "', '" . $value['content'] . "')";
                     mysqli_query($conn, $insert_translation);
                 }
             }
@@ -44,7 +43,6 @@ if ($_SESSION['logged_in'] == 1) {
                 $image     = $post_row['image'];
             else
                 $image     = uploadImage($_FILES['image']);
-
             $status        = (isset($_POST['status'])) ? intval($_POST['status']) : 0;
             $category      = (isset($_POST['category_id'])) ? intval($_POST['category_id']) : 0;
             $translation   = (isset($_POST['translation'])) ? $_POST['translation'] : [];
@@ -54,7 +52,7 @@ if ($_SESSION['logged_in'] == 1) {
             if ($result_update) {
                 mysqli_query($conn, "DELETE FROM `posts_translation` WHERE `post_id`=$post_id");
                 foreach ($translation as $key => $value) {
-                    $insert_translation       = "INSERT INTO `posts_translation`(`post_id`,`lang_id`, `title`, `content`) VALUES ('$post_id','$key','" . $value['title'] . "','" . $value['content'] . "')";
+                    $insert_translation       = "INSERT INTO `posts_translation`(`post_id`,`lang_id`, `title`, `content`) VALUES ('$post_id','$key','" . mysqli_real_escape_string($conn, $value['title']) . "','" . $value['content'] . "')";
                     mysqli_query($conn, $insert_translation);
                 }
             }
@@ -102,8 +100,8 @@ if ($_SESSION['logged_in'] == 1) {
                                                 <label for="exampleFormControlSelect1">Kateqoriya</label>
                                                 <select class="form-control" name="category_id" id="exampleFormControlSelect1">
                                                     <?php
-                                                    $select_sql       = "SELECT * FROM orient_ressamlar.menu_translation mt 
-                                                                         INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
+                                                    $select_sql       = "SELECT * FROM menu_translation mt 
+                                                                         INNER JOIN menu m ON mt.menu_id=m.id 
                                                                          WHERE `lang_id`=1 && `parent_id`>0 && `type`='post'";
                                                     $result           = mysqli_query($conn, $select_sql);
                                                     while ($row1      = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
@@ -195,8 +193,8 @@ if ($_SESSION['logged_in'] == 1) {
                                             <label for="exampleFormControlSelect1">Kateqoriya</label>
                                             <select class="form-control" name="category_id" id="exampleFormControlSelect1">
                                                 <?php
-                                                $select_sql  = "SELECT * FROM orient_ressamlar.menu_translation mt 
-                                                                INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
+                                                $select_sql  = "SELECT * FROM menu_translation mt 
+                                                                INNER JOIN menu m ON mt.menu_id=m.id 
                                                                 WHERE `lang_id`=1 && `parent_id`>0 && `type`='post'";
                                                 $result      = mysqli_query($conn, $select_sql);
                                                 while ($rows = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
@@ -240,7 +238,7 @@ if ($_SESSION['logged_in'] == 1) {
                                                 <div class="tab-pane fade show <?php if ($value['code'] == 'az') echo 'active' ?>" id="nav-<?= $value['code']; ?>" role="tabpanel" aria-labelledby="nav-<?= $value['code']; ?>-tab">
                                                     <div class="form-group">
                                                         <label for="exampleFormControlInput1">Başlıq</label>
-                                                        <input type="text" name="translation[<?= $value['lang_id'] ?>][title]" required value="<?= $value['title']; ?>" class="form-control" id="exampleFormControlInput1" placeholder="Başlıq">
+                                                        <input type="text" name="translation[<?= $value['lang_id'] ?>][title]" required value="<?= htmlentities($value['title']); ?>" class="form-control" id="exampleFormControlInput1" placeholder="Başlıq">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="exampleFormControlInput1">Məzmun</label>

@@ -21,9 +21,9 @@
         $lastpage = ceil($number_of_content / $limit);
         $start = ($page - 1) * $limit;
         if ($lastpage >= $page) {
-            $result = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, pt.*, mt.* FROM orient_ressamlar.posts p 
-                                           INNER JOIN orient_ressamlar.posts_translation pt ON pt.post_id=p.id
-                                           INNER JOIN orient_ressamlar.menu_translation mt ON mt.menu_id=p.category_id
+            $result = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, p.status, pt.*, mt.* FROM posts p 
+                                           INNER JOIN posts_translation pt ON pt.post_id=p.id
+                                           INNER JOIN menu_translation mt ON mt.menu_id=p.category_id
                                            WHERE pt.lang_id=$lang_id && p.status=1 && p.category_id=75 && mt.lang_id=$lang_id ORDER BY p.`id` desc LIMIT " . $start . ',' . $limit);
             $post  = mysqli_fetch_all($result, MYSQLI_ASSOC);
             if (!empty($post)) {

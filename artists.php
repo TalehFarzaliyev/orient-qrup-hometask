@@ -15,8 +15,8 @@
     <?php include 'includes/theme.php';
     if (isset($_GET['painter']) and !empty($_GET['painter'])) {
         $painter        = intval($_GET['painter']);
-        $select_painter = "SELECT p.id as id_painter, p.painter_name, p.painter_surname, p.painter_image, p.status, pt.* FROM orient_ressamlar.painters p 
-                           INNER JOIN orient_ressamlar.painter_translation pt ON pt.painter_id=p.id
+        $select_painter = "SELECT p.id as id_painter, p.painter_name, p.painter_surname, p.painter_image, p.status, pt.* FROM painters p 
+                           INNER JOIN painter_translation pt ON pt.painter_id=p.id
                            WHERE pt.lang_id=$lang_id && p.`id`='$painter'";
         $result         = mysqli_query($conn, $select_painter);
         $painter_row    = mysqli_fetch_array($result, MYSQLI_ASSOC);
@@ -39,11 +39,10 @@
         $sql = "SELECT * FROM works w INNER JOIN works_translation wt ON wt.work_id=w.id 
                 WHERE painter_id='" . $painter . "' && wt.lang_id=$lang_id && w.status=1 ORDER BY `id` desc";
         $work = mysqli_fetch_all(mysqli_query($conn, $sql), MYSQLI_ASSOC);
+        if (!empty($work)) {
         ?>
 
-        <h6 class="head-text change-theme profile-header portfolio-header work_head"><?php if ($lang_id == 1) {
-                                                                                            echo 'Rəssamın əsərlərİ';
-                                                                                        } else echo 'works of the painter'; ?></h6>
+        <h6 class="head-text change-theme profile-header portfolio-header work_head"><?= translate('work_painter', $lang_name); ?></h6>
         <div class="icon title-line">
             <img src="assets/img/title-line.png">
         </div>
@@ -70,6 +69,7 @@
                 </div>
             <?php } ?>
         </div>
+        <?php } ?>
     </div>
 
     <?php include 'includes/footer.php'; ?>

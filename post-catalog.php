@@ -24,14 +24,14 @@ include 'includes/header.php';
 
     <?php include 'includes/theme.php';
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
-    $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT `category_id` FROM `posts` p WHERE p.category_id=$category_id"));
+    $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT `category_id`, `status` FROM `posts` WHERE `category_id`=$category_id and `status`=1"));
     $limit = 8;
     $lastpage = ceil($number_of_content / $limit);
     $start = ($page - 1) * $limit;
     if ($lastpage >= $page) {
-        $result = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, pt.*, m.* FROM orient_ressamlar.posts p 
-                                   INNER JOIN orient_ressamlar.posts_translation pt ON pt.post_id=p.id
-                                   INNER JOIN orient_ressamlar.menu m ON m.id=p.category_id
+        $result = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, p.status, pt.*, m.* FROM posts p 
+                                   INNER JOIN posts_translation pt ON pt.post_id=p.id
+                                   INNER JOIN menu m ON m.id=p.category_id
                                    WHERE pt.lang_id=$lang_id && p.status=1 && p.category_id=$category_id ORDER BY p.`id` desc LIMIT " . $start . ',' . $limit);
         $post  = mysqli_fetch_all($result, MYSQLI_ASSOC);
         if (!empty($post)) {

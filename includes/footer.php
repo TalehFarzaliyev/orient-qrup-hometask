@@ -1,13 +1,20 @@
-<?php include $_SERVER['DOCUMENT_ROOT'].'/config/config.php'; ?>
+<?php include $_SERVER['DOCUMENT_ROOT'] . '/config/config.php'; ?>
 <footer>
    <div class="footer-line" style="background-image: url(assets/img/title-line.png);"></div>
-   <div class="footer-text">
+   <div class="footer-text mb-4">
       <div class="first-row">
-         <a class="footer-item" href="contact.php?lang=<?=$lang_name;?>"><?=translate('contact', $lang_name); ?></a>
-         <a class="footer-item" href="privacy.php?page=privacy_policy&lang=<?=$lang_name;?>"><?=translate('privacy', $lang_name); ?></a>
-         <a class="footer-item" href="privacy.php?page=terms_of_use&lang=<?=$lang_name;?>"><?=translate('terms', $lang_name); ?></a>
-         <a class="footer-item" href="privacy.php?page=faq&lang=<?=$lang_name;?>">faq</a>
+         <a class="footer-item" href="contact.php?lang=<?= $lang_name; ?>"><?= translate('contact', $lang_name); ?></a>
+         <a class="footer-item" href="privacy.php?page=privacy_policy&lang=<?= $lang_name; ?>"><?= translate('privacy', $lang_name); ?></a>
+         <a class="footer-item" href="privacy.php?page=terms_of_use&lang=<?= $lang_name; ?>"><?= translate('terms', $lang_name); ?></a>
+         <a class="footer-item" href="privacy.php?page=faq&lang=<?= $lang_name; ?>">faq</a>
       </div>
+   </div>
+   <div class="copyright-section text-center">
+      <span class="copyright-item">Copyright © <?php echo date("Y"); ?>.</span>
+      <a class="footer-item copyright-item" href="index.php?lang=<?= $lang_name; ?>"><?= translate('nrb', $lang_name); ?></a>
+      <span class="copyright-item"><?= translate('all-rights', $lang_name); ?></span><br>
+      <span class="copyright-item"><?= translate('programming', $lang_name); ?></span>
+      <a class="footer-item copyright-item" href="http://nakhinternet.az/?>"><?= translate('iyttm', $lang_name); ?></a>
    </div>
 </footer>
 <script type="text/javascript" charset="utf-8">

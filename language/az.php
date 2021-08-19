@@ -1,6 +1,7 @@
 <?php
 $translation = [
     'association'  => 'BİRLİYİN PROFİLİ',
+    'union-artist' => 'Rəssamlar birliyi',
     'news'         => 'Xəbərlər',
     'read-more'    => 'Ardını oxu',
     'see-more'     => 'Daha çox gör',
@@ -17,8 +18,8 @@ $translation = [
     'mail'         => 'E-poçt',
     'send-message' => 'Məktub göndər',
     'name'         => 'Ad',
-    'content'      => 'Mövzu',
-    'letter'       => 'Məktub',
+    'content'      => 'Məzmun',
+    'subject'      => 'Mövzu',
     'send'         => 'Göndər',
     'privacy'      => 'GİZLİLİK SİYASƏTİ',
     'terms'        => 'İSTİFADƏ ŞƏRTLƏRİ',
@@ -27,4 +28,11 @@ $translation = [
     'dark'         => 'Tünd',
     'light'        => 'Açıq',
     'color-scheme' => 'RƏNG PALİTRASI',
+    'alert'        => 'xanası doldurulmalıdır!',
+    'success'      => 'Mesajınız uğurla göndərildi!',
+    'work_painter' => 'Rəssamın əsərlərİ',
+    'nrb'          => 'Naxçıvan Muxtar Respublikası Rəssamlar Birliyi.',
+    'all-rights'   => 'Bütün hüquqlar qorunur.',
+    'programming'  => 'Dizayn və proqramlaşdırma',
+    'iyttm'        => 'İYTTM',
 ]; 

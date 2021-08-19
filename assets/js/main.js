@@ -1,15 +1,15 @@
-var miniMenu = document.querySelector('.menu-items'),
+var themeSide = document.getElementById("theme-side"),
+    miniMenu = document.querySelector('.menu-items'),
     menuSide = document.querySelector('.menu-side'),
-    themeSide = document.getElementById("theme-side"),
+    footerColor = document.querySelector("footer"),
+    upTheme = document.querySelector(".up-theme"),
+    upThemeIcon = document.querySelector(".fa-angle-double-up"),
+    blogButton = document.querySelectorAll(".view_button"),
     changeTheme = document.querySelectorAll(".change-theme"),
     menuItem = document.querySelectorAll('.hover-color'),
     hovertextItem = document.querySelectorAll(".hovertext-item"),
     darkText = document.querySelectorAll(".dark-text"),
     seeMore = document.querySelectorAll(".see-more"),
-    upTheme = document.querySelector(".up-theme"),
-    upThemeIcon = document.querySelector(".fa-angle-double-up"),
-    blogButton = document.querySelectorAll(".view_button"),
-    footerColor = document.querySelector("footer"),
     changeButtonColor = document.querySelectorAll('.change_button_color'),
     footerItem = document.querySelectorAll(".footer-item"),
     contactLink = document.querySelectorAll('.contact-link'),
@@ -25,10 +25,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
             jQuery('.menu-side').css("background-color", "rgba(0, 0, 0, 0.8)");
             jQuery('.menu-side').css("padding", "0px 0");
             jQuery('.logo-item').css("transform", "scale(.8)");
+            jQuery('.up-button').css("opacity", "1");
+            jQuery('.up-button').css("visibility", "visible");
         } else {
             jQuery('.menu-side').css("background-color", "transparent");
             jQuery('.menu-side').css("padding", "15px 0");
             jQuery('.logo-item').css("transform", "scale(1)");
+            jQuery('.up-button').css("opacity", "0");
+            jQuery('.up-button').css("visibility", "hidden");
         }
     });
 });

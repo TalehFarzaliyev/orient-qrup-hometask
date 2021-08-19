@@ -22,12 +22,11 @@ if ($_SESSION['logged_in'] == 1) {
         $facebook    = (isset($_POST['facebook'])) ? trim($_POST['facebook']) : '';
         $instagram   = (isset($_POST['instagram'])) ? trim($_POST['instagram']) : '';
         $gmail       = (isset($_POST['gmail'])) ? trim($_POST['gmail']) : '';
-        $gmail_link  = (isset($_POST['gmail_link'])) ? trim($_POST['gmail_link']) : '';
         $youtube     = (isset($_POST['youtube'])) ? trim($_POST['youtube']) : '';
         $phone       = (isset($_POST['phone'])) ? trim($_POST['phone']) : '';
         $translation     = (isset($_POST['translation'])) ? $_POST['translation'] : [];
 
-        $update_settings = "UPDATE `settings` SET `facebook`='$facebook', `instagram`='$instagram', `gmail`='$gmail', `gmail_link`='$gmail_link',`youtube`='$youtube', `phone`='$phone' WHERE `id`=$settings_id";
+        $update_settings = "UPDATE `settings` SET `facebook`='$facebook', `instagram`='$instagram', `gmail`='$gmail',`youtube`='$youtube', `phone`='$phone' WHERE `id`=$settings_id";
         $result_update   = mysqli_query($conn, $update_settings);
         if ($result_update) {
             mysqli_query($conn, "DELETE FROM `settings_translation` WHERE `settings_id`=$settings_id");
@@ -74,10 +73,6 @@ if ($_SESSION['logged_in'] == 1) {
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">Gmail</label>
                                         <input type="text" name="gmail" required class="form-control" value="<?= $settings_row['gmail']; ?>" id="exampleFormControlInput1">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleFormControlInput1">Gmail link</label>
-                                        <input type="text" name="gmail_link" required class="form-control" value="<?= $settings_row['gmail_link']; ?>" id="exampleFormControlInput1">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">Youtube</label>

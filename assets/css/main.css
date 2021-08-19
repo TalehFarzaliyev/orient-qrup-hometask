@@ -33,6 +33,7 @@ li {
   justify-content: center; }
 
 body {
+  overflow-x: hidden;
   background-color: #000; }
   body .header .menu-side {
     position: fixed;
@@ -164,20 +165,26 @@ body {
             animation-duration: 1s;
             animation-timing-function: ease-in-out;
             width: 190px;
-            height: 130px; }
+            height: 130px;
+            position: relative; }
 @keyframes flyingPic {
   from {
     margin-top: -50px; }
   to {
     margin-top: 0px; } }
             body .header .carousel .carousel-inner .carousel-item .slider-caption .row .col-4 .col-pictures img {
-              width: 100%;
-              height: auto;
               display: block;
               overflow: hidden;
+              height: 100%;
+              min-width: 100%;
+              width: auto;
+              position: absolute;
+              transform: translate(-50%, -50%);
+              top: 50%;
+              left: 50%;
               transition: 1s ease-in-out; }
               body .header .carousel .carousel-inner .carousel-item .slider-caption .row .col-4 .col-pictures img:hover {
-                transform: scale(0.8);
+                transform: translate(-50%, -50%) scale(0.8);
                 opacity: .7; }
   body .header .carousel .social-icon {
     position: absolute;
@@ -293,6 +300,8 @@ body {
           transform: rotate(135deg) scale(1.2);
           filter: saturate(1.5); }
   body .up-button {
+    opacity: 0;
+    visibility: hidden;
     position: fixed;
     bottom: 5%;
     right: 5%;
@@ -541,6 +550,7 @@ body {
       body .news-section .owl-carousel .card .card-img-top {
         height: 180px; }
       body .news-section .owl-carousel .card .card-body {
+        height: 190px;
         display: flex;
         flex-direction: column;
         justify-content: space-between; }
@@ -698,7 +708,7 @@ body {
       body .blog .blog-slider .vc_item .acrylic h3 {
         font-family: "JosefinSans-Thin";
         font-size: 35px; }
-      body .blog .blog-slider .vc_item .acrylic p {
+      body .blog .blog-slider .vc_item .acrylic .material-text {
         font-size: 14px;
         line-height: 2;
         margin-top: 15px;
@@ -754,6 +764,11 @@ body {
           margin-right: 0; }
         body footer .footer-text .footer-item:hover {
           color: #A91C51; }
+    body footer .copyright-section .copyright-item {
+      text-decoration: none;
+      color: #6e6e6e;
+      font-size: 12px;
+      text-transform: initial; }
 
 @media only screen and (min-width: 1201px) {
   .menu-items {
@@ -1048,10 +1063,12 @@ body {
       order: 2; }
     body .blog .blog-slider .vc_item .acrylic h3 {
       font-size: 25px; }
-    body .blog .blog-slider .vc_item .acrylic p {
+    body .blog .blog-slider .vc_item .acrylic .material-text {
       font-size: 12px;
       line-height: 1.5; }
     body footer {
-      font-size: 10px; } }
+      font-size: 10px; }
+      body footer .copyright-section .copyright-item {
+        font-size: 9px; } }
 
 /*# sourceMappingURL=main.css.map */

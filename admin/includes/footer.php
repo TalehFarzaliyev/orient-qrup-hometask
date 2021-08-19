@@ -20,6 +20,7 @@
     </div>
 </div>
 <script src="templates/vendor/jquery/jquery.min.js"></script>
+<script src="templates/js/switch.js"></script>
 <script src="templates/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="templates/vendor/jquery-easing/jquery.easing.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

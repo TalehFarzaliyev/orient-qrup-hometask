@@ -13,8 +13,8 @@ $langIcon = '?';
 if (isset($_GET['category']) || isset($_GET['page']) || isset($_GET['post']) || isset($_GET['painter']) || isset($_GET['sales'])) {
     $langIcon = "&";
 }
-$parent_sql   = "SELECT * FROM orient_ressamlar.menu_translation mt 
-                 INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
+$parent_sql   = "SELECT * FROM menu_translation mt 
+                 INNER JOIN menu m ON mt.menu_id=m.id 
                  WHERE mt.lang_id=$lang_id and m.parent_id=0 and m.status=1 order by m.`order_number` ASC;";
 $parent_menus = mysqli_fetch_all(mysqli_query($conn, $parent_sql), MYSQLI_ASSOC);
 ?>
@@ -30,8 +30,8 @@ $parent_menus = mysqli_fetch_all(mysqli_query($conn, $parent_sql), MYSQLI_ASSOC)
         <?php
         if (!empty($parent_menus)) {
             foreach ($parent_menus as $parent) {
-                $sub_sql   = "SELECT * FROM orient_ressamlar.menu_translation mt 
-                              INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
+                $sub_sql   = "SELECT * FROM menu_translation mt 
+                              INNER JOIN menu m ON mt.menu_id=m.id 
                               WHERE mt.lang_id=$lang_id and m.parent_id=" . $parent['menu_id'] . " and m.status=1 order by m.`order_number` ASC;";
                 $sub_menus = mysqli_fetch_all(mysqli_query($conn, $sub_sql), MYSQLI_ASSOC);
                 if (!empty($sub_menus)) {

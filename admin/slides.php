@@ -58,59 +58,35 @@ if ($_SESSION['logged_in'] == 1) {
                                                     <tr role="row" style="text-align: center;">
                                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 180px;">Şəkil</th>
                                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Rəssamın adı</th>
-                                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Başlıq</th>
+                                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 355px;">Başlıq</th>
+                                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 155px;">Status</th>
                                                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 163px;">Əməliyyatlar</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <?php
                                                     include '../config/config.php';
-
-                                                    $select_sql = "SELECT s.id as id_slider, s.painter_id, s.image, s.status, st.* FROM orient_ressamlar.slider s 
-                                                                   INNER JOIN orient_ressamlar.slider_translation st ON st.slider_id=s.id
-                                                                   Where st.lang_id=1 and s.status=1 and s.painter_id=0 ORDER BY s.`id` desc";
-                                                    $result     = mysqli_query($conn, $select_sql);
-                                                    $rows       = mysqli_fetch_array($result, MYSQLI_ASSOC)
-                                                    ?>
-                                                    <tr role="row" class="even bg-gray-400 bg-gradient">
-                                                        <?php
-                                                        if (empty($rows['image']))
-                                                            echo "<td><img src='../uploads/noPhoto.png' class='img-thumbnail' width='200px' height='200px'></td>";
-                                                        else
-                                                            echo "<td><img id='previewImage' src='../uploads/" . $rows['image'] . "' class='img-thumbnail' width='200px' height='200px'></td>";
-                                                        ?>
-                                                        <td class="sorting_1">Əsas şəkil</td>
-                                                        <td class="sorting_1"><?= $rows['title']; ?></td>
-                                                        <td class="edit-buttons">
-                                                            <div class="button-section">
-                                                                <a href="form-slider.php?id=<?= $rows['id_slider']; ?>" class="btn btn-success"><i class="fas fa-edit"></i></a>
-                                                                <a onclick="deleteItem(this);" data-id-number="<?= $rows['id_slider']; ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <?php
                                                     $page = isset($_GET['page']) ? $_GET['page'] : 1;
                                                     if (isset($_REQUEST['search'])) {
                                                         $name = $_GET['search'];;
-                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `slider` s INNER JOIN orient_ressamlar.painters p ON p.id=s.painter_id WHERE s.`status`=1 and p.painter_name like '" . $name . "%'"));
+                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `slider` s INNER JOIN painters p ON p.id=s.painter_id WHERE p.painter_name like '" . $name . "%'"));
                                                     } else {
-                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, 'SELECT `id` FROM `slider` WHERE `status`=1'));
+                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, 'SELECT `id` FROM `slider`'));
                                                     }
-                                                    $number_of_content = mysqli_num_rows(mysqli_query($conn, 'SELECT `id` FROM `slider`'));
-                                                    $limit = 5;
+                                                    $limit = 10;
                                                     $lastpage = ceil($number_of_content / $limit);
                                                     $start = ($page - 1) * $limit;
                                                     if ($lastpage >= $page) {
                                                         if (isset($_REQUEST['search'])) {
-                                                            $result = mysqli_query($conn, "SELECT s.id as id_slider, s.painter_id, s.image, s.status, st.*, p.* FROM orient_ressamlar.slider s 
-                                                                                           INNER JOIN orient_ressamlar.slider_translation st ON st.slider_id=s.id
-                                                                                           INNER JOIN orient_ressamlar.painters p ON p.id=s.painter_id
-                                                                                           Where st.lang_id=1 and s.status=1 && p.painter_name like '" . $name . "%' ORDER BY p.`id` desc LIMIT " . $start . ',' . $limit);
+                                                            $result = mysqli_query($conn, "SELECT s.id as id_slider, s.painter_id, s.image, s.status as status_slider, st.*, p.* FROM slider s 
+                                                                                           INNER JOIN slider_translation st ON st.slider_id=s.id
+                                                                                           INNER JOIN painters p ON p.id=s.painter_id
+                                                                                           Where st.lang_id=1 && p.painter_name like '" . $name . "%' ORDER BY p.`id` desc LIMIT " . $start . ',' . $limit);
                                                         } else {
-                                                            $result = mysqli_query($conn, 'SELECT s.id as id_slider, s.painter_id, s.image, s.status, st.*, p.* FROM orient_ressamlar.slider s 
-                                                                                           INNER JOIN orient_ressamlar.slider_translation st ON st.slider_id=s.id
-                                                                                           INNER JOIN orient_ressamlar.painters p ON p.id=s.painter_id
-                                                                                           Where st.lang_id=1 and s.status=1 ORDER BY s.`id` desc LIMIT ' . $start . ',' . $limit);
+                                                            $result = mysqli_query($conn, 'SELECT s.id as id_slider, s.painter_id, s.image, s.status as status_slider, st.*, p.* FROM slider s 
+                                                                                           INNER JOIN slider_translation st ON st.slider_id=s.id
+                                                                                           INNER JOIN painters p ON p.id=s.painter_id
+                                                                                           Where st.lang_id=1 ORDER BY s.`id` desc LIMIT ' . $start . ',' . $limit);
                                                         }
                                                         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                                                     ?>
@@ -123,6 +99,14 @@ if ($_SESSION['logged_in'] == 1) {
                                                                 ?>
                                                                 <td class="sorting_1"><?= $row['painter_name']; ?> <?= $row['painter_surname']; ?></td>
                                                                 <td class="sorting_1"><?= $row['title']; ?></td>
+                                                                <td class="edit-buttons text-center align-middle">
+                                                                    <form action="" method="get">
+                                                                        <label class="switch button-section d-block">
+                                                                            <input type="checkbox" data-onstyle="success" name="slider" data-offstyle="danger" id='<?php echo $row['id_slider'] ?>' class="status-check" <?php echo $row['status_slider'] == 1 ? 'checked' : '' ?> />
+                                                                            <span class="slider round"></span>
+                                                                        </label>
+                                                                    </form>
+                                                                </td>
                                                                 <td class="edit-buttons">
                                                                     <div class="button-section">
                                                                         <a href="form-slider.php?id=<?= $row['id_slider']; ?>" class="btn btn-success"><i class="fas fa-edit"></i></a>
@@ -133,6 +117,37 @@ if ($_SESSION['logged_in'] == 1) {
                                                         <?php
                                                         }
                                                         ?>
+                                                        <?php
+                                                        $select_sql = "SELECT s.id as id_slider, s.painter_id, s.image, s.status as status_slider, st.* FROM slider s 
+                                                                   INNER JOIN slider_translation st ON st.slider_id=s.id
+                                                                   Where st.lang_id=1 and s.painter_id=0 ORDER BY s.`id` desc";
+                                                        $result     = mysqli_query($conn, $select_sql);
+                                                        $rows       = mysqli_fetch_array($result, MYSQLI_ASSOC)
+                                                        ?>
+                                                        <tr role="row" class="even bg-gray-400 bg-gradient">
+                                                            <?php
+                                                            if (empty($rows['image']))
+                                                                echo "<td><img src='../uploads/noPhoto.png' class='img-thumbnail' width='200px' height='200px'></td>";
+                                                            else
+                                                                echo "<td><img id='previewImage' src='../uploads/" . $rows['image'] . "' class='img-thumbnail' width='200px' height='200px'></td>";
+                                                            ?>
+                                                            <td class="sorting_1">Əsas şəkil</td>
+                                                            <td class="sorting_1"><?= $rows['title']; ?></td>
+                                                            <td class="edit-buttons text-center align-middle">
+                                                                <form action="" method="get">
+                                                                    <label class="switch button-section d-block">
+                                                                        <input type="checkbox" data-onstyle="success" name="slider" data-offstyle="danger" id='<?php echo $rows['id_slider'] ?>' class="status-check" <?php echo $rows['status_slider'] == 1 ? 'checked' : '' ?> />
+                                                                        <span class="slider round"></span>
+                                                                    </label>
+                                                                </form>
+                                                            </td>
+                                                            <td class="edit-buttons">
+                                                                <div class="button-section">
+                                                                    <a href="form-slider.php?id=<?= $rows['id_slider']; ?>" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                                                                    <a onclick="deleteItem(this);" data-id-number="<?= $rows['id_slider']; ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
                                                 </tbody>
                                             </table>
                                             <div class="text-center">

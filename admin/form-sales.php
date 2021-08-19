@@ -32,7 +32,7 @@ if ($_SESSION['logged_in'] == 1) {
             if ($result_insert) {
                 $sales_id    = mysqli_insert_id($conn);
                 foreach ($translation as $key => $value) {
-                    $insert_translation       = "INSERT INTO `sales_translation`(`sales_id`, `lang_id`, `name`, `size`, `technique`) VALUES ('$sales_id','$key','" . $value['name'] . "','" . $value['size'] . "','" . $value['technique'] . "')";
+                    $insert_translation       = "INSERT INTO `sales_translation`(`sales_id`, `lang_id`, `name`, `size`, `technique`) VALUES ('$sales_id','$key','" . mysqli_real_escape_string($conn, $value['name']) . "','" . mysqli_real_escape_string($conn, $value['size']) . "','" . mysqli_real_escape_string($conn, $value['technique']) . "')";
                     mysqli_query($conn, $insert_translation);
                 }
             }
@@ -46,7 +46,7 @@ if ($_SESSION['logged_in'] == 1) {
                 $image  = $sales_row['image'];
             else
                 $image  = uploadImage($_FILES['image']);
-            
+
             $price           = (isset($_POST['price'])) ? trim($_POST['price']) : '';
             $status          = (isset($_POST['status'])) ? intval($_POST['status']) : 0;
             $translation     = (isset($_POST['translation'])) ? $_POST['translation'] : [];
@@ -56,7 +56,7 @@ if ($_SESSION['logged_in'] == 1) {
             if ($result_update) {
                 mysqli_query($conn, "DELETE FROM `sales_translation` WHERE `sales_id`=$sales_id");
                 foreach ($translation as $key => $value) {
-                    $insert_translation       = "INSERT INTO `sales_translation`(`sales_id`, `lang_id`, `name`, `size`, `technique`) VALUES ('$sales_id','$key','" . $value['name'] . "','" . $value['size'] . "','" . $value['technique'] . "')";
+                    $insert_translation       = "INSERT INTO `sales_translation`(`sales_id`, `lang_id`, `name`, `size`, `technique`) VALUES ('$sales_id','$key','" . mysqli_real_escape_string($conn, $value['name']) . "','" . mysqli_real_escape_string($conn, $value['size']) . "','" . mysqli_real_escape_string($conn, $value['technique']) . "')";
                     mysqli_query($conn, $insert_translation);
                 }
             }
@@ -96,7 +96,7 @@ if ($_SESSION['logged_in'] == 1) {
                                             <label for="exampleFormControlSelect1">Rəssam</label>
                                             <select class="form-control" name="painter_id" id="exampleFormControlSelect1">
                                                 <?php
-                                                $select_sql       = "SELECT * FROM orient_ressamlar.painters 
+                                                $select_sql       = "SELECT * FROM painters 
                                                                      WHERE `status`=1";
                                                 $result           = mysqli_query($conn, $select_sql);
                                                 while ($row1      = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
@@ -186,8 +186,7 @@ if ($_SESSION['logged_in'] == 1) {
                                             <label for="exampleFormControlSelect1">Rəssam</label>
                                             <select class="form-control" name="painter_id" id="exampleFormControlSelect1">
                                                 <?php
-                                                $select_sql  = "SELECT * FROM orient_ressamlar.painters  
-                                                                WHERE `status`=1";
+                                                $select_sql  = "SELECT * FROM painters WHERE `status`=1";
                                                 $result      = mysqli_query($conn, $select_sql);
                                                 while ($rows = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                                                 ?>
@@ -246,15 +245,15 @@ if ($_SESSION['logged_in'] == 1) {
                                                 <div class="tab-pane fade show <?php if ($value['code'] == 'az') echo 'active' ?>" id="nav-<?= $value['code']; ?>" role="tabpanel" aria-labelledby="nav-<?= $value['code']; ?>-tab">
                                                     <div class="form-group">
                                                         <label for="exampleFormControlInput1">Məhsul adı</label>
-                                                        <input type="text" name="translation[<?= $value['lang_id'] ?>][name]" required value="<?= $value['name']; ?>" class="form-control" id="exampleFormControlInput1" placeholder="Məhsulun adı">
+                                                        <input type="text" name="translation[<?= $value['lang_id'] ?>][name]" required value="<?= htmlentities($value['name']); ?>" class="form-control" id="exampleFormControlInput1" placeholder="Məhsulun adı">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="exampleFormControlInput1">Ölçü</label>
-                                                        <input type="text" name="translation[<?= $value['lang_id'] ?>][size]" required value="<?= $value['size']; ?>" class="form-control" id="exampleFormControlInput1" placeholder="Ölçü">
+                                                        <input type="text" name="translation[<?= $value['lang_id'] ?>][size]" required value="<?= htmlentities($value['size']); ?>" class="form-control" id="exampleFormControlInput1" placeholder="Ölçü">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="exampleFormControlInput1">Texnika</label>
-                                                        <input type="text" name="translation[<?= $value['lang_id'] ?>][technique]" required value="<?= $value['technique']; ?>" class="form-control" id="exampleFormControlInput1" placeholder="Texnika">
+                                                        <input type="text" name="translation[<?= $value['lang_id'] ?>][technique]" required value="<?= htmlentities($value['technique']); ?>" class="form-control" id="exampleFormControlInput1" placeholder="Texnika">
                                                     </div>
                                                 </div>
                                             <?php

@@ -46,7 +46,8 @@ if ($_SESSION['logged_in'] == 1) {
                                                 <thead>
                                                     <tr role="row" style="text-align: center;">
                                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 180px;">Şəkil</th>
-                                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Əsərin adı</th>
+                                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 455px;">Əsərin adı</th>
+                                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 155px;">Status</th>
                                                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 163px;">Əməliyyatlar</th>
                                                     </tr>
                                                 </thead>
@@ -61,9 +62,9 @@ if ($_SESSION['logged_in'] == 1) {
                                                         $lastpage = ceil($number_of_content / $limit);
                                                         $start = ($page - 1) * $limit;
                                                         if ($lastpage >= $page) {
-                                                            $result = mysqli_query($conn, "SELECT * FROM orient_ressamlar.painters p 
-                                                                                    INNER JOIN orient_ressamlar.works w 
-                                                                                    INNER JOIN orient_ressamlar.works_translation wt ON w.id=wt.work_id 
+                                                            $result = mysqli_query($conn, "SELECT * FROM painters p 
+                                                                                    INNER JOIN works w 
+                                                                                    INNER JOIN works_translation wt ON w.id=wt.work_id 
                                                                                     Where w.painter_id=p.id && wt.lang_id=1 && w.`painter_id`='$painter' ORDER BY w.`id` desc LIMIT " . $start . ',' . $limit);
                                                             while ($row  = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                                                     ?>
@@ -75,6 +76,14 @@ if ($_SESSION['logged_in'] == 1) {
                                                                         echo "<td><img id='previewImage' src='../uploads/" . $row['work_image'] . "' class='img-thumbnail' width='200px' height='200px'></td>";
                                                                     ?>
                                                                     <td class="sorting_1"><?= $row['work_name']; ?></td>
+                                                                    <td class="edit-buttons text-center align-middle">
+                                                                        <form action="" method="get">
+                                                                            <label class="switch button-section d-block">
+                                                                                <input type="checkbox" data-onstyle="success" name="works" data-offstyle="danger" id='<?php echo $row['id'] ?>' class="status-check" <?php echo $row['status'] == 1 ? 'checked' : '' ?> />
+                                                                                <span class="slider round"></span>
+                                                                            </label>
+                                                                        </form>
+                                                                    </td>
                                                                     <td class="edit-buttons">
                                                                         <div class="button-section">
                                                                             <a href="form-works.php?id=<?= $row['id']; ?>&painter=<?= $_GET['painter'] ?>" class="btn btn-success"><i class="fas fa-edit"></i></a>

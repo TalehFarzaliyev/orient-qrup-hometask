@@ -5,7 +5,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Admin Panel</title>
-
+    <link rel="icon" href="../assets/img/logo_img.png" type="image/x-icon">
     <!-- Custom fonts for this template-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link href="templates/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -16,7 +16,12 @@
     <link href="templates/css/main.css" rel="stylesheet">
     <link href="templates/css/style.css" rel="stylesheet" type="text/css">
     <link href="templates/css/dropzone.css" rel="stylesheet" type="text/css">
+    <link href="templates/css/switch.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://write.corbpie.com/wp-content/litespeed/localres/cdnjs.cloudflare.com/ajax/libs/bootswatch/4.5.0/flatly/bootstrap.min.css"/>
+    <script src="https://write.corbpie.com/wp-content/litespeed/localres/cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="templates/js/dropzone.js" type="text/javascript"></script>
     <script src=" https://cdn.ckeditor.com/4.14.0/full/ckeditor.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 </head>

@@ -45,7 +45,7 @@ if ($_SESSION['logged_in'] == 1) {
                                                 <select class="form-control" name="id" id="exampleFormControlSelect1">
                                                     <option value="" disabled selected>Rəssam seçin</option>
                                                     <?php
-                                                    $select_sql  = "SELECT * FROM orient_ressamlar.painters
+                                                    $select_sql  = "SELECT * FROM painters
                                                                     WHERE `status`=1";
                                                     $result      = mysqli_query($conn, $select_sql);
                                                     while ($row1 = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
@@ -81,6 +81,7 @@ if ($_SESSION['logged_in'] == 1) {
                                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Qiyməti</th>
                                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Ölçüsü</th>
                                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Texnikası</th>
+                                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Status</th>
                                                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 163px;">Əməliyyatlar</th>
                                                     </tr>
                                                 </thead>
@@ -90,12 +91,12 @@ if ($_SESSION['logged_in'] == 1) {
                                                     $page = isset($_GET['page']) ? $_GET['page'] : 1;
                                                     if (isset($_REQUEST['search'])) {
                                                         $name = $_GET['search'];;
-                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `sales` s INNER JOIN sales_translation st ON s.id=st.sales_id WHERE `status`=1 and lang_id=1 and `name` like '" . $name . "%'"));
+                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `sales` s INNER JOIN sales_translation st ON s.id=st.sales_id WHERE lang_id=1 and `name` like '" . $name . "%'"));
                                                     } elseif (isset($_REQUEST['id'])) {
                                                         $category = $_GET['id'];;
-                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `sales` WHERE `status`=1 and painter_id=$category"));
+                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `sales` WHERE painter_id=$category"));
                                                     } else {
-                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, 'SELECT `id` FROM `sales` WHERE `status`=1'));
+                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, 'SELECT `id` FROM `sales`'));
                                                     }
                                                     $limit = 5;
                                                     $lastpage = ceil($number_of_content / $limit);
@@ -103,21 +104,21 @@ if ($_SESSION['logged_in'] == 1) {
                                                     if ($lastpage >= $page) {
                                                         if (isset($_REQUEST['search'])) {
                                                             $name = $_GET['search'];
-                                                            $result = mysqli_query($conn, "SELECT s.id as id_sales, s.painter_id, s.image, s.price, s.status, st.*, p.* FROM orient_ressamlar.sales s 
-                                                                                           INNER JOIN orient_ressamlar.sales_translation st ON st.sales_id=s.id
-                                                                                           INNER JOIN orient_ressamlar.painters p ON p.id=s.painter_id
-                                                                                           Where st.lang_id=1 and st.name LIKE '" . $name . "%' && s.status=1 ORDER BY s.`id` desc LIMIT " . $start . ',' . $limit);
+                                                            $result = mysqli_query($conn, "SELECT s.id as id_sales, s.painter_id, s.image, s.price, s.status as status_sales, st.*, p.* FROM sales s 
+                                                                                           INNER JOIN sales_translation st ON st.sales_id=s.id
+                                                                                           INNER JOIN painters p ON p.id=s.painter_id
+                                                                                           Where st.lang_id=1 and st.name LIKE '" . $name . "%' ORDER BY s.`id` desc LIMIT " . $start . ',' . $limit);
                                                         } elseif (isset($_REQUEST['id'])) {
                                                             $category = $_GET['id'];
-                                                            $result = mysqli_query($conn, "SELECT s.id as id_sales, s.painter_id, s.image, s.price, s.status, st.*, p.* FROM orient_ressamlar.sales s 
-                                                                                           INNER JOIN orient_ressamlar.sales_translation st ON st.sales_id=s.id
-                                                                                           INNER JOIN orient_ressamlar.painters p ON p.id=s.painter_id
-                                                                                           Where st.lang_id=1 and s.status=1 && s.painter_id=$category ORDER BY s.`id` desc LIMIT " . $start . ',' . $limit);
+                                                            $result = mysqli_query($conn, "SELECT s.id as id_sales, s.painter_id, s.image, s.price, s.status as status_sales, st.*, p.* FROM sales s 
+                                                                                           INNER JOIN sales_translation st ON st.sales_id=s.id
+                                                                                           INNER JOIN painters p ON p.id=s.painter_id
+                                                                                           Where st.lang_id=1 && s.painter_id=$category ORDER BY s.`id` desc LIMIT " . $start . ',' . $limit);
                                                         } else {
-                                                            $result = mysqli_query($conn, 'SELECT s.id as id_sales, s.painter_id, s.image, s.price, s.status, st.*, p.* FROM orient_ressamlar.sales s 
-                                                                                           INNER JOIN orient_ressamlar.sales_translation st ON st.sales_id=s.id
-                                                                                           INNER JOIN orient_ressamlar.painters p ON p.id=s.painter_id
-                                                                                           Where st.lang_id=1 and s.status=1 ORDER BY s.`id` desc LIMIT ' . $start . ',' . $limit);
+                                                            $result = mysqli_query($conn, 'SELECT s.id as id_sales, s.painter_id, s.image, s.price, s.status as status_sales, st.*, p.* FROM sales s 
+                                                                                           INNER JOIN sales_translation st ON st.sales_id=s.id
+                                                                                           INNER JOIN painters p ON p.id=s.painter_id
+                                                                                           Where st.lang_id=1 ORDER BY s.`id` desc LIMIT ' . $start . ',' . $limit);
                                                         }
                                                         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                                                     ?>
@@ -133,6 +134,14 @@ if ($_SESSION['logged_in'] == 1) {
                                                                 <td class="sorting_1"><?= $row['price']; ?></td>
                                                                 <td class="sorting_1"><?= $row['size']; ?></td>
                                                                 <td class="sorting_1"><?= $row['technique']; ?></td>
+                                                                <td class="edit-buttons text-center align-middle">
+                                                                    <form action="" method="get">
+                                                                        <label class="switch button-section d-block">
+                                                                            <input type="checkbox" data-onstyle="success" name="sales" data-offstyle="danger" id='<?php echo $row['id_sales'] ?>' class="status-check" <?php echo $row['status_sales'] == 1 ? 'checked' : '' ?> />
+                                                                            <span class="slider round"></span>
+                                                                        </label>
+                                                                    </form>
+                                                                </td>
                                                                 <td class="edit-buttons">
                                                                     <div class="button-section">
                                                                         <a href="form-sales.php?id=<?= $row['id_sales']; ?>" class="btn btn-success"><i class="fas fa-edit"></i></a>

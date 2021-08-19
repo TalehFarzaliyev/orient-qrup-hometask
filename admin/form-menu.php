@@ -79,8 +79,8 @@ if ($_SESSION['logged_in'] == 1) {
                                                 <option value="0">Seç</option>
                                                 <?php
 
-                                                $select_sql    = "SELECT * FROM orient_ressamlar.menu_translation mt 
-                                                                  INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
+                                                $select_sql    = "SELECT * FROM menu_translation mt 
+                                                                  INNER JOIN menu m ON mt.menu_id=m.id 
                                                                   WHERE `lang_id`=1 && `parent_id`=0";
                                                 $result        = mysqli_query($conn, $select_sql);
                                                 while ($row1   = mysqli_fetch_array($result, MYSQLI_ASSOC)) {

@@ -46,8 +46,8 @@ if ($_SESSION['logged_in'] == 1) {
                                                 <select class="form-control" name="id" id="exampleFormControlSelect1">
                                                     <option value="" disabled selected>Kateqoriya seçin</option>
                                                     <?php
-                                                    $select_sql  = "SELECT * FROM orient_ressamlar.menu m
-                                                                    INNER JOIN orient_ressamlar.menu_translation mt ON m.id=mt.menu_id  
+                                                    $select_sql  = "SELECT * FROM menu m
+                                                                    INNER JOIN menu_translation mt ON m.id=mt.menu_id  
                                                                     WHERE m.type='post' && mt.lang_id=1 && m.parent_id>0";
                                                     $result      = mysqli_query($conn, $select_sql);
                                                     while ($row1 = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
@@ -81,6 +81,7 @@ if ($_SESSION['logged_in'] == 1) {
                                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Başlıq</th>
                                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Kateqoriya</th>
                                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 100px;">Qalereya</th>
+                                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 100px;">Status</th>
                                                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 163px;">Əməliyyatlar</th>
                                                     </tr>
                                                 </thead>
@@ -90,12 +91,12 @@ if ($_SESSION['logged_in'] == 1) {
                                                     $page = isset($_GET['page']) ? $_GET['page'] : 1;
                                                     if (isset($_REQUEST['search'])) {
                                                         $name = $_GET['search'];;
-                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `posts` p INNER JOIN posts_translation pt ON p.id=pt.post_id WHERE `status`=1 and lang_id=1 and title like '" . $name . "%'"));
+                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `posts` p INNER JOIN posts_translation pt ON p.id=pt.post_id WHERE p.lang_id=1 and pt.title like '" . $name . "%'"));
                                                     } elseif (isset($_REQUEST['id'])) {
                                                         $category = $_GET['id'];;
-                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `posts` WHERE `status`=1 and category_id=$category"));
+                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `posts` WHERE category_id=$category"));
                                                     } else {
-                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, 'SELECT `id` FROM `posts` WHERE `status`=1'));
+                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, 'SELECT `id` FROM `posts`'));
                                                     }
                                                     $limit = 5;
                                                     $lastpage = ceil($number_of_content / $limit);
@@ -103,24 +104,24 @@ if ($_SESSION['logged_in'] == 1) {
                                                     if ($lastpage >= $page) {
                                                         if (isset($_REQUEST['search'])) {
                                                             $name = $_GET['search'];
-                                                            $result = mysqli_query($conn, 'SELECT p.id as id_post, p.image, p.category_id, pt.*, mt.*, m.* FROM orient_ressamlar.posts p 
-                                                                                           INNER JOIN orient_ressamlar.posts_translation pt ON pt.post_id=p.id
-                                                                                           INNER JOIN orient_ressamlar.menu_translation mt 
-                                                                                           INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
-                                                                                           WHERE pt.lang_id=1 && p.status=1 && pt.title LIKE "' . $name . '%" && p.category_id=m.id && mt.lang_id=1 ORDER BY p.`id` desc LIMIT ' . $start . ',' . $limit);
+                                                            $result = mysqli_query($conn, 'SELECT p.id as id_post, p.image, p.category_id, p.status as status_post, pt.*, mt.*, m.* FROM posts p 
+                                                                                           INNER JOIN posts_translation pt ON pt.post_id=p.id
+                                                                                           INNER JOIN menu_translation mt 
+                                                                                           INNER JOIN menu m ON mt.menu_id=m.id 
+                                                                                           WHERE pt.lang_id=1 && pt.title LIKE "' . $name . '%" && p.category_id=m.id && mt.lang_id=1 ORDER BY p.`id` desc LIMIT ' . $start . ',' . $limit);
                                                         } elseif (isset($_REQUEST['id'])) {
                                                             $category = $_GET['id'];
-                                                            $result = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.category_id, pt.*, mt.*, m.* FROM orient_ressamlar.posts p 
-                                                                                           INNER JOIN orient_ressamlar.posts_translation pt ON pt.post_id=p.id
-                                                                                           INNER JOIN orient_ressamlar.menu_translation mt 
-                                                                                           INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
-                                                                                           WHERE pt.lang_id=1 && p.status=1 && p.category_id=m.id && p.category_id='$category' && mt.lang_id=1 ORDER BY p.`id` desc LIMIT " . $start . ',' . $limit);
+                                                            $result = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.category_id, p.status as status_post, pt.*, mt.*, m.* FROM posts p 
+                                                                                           INNER JOIN posts_translation pt ON pt.post_id=p.id
+                                                                                           INNER JOIN menu_translation mt 
+                                                                                           INNER JOIN menu m ON mt.menu_id=m.id 
+                                                                                           WHERE pt.lang_id=1 && p.category_id=m.id && p.category_id='$category' && mt.lang_id=1 ORDER BY p.`id` desc LIMIT " . $start . ',' . $limit);
                                                         } else {
-                                                            $result = mysqli_query($conn, 'SELECT p.id as id_post, p.image, p.category_id, pt.*, mt.*, m.* FROM orient_ressamlar.posts p 
-                                                                                           INNER JOIN orient_ressamlar.posts_translation pt ON pt.post_id=p.id
-                                                                                           INNER JOIN orient_ressamlar.menu_translation mt 
-                                                                                           INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
-                                                                                           WHERE pt.lang_id=1 && p.status=1 && p.category_id=m.id && mt.lang_id=1 ORDER BY p.`id` desc LIMIT ' . $start . ',' . $limit);
+                                                            $result = mysqli_query($conn, 'SELECT p.id as id_post, p.image, p.category_id, p.status as status_post, pt.*, mt.*, m.* FROM posts p 
+                                                                                           INNER JOIN posts_translation pt ON pt.post_id=p.id
+                                                                                           INNER JOIN menu_translation mt 
+                                                                                           INNER JOIN menu m ON mt.menu_id=m.id 
+                                                                                           WHERE pt.lang_id=1 && p.category_id=m.id && mt.lang_id=1 ORDER BY p.`id` desc LIMIT ' . $start . ',' . $limit);
                                                         }
                                                         while ($row  = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                                                     ?>
@@ -133,8 +134,16 @@ if ($_SESSION['logged_in'] == 1) {
                                                                 ?>
                                                                 <td class="sorting_1"><?= $row['title']; ?></td>
                                                                 <td class="sorting_1"><?= $row['name']; ?></td>
-                                                                <td class="sorting_1 edit-buttons">
+                                                                <td class="edit-buttons">
                                                                     <a href="gallery.php?post=<?= $row['id_post']; ?>" class="btn btn-secondary button-section d-block"><i class="far fa-images"></i></a>
+                                                                </td>
+                                                                <td class="edit-buttons align-middle">
+                                                                    <form action="" method="get">
+                                                                        <label class="switch button-section d-block">
+                                                                            <input type="checkbox" data-onstyle="success" name="posts" data-offstyle="danger" id='<?php echo $row['id_post'] ?>' class="status-check" <?php echo $row['status_post'] == 1 ? 'checked' : '' ?> />
+                                                                            <span class="slider round"></span>
+                                                                        </label>
+                                                                    </form>
                                                                 </td>
                                                                 <td class="edit-buttons">
                                                                     <div class="button-section">

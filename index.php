@@ -10,8 +10,8 @@
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <?php
-                $result = mysqli_query($conn, "SELECT * FROM orient_ressamlar.slider s
-                                               INNER JOIN orient_ressamlar.slider_translation st ON st.slider_id=s.id
+                $result = mysqli_query($conn, "SELECT * FROM slider s
+                                               INNER JOIN slider_translation st ON st.slider_id=s.id
                                                WHERE s.`painter_id`=0 && s.status=1 && st.lang_id=$lang_id");
                 $main   = mysqli_fetch_array($result, MYSQLI_ASSOC);
                 if (!empty($main)) {
@@ -23,10 +23,10 @@
                         </div>
                     </div>
                     <?php }
-                $result = mysqli_query($conn, "SELECT s.id as id_slider, s.painter_id, s.image, s.status, st.*, p.* FROM orient_ressamlar.slider s 
-                                               INNER JOIN orient_ressamlar.slider_translation st ON st.slider_id=s.id
-                                               INNER JOIN orient_ressamlar.painters p ON p.id=s.painter_id
-                                               Where st.lang_id=$lang_id and s.status=1 ORDER BY s.`id` desc");
+                $result = mysqli_query($conn, "SELECT s.id as id_slider, s.painter_id, s.image, s.status, st.*, p.* FROM slider s 
+                                               INNER JOIN slider_translation st ON st.slider_id=s.id
+                                               INNER JOIN painters p ON p.id=s.painter_id
+                                               Where st.lang_id=$lang_id and s.status=1");
                 $artist = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 if (!empty($artist)) {
                     foreach ($artist as $key => $artist_row) {
@@ -66,12 +66,12 @@
             </a>
 
             <?php
-            $result = mysqli_query($conn, "SELECT * FROM orient_ressamlar.settings WHERE `id`=1");
+            $result = mysqli_query($conn, "SELECT * FROM settings WHERE `id`=1");
             $social  = mysqli_fetch_array($result, MYSQLI_ASSOC);
             if (!empty($social)) {
             ?>
                 <div class="social-icon">
-                    <a class="gmail" href="<?= $social['gmail_link']; ?>"><i class="fas fa-envelope social-media"></i></a>
+                    <a class="gmail" href="mailto:<?= $social['gmail']; ?>"><i class="fas fa-envelope social-media"></i></a>
                     <a class="instagram" href="<?= $social['instagram']; ?>"><i class="fab fa-instagram social-media"></i></a>
                     <a class="facebook" href="<?= $social['facebook']; ?>"><i class="fab fa-facebook-f social-media"></i></a>
                     <a class="youtube" href="<?= $social['youtube']; ?>"><i class="fab fa-youtube social-media"></i></a>
@@ -87,19 +87,24 @@
 </div>
 
 <?php
-$result1 = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, pt.*, mt.*, m.* FROM orient_ressamlar.posts p 
-                                INNER JOIN orient_ressamlar.posts_translation pt ON pt.post_id=p.id
-                                INNER JOIN orient_ressamlar.menu m ON  p.category_id=m.id
-                                INNER JOIN orient_ressamlar.menu_translation mt ON mt.menu_id=m.id 
+$result1 = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, p.status, pt.*, mt.*, m.* FROM posts p 
+                                INNER JOIN posts_translation pt ON pt.post_id=p.id
+                                INNER JOIN menu m ON  p.category_id=m.id
+                                INNER JOIN menu_translation mt ON mt.menu_id=m.id 
                                 WHERE pt.lang_id=$lang_id && p.status=1 && p.category_id=67 && mt.lang_id=$lang_id ORDER BY p.`id` desc LIMIT 4");
-$result2 = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, pt.*, mt.*, m.* FROM orient_ressamlar.posts p 
-                                INNER JOIN orient_ressamlar.posts_translation pt ON pt.post_id=p.id
-                                INNER JOIN orient_ressamlar.menu m ON  p.category_id=m.id
-                                INNER JOIN orient_ressamlar.menu_translation mt ON mt.menu_id=m.id 
+$result2 = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, p.status, pt.*, mt.*, m.* FROM posts p 
+                                INNER JOIN posts_translation pt ON pt.post_id=p.id
+                                INNER JOIN menu m ON  p.category_id=m.id
+                                INNER JOIN menu_translation mt ON mt.menu_id=m.id 
                                 WHERE pt.lang_id=$lang_id && p.status=1 && p.category_id=68 && mt.lang_id=$lang_id ORDER BY p.`id` desc LIMIT 4");
 $news1   = mysqli_fetch_all($result1, MYSQLI_ASSOC);
 $news2   = mysqli_fetch_all($result2, MYSQLI_ASSOC);
 $news    = array_merge($news1, $news2);
+function cleaner($text, $character) {
+    $text = strip_tags($text);
+    $text = mb_substr($text, 0, $character);
+    return $text;
+}
 if (!empty($news)) {
 ?>
     <div class="blog change-theme news-section">
@@ -112,12 +117,13 @@ if (!empty($news)) {
         <div class="owl-carousel owl-theme container">
             <?php
             foreach ($news as $post) {
+                
             ?>
                 <div class="card wow bounceIn">
-                    <img class="card-img-top" src="uploads/<?= $post['image']; ?>" alt="Card image cap">
+                    <img class="card-img-top d-block" src="uploads/<?= $post['image']; ?>" alt="Card image cap">
                     <div class="card-body">
-                        <h6 class="card-title text-center"><?= substr($post['title'], 0, 20); ?></h6>
-                        <p class="card-text"><?= substr($post['content'], 0, 100); ?>...</p>
+                        <h6 class="card-title text-center"><?= cleaner($post['title'], 50); ?></h6>
+                        <p class="card-text"><?= cleaner($post['content'], 105); ?>...</p>
                         <div class="date_button">
                             <span><i class="far fa-clock"></i>&nbsp;&nbsp;<?= date('d.m.Y H:i', strtotime($post['created_date'])); ?></span>
                             <a href="single-post.php?post=<?= $post['id_post']; ?>&lang=<?= $lang_name; ?>" class="btn btn-primary change_button_color"><?=translate('read-more', $lang_name); ?></a>
@@ -133,9 +139,9 @@ if (!empty($news)) {
 <?php
 }
 
-$result    = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, pt.*, mt.* FROM orient_ressamlar.posts p 
-                                  INNER JOIN orient_ressamlar.posts_translation pt ON pt.post_id=p.id
-                                  INNER JOIN orient_ressamlar.menu_translation mt ON mt.menu_id=p.category_id
+$result    = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, p.status, pt.*, mt.* FROM posts p 
+                                  INNER JOIN posts_translation pt ON pt.post_id=p.id
+                                  INNER JOIN menu_translation mt ON mt.menu_id=p.category_id
                                   WHERE pt.lang_id=$lang_id && p.status=1 && p.category_id=74 && mt.lang_id=$lang_id ORDER BY p.`id` desc LIMIT 4");
 $materials = mysqli_fetch_all($result, MYSQLI_ASSOC);
 if (!empty($materials)) {
@@ -182,7 +188,7 @@ if (!empty($materials)) {
                                                                                         echo 'order_class_left';
                                                                                     } ?>">
                         <h3><?= $material_row['title']; ?></h3>
-                        <p><?= substr($material_row['content'], 0, 200); ?>...</p>
+                        <p class="material-text"><?= cleaner($material_row['content'], 200); ?>...</p>
                         <a href="post.php?post=<?= $material_row['id_post']; ?>&lang=<?= $lang_name; ?>" class="more_button"><?=translate('read-more', $lang_name); ?></a>
                     </div>
                 </div>

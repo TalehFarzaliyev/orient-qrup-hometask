@@ -59,22 +59,22 @@ if ($_SESSION['logged_in'] == 1) {
                                                 <thead>
                                                     <tr role="row" style="text-align: center;">
                                                         <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Menyu adı</th>
-                                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Slug</th>
-                                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 255px;">Tipi</th>
+                                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 355px;">Slug</th>
+                                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 155px;">Tipi</th>
+                                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 155px;">Status</th>
                                                         <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 163px;">Əməliyyatlar</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    include '../config/config.php';
                                                     $page = isset($_GET['page']) ? $_GET['page'] : 1;
                                                     if (isset($_REQUEST['search'])) {
                                                         $name = $_GET['search'];
                                                         $number_of_content = mysqli_num_rows(mysqli_query($conn, "SELECT id FROM `menu` m
                                                                                                                   INNER JOIN `menu_translation` mt ON m.id=mt.menu_id
-                                                                                                                  WHERE mt.lang_id=1 and m.status=1 and mt.`name` like '" . $name . "%'"));
+                                                                                                                  WHERE mt.lang_id=1 and mt.`name` like '" . $name . "%'"));
                                                     } else {
-                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, 'SELECT `id` FROM `menu` WHERE `status`=1'));
+                                                        $number_of_content = mysqli_num_rows(mysqli_query($conn, 'SELECT `id` FROM `menu`'));
                                                     }
                                                     $limit = 7;
                                                     $lastpage = ceil($number_of_content / $limit);
@@ -82,13 +82,13 @@ if ($_SESSION['logged_in'] == 1) {
                                                     if ($lastpage >= $page) {
                                                         if (isset($_REQUEST['search'])) {
                                                             $name = $_GET['search'];
-                                                            $result = mysqli_query($conn, "SELECT * FROM orient_ressamlar.menu_translation mt 
-                                                                                           INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
-                                                                                           Where mt.lang_id=1 and m.status=1 and mt.name like '" . $name . "%' ORDER BY m.`id` desc LIMIT " . $start . ',' . $limit);
+                                                            $result = mysqli_query($conn, "SELECT * FROM menu_translation mt 
+                                                                                           INNER JOIN menu m ON mt.menu_id=m.id 
+                                                                                           Where mt.lang_id=1 and mt.name like '" . $name . "%' ORDER BY m.`id` desc LIMIT " . $start . ',' . $limit);
                                                         } else {
-                                                            $result = mysqli_query($conn, 'SELECT * FROM orient_ressamlar.menu_translation mt 
-                                                                                           INNER JOIN orient_ressamlar.menu m ON mt.menu_id=m.id 
-                                                                                           Where mt.lang_id=1 and m.status=1 order by m.`id` desc LIMIT ' . $start . ',' . $limit);
+                                                            $result = mysqli_query($conn, 'SELECT * FROM menu_translation mt 
+                                                                                           INNER JOIN menu m ON mt.menu_id=m.id 
+                                                                                           Where mt.lang_id=1 order by m.`id` desc LIMIT ' . $start . ',' . $limit);
                                                         }
                                                         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                                                     ?>
@@ -96,12 +96,19 @@ if ($_SESSION['logged_in'] == 1) {
                                                                 <td class="sorting_1"><?= $row['name']; ?></td>
                                                                 <td class="sorting_1"><?= $row['slug']; ?></td>
                                                                 <td class="sorting_1"><?= $row['type']; ?></td>
+                                                                <td class="edit-buttons text-center align-middle">
+                                                                    <form action="" method="get">
+                                                                        <label class="switch button-section d-block">
+                                                                            <input type="checkbox" data-onstyle="success" name="menu" data-offstyle="danger" id='<?php echo $row['id'] ?>' class="status-check" <?php echo $row['status'] == 1 ? 'checked' : '' ?> />
+                                                                            <span class="slider round"></span>
+                                                                        </label>
+                                                                    </form>
+                                                                </td>
                                                                 <td class="edit-buttons">
                                                                     <div class="button-section">
                                                                         <a href="form-menu.php?id=<?= $row['id']; ?>" class="btn btn-success"><i class="fas fa-edit"></i></a>
                                                                         <a onclick="deleteItem(this);" data-id-number="<?= $row['id']; ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
                                                                     </div>
-
                                                                 </td>
                                                             </tr>
                                                         <?php

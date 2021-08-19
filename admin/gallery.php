@@ -76,8 +76,8 @@ if ($_SESSION['logged_in'] == 1) {
                                                                         $lastpage = ceil($number_of_content / $limit);
                                                                         $start = ($page - 1) * $limit;
                                                                         if ($lastpage >= $page) {
-                                                                            $result = mysqli_query($conn, "SELECT * FROM orient_ressamlar.posts p 
-                                                                                                           INNER JOIN orient_ressamlar.posts_gallery pg ON pg.post_id=p.id 
+                                                                            $result = mysqli_query($conn, "SELECT * FROM posts p 
+                                                                                                           INNER JOIN posts_gallery pg ON pg.post_id=p.id 
                                                                                                            WHERE pg.`post_id`='$post' ORDER BY pg.`id` desc LIMIT " . $start . ',' . $limit);
                                                                             while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                                                                     ?>

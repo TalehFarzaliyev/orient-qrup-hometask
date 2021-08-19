@@ -1,6 +1,7 @@
 <?php
 $translation = [
     'association'  => 'ASSOCIATION PROFILE',
+    'union-artist' => 'Union of artists',
     'news'         => 'News',
     'read-more'    => 'Read more',
     'see-more'     => 'See more',
@@ -18,7 +19,7 @@ $translation = [
     'send-message' => 'Send message',
     'name'         => 'Name',
     'content'      => 'Content',
-    'letter'       => 'Letter',
+    'subject'      => 'Subject',
     'send'         => 'Send',
     'privacy'      => 'PRIVACY POLICY',
     'terms'        => 'TERMS OF USE',
@@ -27,4 +28,11 @@ $translation = [
     'dark'         => 'Dark',
     'light'        => 'Light',
     'color-scheme' => 'color scheme',
+    'alert'        => 'field must be filled!',
+    'success'      => 'Message sent successfully!',
+    'work_painter' => 'works of the painter',
+    'nrb'          => 'Nakhchivan Autonomous Republic Union Of Artists.',
+    'all-rights'   => 'All rights reserved.',
+    'programming'  => 'Design and programming',
+    'iyttm'        => 'INTTC',
 ];

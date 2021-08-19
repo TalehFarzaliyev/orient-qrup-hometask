@@ -27,9 +27,9 @@ $category_id   = $category['menu_id'];
         $lastpage = ceil($number_of_content / $limit);
         $start = ($page - 1) * $limit;
         if ($lastpage >= $page) {
-            $result = mysqli_query($conn, "SELECT p.id as id_painter, p.painter_name, p.painter_surname, p.painter_image, p.status, p.categories, pt.*, m.* FROM orient_ressamlar.painters p 
-                                        INNER JOIN orient_ressamlar.painter_translation pt ON pt.painter_id=p.id
-                                        INNER JOIN orient_ressamlar.menu m ON p.categories=m.id
+            $result = mysqli_query($conn, "SELECT p.id as id_painter, p.painter_name, p.painter_surname, p.painter_image, p.status, p.categories, pt.*, m.* FROM painters p 
+                                        INNER JOIN painter_translation pt ON pt.painter_id=p.id
+                                        INNER JOIN menu m ON p.categories=m.id
                                         WHERE pt.lang_id=$lang_id && p.status=1 && p.categories LIKE '%$category_id%' ORDER BY p.`id` desc LIMIT " . $start . ',' . $limit);
             $painter  = mysqli_fetch_all($result, MYSQLI_ASSOC);
             if (!empty($painter)) {

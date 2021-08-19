@@ -15,8 +15,8 @@
     include $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
     if (isset($_GET['post']) and !empty($_GET['post'])) {
         $post           = intval($_GET['post']);
-        $select_post    = "SELECT p.id as id_post, p.image, p.status, pt.* FROM orient_ressamlar.posts p 
-                           INNER JOIN orient_ressamlar.posts_translation pt ON pt.post_id=p.id
+        $select_post    = "SELECT p.id as id_post, p.image, p.status, pt.* FROM posts p 
+                           INNER JOIN posts_translation pt ON pt.post_id=p.id
                            Where pt.lang_id=$lang_id and p.status=1 and p.`id`='$post'";
         $result         = mysqli_query($conn, $select_post);
         $post_row       = mysqli_fetch_array($result, MYSQLI_ASSOC);

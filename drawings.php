@@ -13,11 +13,16 @@
 
     <?php
     include 'includes/theme.php';
-    $result    = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, pt.*, mt.* FROM orient_ressamlar.posts p 
-                                  INNER JOIN orient_ressamlar.posts_translation pt ON pt.post_id=p.id
-                                  INNER JOIN orient_ressamlar.menu_translation mt ON mt.menu_id=p.category_id
+    $result    = mysqli_query($conn, "SELECT p.id as id_post, p.image, p.created_date, p.category_id, pt.*, mt.* FROM posts p 
+                                  INNER JOIN posts_translation pt ON pt.post_id=p.id
+                                  INNER JOIN menu_translation mt ON mt.menu_id=p.category_id
                                   WHERE pt.lang_id=$lang_id && p.status=1 && p.category_id=74 && mt.lang_id=$lang_id ORDER BY p.`id` desc");
     $materials = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    function cleaner($text, $character) {
+        $text = strip_tags($text);
+        $text = mb_substr($text, 0, $character);
+        return $text;
+    }
     if (!empty($materials)) {
     ?>
         <div class="blog change-theme">
@@ -62,7 +67,7 @@
                                                                                             echo 'order_class_left';
                                                                                         } ?>">
                             <h3><?= $material_row['title']; ?></h3>
-                            <p><?= substr($material_row['content'], 0, 200); ?>...</p>
+                            <p><?= cleaner($material_row['content'], 200); ?>...</p>
                             <a href="post.php?post=<?= $material_row['id_post']; ?>&lang=<?= $lang_name; ?>" class="more_button"><?=translate('read-more', $lang_name); ?></a>
                         </div>
                     </div>
